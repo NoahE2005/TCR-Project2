@@ -1,0 +1,9 @@
+.TextColorgradient {
+    color: white;
+    transition: 0.4s;
+}
+
+.TextColorgradient:hover {
+    color: linear-gradient(-45deg, #ffffff, #ffffff, #23a6d5, #23d5ab);
+    transition: 0.4s;
+}
