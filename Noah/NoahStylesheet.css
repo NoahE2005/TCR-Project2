@@ -4,6 +4,13 @@
 }
 
 .TextColorgradient:hover {
-    color: linear-gradient(-45deg, #ffffff, #ffffff, #23a6d5, #23d5ab);
+    color: linear-gradient(-45deg, #71c1fe, #3aac71, #23a6d5, #23d5ab);
     transition: 0.4s;
+}
+
+.MainText {
+    border-style: solid;
+    border-radius: 1vh;
+    border-width: 0.3vw;
+    border-color: rgba (255,255,255,0.5);
 }
