@@ -28,7 +28,7 @@
     border-style: solid;
     border-radius: 1vh;
     border-width: 0.3vw;
-    border-color: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.1);
 }
 
   @keyframes BackgroundFill {
