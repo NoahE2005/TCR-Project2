@@ -1,16 +1,34 @@
+.TextColorgradientButton {
+    color: white;
+    transition: 0.4s;
+    background:none;
+    border-width: 0.5vw;
+    padding-top: 3vh;
+    padding-left: 3vw;
+    padding-bottom: 3vh;
+    padding-right: 3vw;
+}
+
+.TextColorgradientButton:hover {
+    color: linear-gradient(-45deg, #71c1fe, #3aac71, #23a6d5, #23d5ab);
+    transition: 0.4s;
+    cursor: pointer;
+    background:none;
+}
+
 .TextColorgradient {
     color: white;
     transition: 0.4s;
 }
 
-.TextColorgradient:hover {
-    color: linear-gradient(-45deg, #71c1fe, #3aac71, #23a6d5, #23d5ab);
-    transition: 0.4s;
-}
-
 .MainText {
+    padding: 1vw;
+    margin-top: 2vh;
+    margin-left: 2vw;
+    margin-top: 2vh;
+    margin-right: 2vw;
     border-style: solid;
     border-radius: 1vh;
     border-width: 0.3vw;
-    border-color: rgba (255,255,255,0.5);
+    border-color: rgba(255,255,255,0.2);
 }
