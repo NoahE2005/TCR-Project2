@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
 
-html {
+main {
     font-family: "Montserrat", sans-serif;
   }
 
@@ -39,8 +40,6 @@ html {
 }
 
 
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
-
 .BGGradient {
   background: linear-gradient(to right, #3aac71, #23a6d5, #23d5ab);
   padding: 0 40px;
@@ -55,8 +54,6 @@ html {
 }
 
 h1 {
-  margin: 0.5rem;
-  padding: 1rem;
   font-size: 3rem;
   font-weight: bold;
 }
@@ -65,7 +62,7 @@ h1 {
 
 .waviy {
     position: relative;
-    -webkit-box-reflect: below -20px linear-gradient(transparent, rgba(0,0,0,.2));
+    -webkit-box-reflect: below -30px linear-gradient(transparent, rgba(0,0,0,.2));
     font-size: 60px;
   }
   .waviy span {
@@ -74,11 +71,9 @@ h1 {
     display: inline-block;
     color: #fff;
     text-transform: uppercase;
-    animation: waviy 1s infinite;
-    animation-delay: calc(.1s * var(--i));
-    
+    animation: waviy 1.3s infinite;
+    animation-delay: calc(.1s * var(--i));    
   }
-
 
 /*Keyframes*/
 @keyframes waviy {
