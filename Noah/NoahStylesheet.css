@@ -73,6 +73,11 @@ h1 {
     animation-delay: calc(.1s * var(--i));    
   }
 
+  .Capital {
+    font-size: 80px;
+  }
+
+
 /*Keyframes*/
 @keyframes waviy {
     0%,40%,100% {
