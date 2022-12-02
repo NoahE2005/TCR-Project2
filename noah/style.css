@@ -5,24 +5,6 @@ main {
     font-family: "Montserrat", sans-serif;
   }
 
-
-.TextColorgradientButton {
-    color: white;
-    background:none;
-    border-width: 0.5vw;
-    padding-top: 3vh;
-    padding-left: 3vw;
-    padding-bottom: 3vh;
-    padding-right: 3vw;
-}
-
-.TextColorgradientButton:hover {
-    color: linear-gradient(-45deg, #71c1fe, #3aac71, #23a6d5, #23d5ab);
-    cursor: pointer;
-    background:none;
-    animation: BackgroundFill 1s ease;
-}
-
 .TextColorgradient {
     color: white;
 }
@@ -34,15 +16,32 @@ main {
     margin-top: 2vh;
     margin-right: 4vw;
     border-style: solid;
+    border-bottom-style: none;
+    border-top-style: none;
     border-radius: 1vh;
     border-width: 0.3vw;
     border-color: rgba(255,255,255,0.1);
+    margin-bottom: 2em;
 }
 
+a {
+  text-decoration: none;
+  list-style: none;
+  color: white;
+  transition: 0.6s;
+}
+
+a:hover {
+  text-decoration: none;
+  list-style: none;
+  color: black;
+  transition: 0.3s;
+}
 
 .BGGradient {
   background: linear-gradient(to right, #3aac71, #23a6d5, #23d5ab);
   padding: 0 40px;
+  animation: GradientMove 1.3s infinite;
 }
 
 .TextGradient {
@@ -51,6 +50,7 @@ main {
   background-clip: text;
   color: transparent;
   animation: ColorMove 4s ease infinite;
+  animation-delay: calc(.1s * var(--i));    
 }
 
 h1 {
@@ -60,7 +60,7 @@ h1 {
 
 .waviy {
     position: relative;
-    -webkit-box-reflect: below -30px linear-gradient(transparent, rgba(0,0,0,.2));
+    -webkit-box-reflect: below -37px linear-gradient(transparent, rgba(0,0,0,.2));
     font-size: 60px;
   }
   .waviy span {
@@ -77,6 +77,26 @@ h1 {
     font-size: 80px;
   }
 
+  .PortfolieSection {
+    background-color: rgb(51, 51, 51);
+    padding-top: 1em; 
+    padding-bottom: 2em;
+  }
+
+  .TextColorgradientButton {
+    color: white;
+    border-width: 0.3vw;
+    padding-top: 3vh;
+    padding-left: 3vw;
+    padding-bottom: 3vh;
+    padding-right: 3vw;
+    border-radius: 1em;
+}
+
+.TextColorgradientButton:hover {
+    color: linear-gradient(-45deg, #71c1fe, #3aac71, #23a6d5, #23d5ab);
+    cursor: pointer;
+}
 
 /*Keyframes*/
 @keyframes waviy {
@@ -97,6 +117,18 @@ h1 {
 	}
     100% {
         background: linear-gradient(to right, #23d5ab, #3aac71, #23a6d5)
+	}
+}
+
+@keyframes GradientMoveReverse {
+	0% {
+        border-color: linear-gradient(to left, #3aac71, #23a6d5, #23d5ab)
+	}
+	50% {
+        border-color: linear-gradient(to left, #23a6d5, #23d5ab, #3aac71)
+	}
+    100% {
+        border-color: linear-gradient(to left, #23d5ab, #3aac71, #23a6d5)
 	}
 }
 
