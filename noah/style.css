@@ -98,6 +98,29 @@ h1 {
     cursor: pointer;
 }
 
+.ContactFormName {
+  min-width: 25em;
+  max-width: 25.1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  background: none;
+  border-width: 0.3em;
+  animation: GradientMoveReverse 1.3s infinite;
+}
+
+.ContactFormText {
+  min-width: 50.99em;
+  max-width: 51em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  min-height: 20em;
+  margin-top: 1em;
+  background: none;
+  border-width: 0.3em;
+  animation: GradientMoveReverse 1.3s infinite;
+  text-align: center;
+}
+
 /*Keyframes*/
 @keyframes waviy {
     0%,40%,100% {
@@ -122,13 +145,13 @@ h1 {
 
 @keyframes GradientMoveReverse {
 	0% {
-        border-color: linear-gradient(to left, #3aac71, #23a6d5, #23d5ab)
+        border-color: #23d5ab
 	}
 	50% {
-        border-color: linear-gradient(to left, #23a6d5, #23d5ab, #3aac71)
+        border-color:  #3aac71
 	}
     100% {
-        border-color: linear-gradient(to left, #23d5ab, #3aac71, #23a6d5)
+        border-color: #23a6d5
 	}
 }
 
