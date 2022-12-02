@@ -12,6 +12,7 @@ header {
     padding-bottom: 6vh;
 }
 
+/**/
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
@@ -51,6 +52,7 @@ h1 {
     float: left;
 }
 
+/*voor de images*/
 .images {
     float: right;
     width: 25vw;
@@ -100,10 +102,12 @@ h1 {
     padding: 0.75vw 1.75vw;
 }
 
+/*de breete van de navbar*/
 .topnav {
     width: 100%;
 }
 
+/*voor de buttons in de navbar*/
 .subnav {
     float: left;
     text-align: center;
@@ -128,6 +132,7 @@ h1 {
     z-index: 2;
 }
 
+/*navbar buttons*/
 .subnavbtn {
     display: flex;
     align-self: top;
@@ -135,6 +140,7 @@ h1 {
     z-index: 2;
 }
 
+/**/
 .navbar a:hover,
 .subnav:hover .subnavbtn {
     background-color: black;
@@ -175,11 +181,9 @@ h1 {
 }
 /* einde navigatiebar */
 
-
+/**/
 .DropdownImg {
     width: 1.5vw;
     height: 1.5vw;
     padding: 0;
 }
-
-/*for games*/

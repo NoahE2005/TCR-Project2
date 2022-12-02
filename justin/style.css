@@ -1,21 +1,14 @@
+/*voor alles in main*/
 main {
     font-family: "Montserrat", sans-serif;
 }
 
+/*li is voor lists*/
 li {
     margin-left: 8vw;
 }
 
-.TextColorgradientButton {
-    color: white;
-    background: none;
-    border-width: 0.5vw;
-    padding-top: 3vh;
-    padding-left: 3vw;
-    padding-bottom: 3vh;
-    padding-right: 3vw;
-}
-
+/**/
 .TextColorgradientButton:hover {
     color: rgb(146, 219, 244);
     cursor: pointer;
@@ -23,10 +16,12 @@ li {
     animation: BackgroundFill 1s ease;
 }
 
+/**/
 .TextColorgradient {
     color: white;
 }
 
+/**/
 .MainText {
     padding: 1vw;
     margin-top: 2vh;
@@ -39,7 +34,7 @@ li {
     border-color: rgba(255, 255, 255, 0.1);
 }
 
-
+/**/
 .Text {
     background: rgb(146, 219, 244);
     -webkit-background-clip: text;
@@ -48,17 +43,20 @@ li {
     animation: ColorMove 4s ease infinite;
 }
 
+/**/
 h1 {
     font-size: 3rem;
     font-weight: bold;
 }
 
+/**/
 .waviy {
     position: relative;
     -webkit-box-reflect: below -30px linear-gradient(transparent, rgba(0, 0, 0, .2));
     font-size: 60px;
 }
 
+/**/
 .waviy span {
     font-family: "Montserrat", sans-serif;
     position: relative;
