@@ -66,3 +66,15 @@ h1 {
     animation: waviy 1.3s infinite;
     animation-delay: calc(.1s * var(--i));
 }
+
+#game {
+    z-index: 2;
+    margin-left: 25vw;
+    margin-right: 25vw;
+    margin-top: 5vh;
+    width: 50vw;
+    height: auto;
+    background-image: url("../assets/for_games/justin/castledef.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
