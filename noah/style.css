@@ -141,7 +141,9 @@ h1 {
 }
 
 .ContactFormSubmit {
-  color: transparent;
+  background-color: rgb(40, 40, 40);
+  font-size: 2em;
+  font-weight: bold;
   border-color: transparent;
 }
 
