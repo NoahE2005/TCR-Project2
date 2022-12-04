@@ -98,6 +98,7 @@ h1 {
     cursor: pointer;
 }
 
+<<<<<<< HEAD
 .ContactFormName {
   min-width: 24.85em;
   max-width: 25.1em;
@@ -147,6 +148,8 @@ h1 {
   border-color: transparent;
 }
 
+=======
+>>>>>>> parent of 69651d0 (a)
 /*Keyframes*/
 @keyframes waviy {
     0%,40%,100% {
@@ -171,13 +174,13 @@ h1 {
 
 @keyframes GradientMoveReverse {
 	0% {
-        border-color: #23d5ab
+        border-color: linear-gradient(to left, #3aac71, #23a6d5, #23d5ab)
 	}
 	50% {
-        border-color:  #3aac71
+        border-color: linear-gradient(to left, #23a6d5, #23d5ab, #3aac71)
 	}
     100% {
-        border-color: #23a6d5
+        border-color: linear-gradient(to left, #23d5ab, #3aac71, #23a6d5)
 	}
 }
 
