@@ -1,14 +1,10 @@
-//https://www.youtube.com/watch?v=kX18GQurDQg&ab_channel=NewTrix (fix met opnieuw kijken)
-//doe nog https://www.youtube.com/watch?v=y1Avl1CscnM&ab_channel=RizedWebDesign
 //maak https://codepen.io/GabbeV/pen/Abzwga
 
 const  Canvas = document.getElementById("Canvas")
 const ctx = Canvas.getContext("2d")
 
-
 const PlayerWalkSpeed = 3; //De speler snelheid
 const PlayerColor = 000000;
-
 
 let x = 0; //X locatie van speler
 let y = 0; //Y locatie van speler
@@ -16,7 +12,7 @@ let vxl = 0; // de X links "velocity" van speler
 let vxr = 0; // de X rechts "velocity" van speler
 let vy = 0; // de Y "velocity" van speler
 
-var player = ctx.fillRect(x,y, 50, 50);
+var player = ctx.fillRect(0,0, 0, 0);
 var walls = ctx.fillRect(200,200, 200, 200);
 
 function UpdateScreen() {
@@ -24,7 +20,7 @@ function UpdateScreen() {
     x += vxl;
     x += vxr;
     y += vy;
-    var player = ctx.fillRect(x,y, 50, 50)
+    player = ctx.fillRect(x,y, 50, 50)
     ctx.fillStyle = "#" + PlayerColor;
     Walls()
     requestAnimationFrame(UpdateScreen)
@@ -32,7 +28,7 @@ function UpdateScreen() {
 UpdateScreen()
 
 function Walls () {
-    var walls = ctx.fillRect(200,200, 200, 200)
+    walls = ctx.fillRect(200,200, 200, 200)
     ctx.fillStyle = "#" + PlayerColor;
 }
 
@@ -57,11 +53,17 @@ addEventListener("keyup", function(e) {
 })
 
 function collisionCheck(a, b) {
-    return a.x < b.x + b.width &&
-           a.x + a.width > b.x &&
-           a.y < b.y + b.height &&
-           a.y + a.heighta > b.x;
+    let ALeftB = (a.x + a.width) < b.x;
+    let ARightB = a.x > (b.x + b.width);
+    let AaboveB = (a.y + a.height) < b.y;
+    let AbelowB = a.y > (b.y + b.height)
+           
+alert ("Test success")
+
+    return !(ALeftB || ARightB || AaboveB || AbelowB)
 }
+
+
 
 //Eind Input
 
