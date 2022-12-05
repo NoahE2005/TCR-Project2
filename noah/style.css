@@ -153,6 +153,7 @@ h1 {
   padding: 1em;
   background-color: white;
   min-height: 15vw;
+  float: right;
 }
 
 /*Keyframes*/
