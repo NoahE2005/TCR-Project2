@@ -17,7 +17,10 @@ let vy = 0; // de Y "velocity" van speler
 var player = ctx.fillRect(0,0, 0, 0);
 var walls = ctx.fillRect(200,200, 200, 200);
 var CoinCount = 0;
+var coinlocationsX = [];
+var coinlocationsY = [];
 
+CoinsBegin()
 function UpdateScreen() {
     ctx.clearRect(0,0, Canvas.width, Canvas.height)
     x += vxl;
@@ -26,6 +29,7 @@ function UpdateScreen() {
     player = ctx.fillRect(x,y, 50, 50)
     ctx.fillStyle = "#" + PlayerColor;
     Walls()
+    Coins()
     requestAnimationFrame(UpdateScreen)
 }
 UpdateScreen()
@@ -35,12 +39,18 @@ function Walls() {
     ctx.fillStyle = "#" + PlayerColor;
 }
 
-function Coins() {
+function CoinsBegin() {
     for (let i = 0; i < MaxCoints; i++) {
-        coins.fillRect(x, y, 50, 50, "yellow")
+        coinlocationsX.push(Math.floor(Math.random() * 500))
+        coinlocationsY.push(Math.floor(Math.random() * 500))
     }
 }
-Coins()
+
+function Coins() {
+    for (let i = 0; i < MaxCoints; i++) {
+        ctx.fillRect(500,500, 30, 30, "yellow")
+    }
+}
 
 //Begin Input
 addEventListener('keydown', function (e){
