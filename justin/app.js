@@ -11,7 +11,7 @@ let mouse = {
 }
 
 addEventListener('mousemove', (event) => {
-  mouse.x = event.clientX
+  mouse.x = event.clientX,
   mouse.y = event.clientY
 });
 
@@ -134,6 +134,7 @@ function Update () {
       enemies.splice(i, 1);
       points = 0;
       originalTimer = 150;
+      Start();
     }
 
     for (let j = 0; j < bullets.length; j++) {
