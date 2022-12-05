@@ -147,6 +147,14 @@ h1 {
   border-color: transparent;
 }
 
+.FavorietGamesBorder {
+  border: black solid 0.3em;
+  border-radius: 1em;
+  padding: 1em;
+  background-color: white;
+  min-height: 15vw;
+}
+
 /*Keyframes*/
 @keyframes waviy {
     0%,40%,100% {
@@ -223,4 +231,10 @@ h1 {
         color: linear-gradient(-45deg, #71c1fe, #3aac71, #23a6d5, #23d5ab);
         border-color: linear-gradient(-45deg, #71c1fe, #3aac71, #23a6d5, #23d5ab);
 	}
+}
+
+/*Game Css*/
+canvas {
+  background-color: white;
+  color: white;
 }
