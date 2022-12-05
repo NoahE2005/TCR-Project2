@@ -2,9 +2,11 @@
 
 const  Canvas = document.getElementById("Canvas")
 const ctx = Canvas.getContext("2d")
+const coins = Canvas.getContext("2d")
 
 const PlayerWalkSpeed = 3; //De speler snelheid
 const PlayerColor = 000000;
+const MaxCoints = 8;
 
 let x = 0; //X locatie van speler
 let y = 0; //Y locatie van speler
@@ -14,6 +16,7 @@ let vy = 0; // de Y "velocity" van speler
 
 var player = ctx.fillRect(0,0, 0, 0);
 var walls = ctx.fillRect(200,200, 200, 200);
+var CoinCount = 0;
 
 function UpdateScreen() {
     ctx.clearRect(0,0, Canvas.width, Canvas.height)
@@ -27,10 +30,17 @@ function UpdateScreen() {
 }
 UpdateScreen()
 
-function Walls () {
+function Walls() {
     walls = ctx.fillRect(200,200, 200, 200)
     ctx.fillStyle = "#" + PlayerColor;
 }
+
+function Coins() {
+    for (let i = 0; i < MaxCoints; i++) {
+        coins.fillRect(x, y, 50, 50, "yellow")
+    }
+}
+Coins()
 
 //Begin Input
 addEventListener('keydown', function (e){
