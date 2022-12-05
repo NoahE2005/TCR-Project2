@@ -147,6 +147,14 @@ h1 {
   border-color: transparent;
 }
 
+.FavorietGamesBorder {
+  border: black solid 0.3em;
+  border-radius: 1em;
+  padding: 1em;
+  background-color: white;
+  min-height: 15vw;
+}
+
 /*Keyframes*/
 @keyframes waviy {
     0%,40%,100% {
