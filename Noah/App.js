@@ -1,9 +1,11 @@
 //https://www.youtube.com/watch?v=kX18GQurDQg&ab_channel=NewTrix (fix met opnieuw kijken)
+//doe nog https://www.youtube.com/watch?v=y1Avl1CscnM&ab_channel=RizedWebDesign
+//maak https://codepen.io/GabbeV/pen/Abzwga
 
 const  Canvas = document.getElementById("Canvas")
 const ctx = Canvas.getContext("2d")
 
-const PlayerWalkSpeed = 5;
+const PlayerWalkSpeed = 3;
 
 let x = 0;
 let y = 0;
@@ -20,24 +22,16 @@ function UpdateScreen() {
 UpdateScreen()
 
 //Input
-addEventListener("keydown", function(e){
-    if(e.code == 'keyD') vx = PlayerWalkSpeed;
-    if(e.code == 'keyA') vx = PlayerWalkSpeed * -1;
-    if(e.code == 'keyS') vy = PlayerWalkSpeed;
-    if(e.code == 'keyW') vy = PlayerWalkSpeed * -1;
+addEventListener('keydown', function (e){
+    if(e.code == 'KeyD') vx = PlayerWalkSpeed;
+    if(e.code == 'KeyA') vx = PlayerWalkSpeed * -1;
+    if(e.code == 'KeyS') vy = PlayerWalkSpeed;
+    if(e.code == 'KeyW') vy = PlayerWalkSpeed * -1;
 })
 addEventListener("keyup", function(e) {
-    if(e.code == 'keyD') {
-        vx = 0;
-    }
-    if(e.code == 'keyA') {
-        vx = 0;
-    }
-    if(e.code == 'keyS') {
-        vx = 0;
-    }
-    if(e.code == 'keyW') {
-        vx = 0;
-    }
+    if(e.code == 'KeyD') vx = 0;
+    if(e.code == 'KeyA') vx = 0;
+    if(e.code == 'KeyS') vy = 0;
+    if(e.code == 'KeyW') vy = 0;
 })
 
