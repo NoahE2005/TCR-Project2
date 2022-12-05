@@ -91,12 +91,14 @@ function Start () {
   player = new Circle(0, canvas.height/2, 20, '#FFCE00');
 }
 
+
 let originalTimer = 120;
 let spawnTimer = originalTimer;
 function Update () {
   requestAnimationFrame(Update);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // where Bullets disapear
+
   for (let i = 0; i < bullets.length; i++) {
     let bullet = bullets[i];
 
@@ -128,7 +130,7 @@ function Update () {
 
     enemy.x -= enemy.speed;
 
-    if (enemy.x < 0) {
+    if (enemy.x < 45) {
       enemies.splice(i, 1);
       points = 0;
       originalTimer = 150;
@@ -157,9 +159,9 @@ function Update () {
   player.update();
 
   ctx.fillStyle = "#FFFFFF";
-  ctx.font = "28px sans-serif";
+  ctx.font = "20px sans-serif";
   ctx.textAlign = "center";
-  ctx.fillText("Points: " + points, canvas.width/2, 25);
+  ctx.fillText("Points: " + points, canvas.width/2, 22);
 }
 
 function MovePlayer(direction) {
@@ -175,5 +177,9 @@ function MovePlayer(direction) {
   }
 }
 
-Start();
-Update();
+addEventListener('keypress', (event) => {
+  if (event.code == "Enter") {
+    Start();
+    Update();
+  }
+})

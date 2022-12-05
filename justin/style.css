@@ -69,12 +69,18 @@ h1 {
 
 #game {
     z-index: 2;
-    margin-left: 25vw;
-    margin-right: 25vw;
-    margin-top: 5vh;
-    width: 50vw;
+    margin-left: 15vw;
+    margin-right: 15vw;
+    margin-top: 1vh;
+    width: 70vw;
     height: auto;
     background-image: url("../assets/for_games/justin/castledef.png");
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.gametext {
+    font-size: 20px;
+    text-align: center;
+    font-weight: bolder;
 }
