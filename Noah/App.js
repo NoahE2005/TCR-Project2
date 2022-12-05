@@ -5,12 +5,12 @@
 const  Canvas = document.getElementById("Canvas")
 const ctx = Canvas.getContext("2d")
 
-const PlayerWalkSpeed = 3;
+const PlayerWalkSpeed = 3; //De speler snelheid
 
-let x = 0;
-let y = 0;
-let vx = 0;
-let vy = 0;
+let x = 0; //X locatie van speler
+let y = 0; //Y locatie van speler
+let vx = 0; // de X "velocity" van speler
+let vy = 0; // de Y "velocity" van speler
 
 function UpdateScreen() {
     ctx.clearRect(0,0, Canvas.width, Canvas.height)
