@@ -6,6 +6,7 @@ const  Canvas = document.getElementById("Canvas")
 const ctx = Canvas.getContext("2d")
 
 const PlayerWalkSpeed = 3; //De speler snelheid
+const PlayerColor = 000000;
 
 let x = 0; //X locatie van speler
 let y = 0; //Y locatie van speler
@@ -17,6 +18,7 @@ function UpdateScreen() {
     x += vx;
     y += vy;
     ctx.fillRect(x,y, 50, 50)
+    ctx.fillStyle = "#" + PlayerColor;
     requestAnimationFrame(UpdateScreen)
 }
 UpdateScreen()
