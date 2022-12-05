@@ -5,8 +5,10 @@
 const  Canvas = document.getElementById("Canvas")
 const ctx = Canvas.getContext("2d")
 
+
 const PlayerWalkSpeed = 3; //De speler snelheid
 const PlayerColor = 000000;
+
 
 let x = 0; //X locatie van speler
 let y = 0; //Y locatie van speler
@@ -14,16 +16,25 @@ let vxl = 0; // de X links "velocity" van speler
 let vxr = 0; // de X rechts "velocity" van speler
 let vy = 0; // de Y "velocity" van speler
 
+var player = ctx.fillRect(x,y, 50, 50);
+var walls = ctx.fillRect(200,200, 200, 200);
+
 function UpdateScreen() {
     ctx.clearRect(0,0, Canvas.width, Canvas.height)
     x += vxl;
     x += vxr;
     y += vy;
-    ctx.fillRect(x,y, 50, 50)
+    var player = ctx.fillRect(x,y, 50, 50)
     ctx.fillStyle = "#" + PlayerColor;
+    Walls()
     requestAnimationFrame(UpdateScreen)
 }
 UpdateScreen()
+
+function Walls () {
+    var walls = ctx.fillRect(200,200, 200, 200)
+    ctx.fillStyle = "#" + PlayerColor;
+}
 
 //Begin Input
 addEventListener('keydown', function (e){
@@ -31,6 +42,12 @@ addEventListener('keydown', function (e){
     if(e.code == 'KeyA') vxl = PlayerWalkSpeed * -1;
     if(e.code == 'KeyS') vy = PlayerWalkSpeed;
     if(e.code == 'KeyW') vy = PlayerWalkSpeed * -1;
+    if( collisionCheck(player, walls)) {
+        vxr = 0;
+        vxl = 0;
+        vy = 0;
+        this.alert ("Collision")
+    }
 })
 addEventListener("keyup", function(e) {
     if(e.code == 'KeyD') vxr = 0;
@@ -38,6 +55,14 @@ addEventListener("keyup", function(e) {
     if(e.code == 'KeyS') vy = 0;
     if(e.code == 'KeyW') vy = 0;
 })
+
+function collisionCheck(a, b) {
+    return a.x < b.x + b.width &&
+           a.x + a.width > b.x &&
+           a.y < b.y + b.height &&
+           a.y + a.heighta > b.x;
+}
+
 //Eind Input
 
 //Begin Lighting
