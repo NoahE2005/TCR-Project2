@@ -1,7 +1,5 @@
 //maak https://codepen.io/GabbeV/pen/Abzwga
 // https://www.the-art-of-web.com/javascript/maze-generator/
-//https://stackoverflow.com/questions/2440377/javascript-collision-detection
-//https://spicyyoghurt.com/tutorials/html5-javascript-game-development/collision-detection-physics
 
 //https://www.google.nl/search?q=javascript+game+maze+generator&sxsrf=ALiCzsZGoyiaBb3uqTkY0tindzcRN_JrqA%3A1670324189364&ei=3R-PY73PFeyP9u8P3-upyAQ&oq=Javascript+game+maze+ge&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQARgAMgUIIRCgATIFCCEQoAEyBQghEKABMggIIRAWEB4QHTIICCEQFhAeEB0yCAghEBYQHhAdMggIIRAWEB4QHTIICCEQFhAeEB0yCgghEBYQHhAPEB0yCgghEBYQHhAPEB06CggAEEcQ1gQQsAM6BggAEBYQHkoECEEYAEoECEYYAFCiAljKBWDaEGgBcAF4AIABlgGIAbUCkgEDMi4xmAEAoAEByAEIwAEB&sclient=gws-wiz-serp
 //https://www.google.nl/search?q=javascript+game+collision+detection&sxsrf=ALiCzsZ9NYk6xQLOpbhnkXqobwPWaY256A%3A1670324152098&source=hp&ei=uB-PY_SqA4LtsAectYzgBQ&iflsig=AJiK0e8AAAAAY48tyEwHazw1f87AaKQuVwq9C93CI_N3&oq=Javasc&gs_lcp=Cgdnd3Mtd2l6EAEYADIECCMQJzIECCMQJzIECCMQJzIECAAQQzIECAAQQzIKCAAQsQMQgwEQQzIECAAQQzIECAAQQzIKCAAQsQMQgwEQQzIKCAAQsQMQgwEQQzoECAAQAzoICAAQsQMQgwE6CwgAEIAEELEDEIMBUABY9AdgjRNoAHAAeACAAWSIAfIDkgEDNS4xmAEAoAEB&sclient=gws-wiz
@@ -33,8 +31,8 @@ var coinlocationsY = [];
 
 CoinsBegin()
 function UpdateScreen() {
-    ctx.clearRect(0,0, Canvas.width, Canvas.height)
-    Character.clearRect(0,0, Canvas.width, Canvas.height)
+  ctx.clearRect(0,0, Canvas.width, Canvas.height)
+  Character.clearRect(0,0, Canvas.width, Canvas.height)
     x += vxl;
     x += vxr;
     y += vy;
@@ -46,7 +44,7 @@ function UpdateScreen() {
     Coins()
     requestAnimationFrame(UpdateScreen)
 }
-UpdateScreen()
+setTimeout(UpdateScreen, 1000)
 
 function Walls() {
     walls = ctx.fillRect(200,200, 200, 200)
@@ -116,305 +114,115 @@ TrackPlayer()
 //Eind Lighting
 
 //Begin Maze
-/** Helper function for better responsiveness and animation. */
-function whileAsync(cond, body, chunkSize, period) {
-    var chunkSize = chunkSize || 10;
-    var period = period || 0;
-    return new Promise(function(resolve, reject){
-      var interval = setInterval(function() {
-        for (var k = 0; k < chunkSize; k++) {
-          if (!cond()) {
-            clearInterval(interval);
-            resolve();
-            return;
-          }
-          body();
-       }
-      }, period);
-    });
-  }
-  
-  /** Adds a CSS class for a short time. */
-  function addEphemeralClass(element, className, duration) {
-    var duration = duration || 1000;
-    element.classList.add(className);
-    setTimeout(function() {
-      element.classList.remove(className);
-    }, duration);
-  }
-  
-  /** A simple point or pair. */
-  function Point(x, y) {
-    this.x = parseInt(x);
-    this.y = parseInt(y);
-  }
-  
-  Point.prototype.equals = function(other) {
-    return other.x == this.x && other.y == this.y;
-  }
-  
-  /** Allows for using the point as a key in a set. */
-  Point.prototype.serialize = function() {
-    return JSON.stringify([this.x, this.y]);
-  }
-  
-  /** Checks if the point is inside bounds. */
-  Point.prototype.insideBounds = function(bounds) {
-    return (
-        (this.x >= 0 && this.x < bounds.x) &&
-        (this.y >= 0 && this.y < bounds.y));
-  }
-  
-  /** Creates a new point offset by the delta. */
-  Point.prototype.offset = function(delta) {
-    return new Point(this.x + parseInt(delta[0]), this.y + parseInt(delta[1]));
-  }
-  
-  /** The main game object. */
-  function Maze(options) {
-    var options = Object.assign({
-      gridElement: document.getElementById('body'),
-      gridSize: new Point(20, 10),
-      startPosition: new Point(0, 0),
-      targetPosition: null,
-      blockSize: 25,
-      onSolved: function() {},
-    }, options || {});
-  
-    this.gridElement = options.gridElement;
-    this.blockSize = options.blockSize;
-    this.onSolved = options.onSolved;
-    this.bounds = options.gridSize;
-    this.startPosition = options.startPosition
-    this.targetPosition =  options.targetPosition || this.bounds.offset([-1, -1]);
-  
-    this.sides = ['bottom', 'right', 'top', 'left'];
-    this.oppositeSides = ['top', 'left', 'bottom', 'right'];
-    this.delta = [[0, 1], [1, 0], [0, -1], [-1, 0]];
-    this.keyCodeDirMap = {37: 'left', 38: 'top', 39: 'right', 40: 'bottom'};
-  
-    this.blocks = new Array(this.bounds.y);
-    for (var i = 0; i < this.bounds.y; i++) {
-      this.blocks[i] = new Array(this.bounds.x);
+pathWidth = 20       //Width of the Maze Path
+wall = 10          //Width of the Walls between Paths
+outerWall = 2        //Width of the Outer most wall
+width = 25           //Number paths fitted horisontally
+height = 25          //Number paths fitted vertically
+delay = 0           //Delay between algorithm cycles
+x = width/2|0        //Horisontal starting position
+y = height/2|0       //Vertical starting position
+seed = Math.random()*100000|0//Seed for random numbers
+wallColor = '#000000'   //Color of the walls
+pathColor = '#222a33'//Color of the path
+
+randomGen = function(seed){
+	if(seed===undefined)var seed=performance.now()
+	return function(){
+    seed = (seed * 9301 + 49297) % 233280
+		return seed/233280
+	}
+}
+
+init = function(){
+  offset = pathWidth/2+outerWall
+  map = []
+  canvas = document.getElementById('Canvas2')
+  Maze = canvas.getContext("2d")
+  canvas.width = outerWall*2+width*(pathWidth+wall)-wall
+  canvas.height = outerWall*2+height*(pathWidth+wall)-wall
+  Maze.fillStyle = wallColor
+  Maze.fillRect(0,0,canvas.width,canvas.height)
+  random = randomGen(seed)
+  Maze.strokeStyle = pathColor
+  Maze.lineCap = 'square'
+  Maze.lineWidth = pathWidth
+  Maze.beginPath()
+  for(var i=0;i<height*2;i++){
+    map[i] = []
+    for(var j=0;j<width*2;j++){
+      map[i][j] = false
     }
-  
-    var self = this;
-    document.onkeydown = function(e) {
-      if (self.solving || self.solved) {
-        return;
-      }
-      if (e.keyCode in self.keyCodeDirMap) {
-        self.movePlayer(self.keyCodeDirMap[e.keyCode]);
-        e.preventDefault();
-      }
-    };
   }
-  
-  /** Creates a single block and sets its position. */
-  Maze.prototype.createBlock = function(p) {
-    var block = document.createElement('div');
-    block.classList.add('block');
-    block.style.left = (p.x * this.blockSize) + 'px';
-    block.style.top = (p.y * this.blockSize) + 'px';
-    block.open = {left: false, top: false, bottom: false, right: false};
-    return block;
+  map[y*2][x*2] = true
+  route = [[x,y]]
+  Maze.moveTo(x*(pathWidth+wall)+offset,
+             y*(pathWidth+wall)+offset)
+}
+init()
+
+inputWidth = document.getElementById('width')
+inputHeight = document.getElementById('height')
+inputPathWidth = document.getElementById('pathwidth')
+inputWallWidth = document.getElementById('wallwidth')
+inputOuterWidth = document.getElementById('outerwidth')
+inputPathColor = document.getElementById('pathcolor')
+inputWallColor = document.getElementById('wallcolor')
+inputSeed = document.getElementById('seed')
+buttonRandomSeed = document.getElementById('randomseed')
+
+settings = {
+
+  update: function(){
+    clearTimeout(timer)
+    width = parseFloat(inputWidth.value)
+    height = parseFloat(inputHeight.value)
+    pathWidth = parseFloat(inputPathWidth.value)
+    wall = parseFloat(inputWallWidth.value)
+    outerWall = parseFloat(inputOuterWidth.value)
+    pathColor = inputPathColor.value
+    wallColor = inputWallColor.value
+    seed = parseFloat(inputSeed.value)
+    x = width/2|0
+    y = height/2|0
+    init()
+    loop()
   }
+}
+
+loop = function(){
+  x = route[route.length-1][0]|0
+  y = route[route.length-1][1]|0
   
-  /** Fetches a block by a given position. */
-  Maze.prototype.getBlock = function(point) {
-    return this.blocks[point.y][point.x];
-  }
+  var directions = [[1,0],[-1,0],[0,1],[0,-1]],
+      alternatives = []
   
-  /** Fetches the player's position block. */
-  Maze.prototype.getPlayerBlock = function() {
-    return this.getBlock(this.position);
-  }
-  
-  /** Resets the game. */
-  Maze.prototype.reset = function() {
-    if (this.solving || this.reseting) {
-      return false;
-    }
-  
-    this.reseting = true;
-    this.position = this.startPosition;
-    this.solving = false;
-    this.solved = false;
-  
-    while (this.gridElement.firstChild) {
-      this.gridElement.removeChild(this.gridElement.firstChild);
-    }
-  
-    var fragment = document.createDocumentFragment();
-    for (var x = 0; x < this.bounds.x; x++) {
-      for (var y = 0; y < this.bounds.y; y++) {
-        var block = this.createBlock(new Point(x, y), 25);
-        this.blocks[y][x] = block;
-        fragment.appendChild(block);
-      }
-    }
-    this.gridElement.appendChild(fragment);
-  
-    this.getBlock(this.targetPosition).classList.add('target');
-  
-    var self = this;
-    return this.generate().then(function() {
-      self.setPlayerPosition(self.startPosition);
-      self.reseting = false;
-    })
-  }
-  
-  /** Gets the valid adjacent points which were not visited. */
-  Maze.prototype.getAdjacents = function(point, visitedSet) {
-    var adjacents = [];
-    for (var i = 0; i < this.delta.length; i++) {
-      var cp = point.offset(this.delta[i]);
-      // We add the direction information w.r.t. the original point.
-      cp.side = this.sides[i];
-      cp.oppositeSide = this.oppositeSides[i];
-      if (cp.insideBounds(this.bounds) && !visitedSet.has(cp.serialize())) {
-        adjacents.push(cp);
-      }
-    }
-    return adjacents;
-  }
-  
-  /** Moves the player to the specified direction (top, left, right, bottom). */
-  Maze.prototype.movePlayer = function(direction) {
-    var currentBlock = this.getPlayerBlock();
-    var delta = this.delta[this.sides.indexOf(direction)];
-    var nextPosition = this.position.offset(delta);
-  
-    if (!nextPosition.insideBounds(this.bounds)) {
-      addEphemeralClass(currentBlock, 'error', 100);
-      return;
-    }
-  
-    if (!currentBlock.open[direction]) {
-      addEphemeralClass(currentBlock, 'error', 100);
-      return;
-    }
-  
-    this.setPlayerPosition(nextPosition);
-  }
-  
-  /** Sets the player's block to the specified point and checks for the goal. */
-  Maze.prototype.setPlayerPosition = function(position) {
-    this.getPlayerBlock().classList.remove('current');
-    this.position = position;
-    this.getPlayerBlock().classList.add('current');
-    if (!this.solved && this.position.equals(this.targetPosition)) {
-      this.solved = true;
-      if (!this.solving) {
-        this.onSolved();
-      }
+  for(var i=0;i<directions.length;i++){
+    if(map[(directions[i][1]+y)*2]!=undefined&&
+       map[(directions[i][1]+y)*2][(directions[i][0]+x)*2]===false){
+      alternatives.push(directions[i])
     }
   }
   
-  /** Generates the maze by randomly traversing and removing walls. */
-  Maze.prototype.generate = function() {
-    var blockCount = this.bounds.x * this.bounds.y;
-    var stack = [];
-    var visited = new Set();
-    var start = this.startPosition;
-    stack.push(start);
-  
-    var i = 0;
-    return whileAsync(() => visited.size < blockCount, () => {
-      var point = stack[stack.length - 1];
-      var ps = point.serialize();
-  
-      var block = this.getBlock(point);
-  
-      if (!visited.has(ps)) {
-        visited.add(ps);
-        block.dataset.index = i;
-        block.classList.add('generated');
-        i++;
-      }
-  
-      var adjacents = this.getAdjacents(point, visited);
-  
-      if (adjacents.length == 0) {
-        stack.pop();
-        return;
-      }
-  
-      var rand = parseInt(Math.random() * 1000);
-      var np = adjacents[rand % adjacents.length]
-      var ajdBlock = this.getBlock(np);
-      stack.push(np);
-  
-      // Remove the wall on the current block.
-      block.classList.add(np.side);
-      block.open[np.side] = true;
-  
-      // And the opposite side for the adjacent block's perspective.
-      ajdBlock.classList.add(np.oppositeSide);
-      ajdBlock.open[np.oppositeSide] = true;
-    }, 100);
-  }
-  
-  /** Solves the maze using the BFS algorithm including simple animation. */
-  Maze.prototype.solve = function() {
-    if (this.solving || this.reseting) {
-      return;
+  if(alternatives.length===0){
+    route.pop()
+    if(route.length>0){
+      Maze.moveTo(route[route.length-1][0]*(pathWidth+wall)+offset,
+                 route[route.length-1][1]*(pathWidth+wall)+offset)
+      timer = setTimeout(loop,delay)
     }
-  
-    this.solving = true;
-    var startPosition = this.position;
-    var visited = new Set();
-    var position = startPosition;
-    var queue = [position];
-    var self = this;
-  
-    // The familiar BFS loop.
-    return whileAsync(
-        () => queue.length > 0 && !position.equals(self.targetPosition), () => {
-      position = queue.shift();
-      var block = self.getBlock(position);
-  
-      visited.add(position.serialize());
-      block.classList.add('visited');
-  
-      for (var side in block.open) {
-        if (!block.open[side]) {
-          continue;
-        }
-  
-        var nextPosition =
-            position.offset(self.delta[self.sides.indexOf(side)]);
-  
-        if (!nextPosition.insideBounds(self.bounds) ||
-            visited.has(nextPosition.serialize())) {
-          continue;
-        }
-  
-        // Keep track so we can traverse back using the shortest path.
-        nextPosition.previous = position;
-        queue.push(nextPosition);
-      }
-    }).then(function() {
-      // Build up the shortest path.
-      var path = [];
-      while (!position.equals(startPosition)) {
-        path.push(position);
-        position = position.previous;
-      };
-  
-      // Animation for showing the shortest path.
-      var i = path.length;
-      whileAsync(() => i > 0, () => {
-        self.getBlock(path[--i]).classList.add('path');
-      }, 1, 5);
-  
-      // Animation for moving the player block to the target.
-      return whileAsync(() => path.length > 0, () => {
-        self.setPlayerPosition(path.pop());
-      }, 1, 100);
-    }).then(function() {
-      self.solving = false;
-    });
+    return;
   }
-  
+  direction = alternatives[random()*alternatives.length|0]
+  route.push([direction[0]+x,direction[1]+y])
+  Maze.lineTo((direction[0]+x)*(pathWidth+wall)+offset,
+             (direction[1]+y)*(pathWidth+wall)+offset)
+  map[(direction[1]+y)*2][(direction[0]+x)*2] = true
+  map[direction[1]+y*2][direction[0]+x*2] = true
+  Maze.stroke()
+  timer = setTimeout(loop,delay)
+}
+
+loop()
+setInterval(settings.check,400)
 //Eind Maze
