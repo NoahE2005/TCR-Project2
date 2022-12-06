@@ -1,6 +1,7 @@
 /*voor alles in main*/
 main {
     font-family: "Montserrat", sans-serif;
+    height: auto;
 }
 
 /*li is voor lists*/
@@ -8,7 +9,13 @@ li {
     margin-left: 8vw;
 }
 
-/**/
+/*om links wit te maken*/
+a {
+    color: white;
+    text-decoration: none;
+}
+
+/*voor als je over de navbar knop hovered*/
 .TextColorgradientButton:hover {
     color: rgb(146, 219, 244);
     cursor: pointer;
@@ -16,25 +23,25 @@ li {
     animation: BackgroundFill 1s ease;
 }
 
-/**/
+/*kleur van text*/
 .TextColorgradient {
     color: white;
 }
 
-/**/
+/*in general voor alles in body behalve header en navbar*/
 .MainText {
     padding: 1vw;
     margin-top: 2vh;
-    margin-left: 2vw;
-    margin-top: 2vh;
-    margin-right: 2vw;
+    margin-left: 6vw;
+    margin-right: 6vw;
     border-style: solid;
     border-radius: 1vh;
     border-width: 0.3vw;
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    background-color: black;
 }
 
-/**/
+/*voor text*/
 .Text {
     background: rgb(146, 219, 244);
     -webkit-background-clip: text;
@@ -43,20 +50,20 @@ li {
     animation: ColorMove 4s ease infinite;
 }
 
-/**/
+/*meer voor text*/
 h1 {
     font-size: 3rem;
     font-weight: bold;
 }
 
-/**/
+/*voor reflexie*/
 .waviy {
     position: relative;
-    -webkit-box-reflect: below -30px linear-gradient(transparent, rgba(0, 0, 0, .2));
+    -webkit-box-reflect: below -27px linear-gradient(transparent, rgba(0, 0, 0, 0.4));
     font-size: 60px;
 }
 
-/**/
+/*meer voor reflexie*/
 .waviy span {
     font-family: "Montserrat", sans-serif;
     position: relative;
@@ -67,6 +74,7 @@ h1 {
     animation-delay: calc(.1s * var(--i));
 }
 
+/*voor het spel*/
 #game {
     z-index: 2;
     margin-left: 15vw;
@@ -79,6 +87,7 @@ h1 {
     background-size: cover;
 }
 
+/*voor text in het spel*/
 .gametext {
     font-size: 20px;
     text-align: center;
