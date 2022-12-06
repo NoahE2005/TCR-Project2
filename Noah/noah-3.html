@@ -51,9 +51,23 @@
             </div>
       </nav>
 <canvas id="Canvas" width="1080px" height="1920px"></canvas>
+<div id="maze_container"><!-- --></div>
 
 <script src="App.js"></script>
-d
+<script>
+    window.onload = function() {
+      window.maze = new Maze({
+        gridElement: document.getElementById('grid'),
+        gridSize: new Point(20, 10),
+        blockSize: 25,
+        onSolved: function() {
+          setTimeout(function() { alert('A maze ing!'); }, 200);
+        }
+      });
+      maze.reset();
+    }
+  </script>
+
 <style>
     :root {
   --cursorXpos:50vw;
