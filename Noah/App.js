@@ -25,6 +25,7 @@ let vy = 0; // de Y "velocity" van speler
 
 var player = Character.fillRect(0,0, 0, 0);
 var walls = ctx.fillRect(200,200, 200, 200);
+var CoinsRef = coins.fillRect(0,0, 0, 0);
 var CoinCount = 0;
 var coinlocationsX = [];
 var coinlocationsY = [];
@@ -36,9 +37,10 @@ function UpdateScreen() {
     x += vxl;
     x += vxr;
     y += vy;
+    ctx.beginPath();
     player = Character.fillRect(x,y, 50, 50)
-    player = Character.fillStyle = "white";
-    ctx.fillStyle = "black"
+    player = Character.fillStyle = "black";
+    ctx.beginPath();
     Walls()
     Coins()
     requestAnimationFrame(UpdateScreen)
@@ -47,7 +49,9 @@ UpdateScreen()
 
 function Walls() {
     walls = ctx.fillRect(200,200, 200, 200)
-    ctx.fillStyle = "#" + PlayerColor;
+    ctx.beginPath();
+    ctx.fillStyle = "white";
+    ctx.closePath();
 }
 
 function CoinsBegin() {
@@ -59,7 +63,10 @@ function CoinsBegin() {
 
 function Coins() {
     for (let i = 0; i < MaxCoints; i++) {
-        ctx.fillRect(500,500, 30, 30, "yellow")
+      coins.beginPath();
+        coins.fillRect(500,500, 30, 30)
+        coins.fillStyle = "white"; //fix
+        coins.closePath();
     }
 }
 
