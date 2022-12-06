@@ -2,6 +2,7 @@
 main {
     font-family: "Montserrat", sans-serif;
     height: auto;
+    z-index: 2;
 }
 
 /*li is voor lists*/
@@ -37,7 +38,7 @@ a {
     border-radius: 1vh;
     border-width: 0.3vw;
     border-color: rgba(255, 255, 255, 0.3);
-    background-color: black;
+    background: black;
 }
 
 /*voor text*/
