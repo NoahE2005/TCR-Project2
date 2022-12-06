@@ -38,7 +38,7 @@ function UpdateScreen() {
     y += vy;
     player = Character.fillRect(x,y, 50, 50)
     player = Character.fillStyle = "white";
-    ctx.fillStyle = "red"
+    ctx.fillStyle = "black"
     Walls()
     Coins()
     requestAnimationFrame(UpdateScreen)
