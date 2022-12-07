@@ -79,7 +79,8 @@ function slideshow() {
 setTimeout(slideshow, 1000);
 var imageSlideshowInterval = setInterval(slideshow, 10000);
 
-function OpenUrl() {
-  alert ("OpenUrl")
-  window.open("Noah/noah-3.html")
+function OpenUrl(Link) {
+  alert (currentImage)
+  alert (currentImage)
+  window.open(Link)
 }

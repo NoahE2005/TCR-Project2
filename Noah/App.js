@@ -1,6 +1,10 @@
 //https://www.google.nl/search?q=javascript+game+maze+generator&sxsrf=ALiCzsZGoyiaBb3uqTkY0tindzcRN_JrqA%3A1670324189364&ei=3R-PY73PFeyP9u8P3-upyAQ&oq=Javascript+game+maze+ge&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQARgAMgUIIRCgATIFCCEQoAEyBQghEKABMggIIRAWEB4QHTIICCEQFhAeEB0yCAghEBYQHhAdMggIIRAWEB4QHTIICCEQFhAeEB0yCgghEBYQHhAPEB0yCgghEBYQHhAPEB06CggAEEcQ1gQQsAM6BggAEBYQHkoECEEYAEoECEYYAFCiAljKBWDaEGgBcAF4AIABlgGIAbUCkgEDMi4xmAEAoAEByAEIwAEB&sclient=gws-wiz-serp
 //https://www.google.nl/search?q=javascript+game+collision+detection&sxsrf=ALiCzsZ9NYk6xQLOpbhnkXqobwPWaY256A%3A1670324152098&source=hp&ei=uB-PY_SqA4LtsAectYzgBQ&iflsig=AJiK0e8AAAAAY48tyEwHazw1f87AaKQuVwq9C93CI_N3&oq=Javasc&gs_lcp=Cgdnd3Mtd2l6EAEYADIECCMQJzIECCMQJzIECCMQJzIECAAQQzIECAAQQzIKCAAQsQMQgwEQQzIECAAQQzIECAAQQzIKCAAQsQMQgwEQQzIKCAAQsQMQgwEQQzoECAAQAzoICAAQsQMQgwE6CwgAEIAEELEDEIMBUABY9AdgjRNoAHAAeACAAWSIAfIDkgEDNS4xmAEAoAEB&sclient=gws-wiz
 
+//https://www.youtube.com/watch?v=_MyPLZSGS3s&ab_channel=ChrisCourses
+//https://www.youtube.com/watch?v=-UJpgZucQGs&ab_channel=SemicolonDotDev
+
+//https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 
 const  Canvas = document.getElementById("Canvas")
 const ctx = Canvas.getContext("2d")
@@ -9,7 +13,11 @@ const coins = Canvas.getContext("2d")
 
 const PlayerWalkSpeed = 3; //De speler snelheid
 const PlayerColor = 000000;
+const PlayerScaleXY = 20;
 const MaxCoints = 8;
+
+var Breed = 0;
+var Hoog = 0;
 
 let x = 0; //X locatie van speler
 let y = 0; //Y locatie van speler
@@ -26,23 +34,25 @@ var coinlocationsY = [];
 
 CoinsBegin()
 function UpdateScreen() {
+  var Breed = Canvas.offsetWidth - PlayerScaleXY;
+  var Hoog = Canvas.offsetWidth - PlayerScaleXY;
   ctx.clearRect(0,0, Canvas.width, Canvas.height)
   Character.clearRect(0,0, Canvas.width, Canvas.height)
     x += vxl;
     x += vxr;
     y += vy;
     ctx.beginPath();
-    player = Character.fillRect(x,y, 50, 50)
-    player = Character.fillStyle = "black";
+    player = Character.fillRect(x,y, PlayerScaleXY, PlayerScaleXY)
+    Character.fillStyle = "black";
     ctx.beginPath();
-    Walls()
+    ColorPLayer()
     Coins()
     requestAnimationFrame(UpdateScreen)
 }
 setTimeout(UpdateScreen, 1000)
+setTimeout(EindLoad, 15000)
 
-function Walls() {
-    walls = ctx.fillRect(200,200, 200, 200)
+function ColorPLayer() {
     ctx.beginPath();
     ctx.fillStyle = "white";
     ctx.closePath();
@@ -109,11 +119,11 @@ TrackPlayer()
 //Eind Lighting
 
 //Begin Maze
-pathWidth = 20       //Width of the Maze Path
-wall = 10          //Width of the Walls between Paths
-outerWall = 2        //Width of the Outer most wall
-width = 25           //Number paths fitted horisontally
-height = 25          //Number paths fitted vertically
+pathWidth = 90      //Width of the Maze Path
+wall = 40          //Width of the Walls between Paths
+outerWall = 50        //Width of the Outer most wall
+width = 15          //Number paths fitted horisontally
+height = 15          //Number paths fitted vertically
 delay = 0           //Delay between algorithm cycles
 x = width/2|0        //Horisontal starting position
 y = height/2|0       //Vertical starting position
@@ -221,3 +231,30 @@ loop = function(){
 loop()
 setInterval(settings.check,400)
 //Eind Maze
+
+//Begin Modal
+
+//Begin Loading
+function EindLoad() {
+var modal = document.getElementById("modal");
+modal.classList.remove("activemodal");
+document.getElementById("Canvas").style.animation = "CanvasZoom 2s forward";
+document.getElementById("Canvas2").style.animation = "CanvasZoom 2s forward";
+document.documentElement.style.setProperty('--Radius', 20 + "rem")
+}
+document.documentElement.style.setProperty('--Radius', 3000 + "rem")
+
+function LoadingText1() {
+  document.getElementById("LoadingText").innerHTML = "Loading.";
+  setTimeout(LoadingText2, 1500);
+}
+function LoadingText2() {
+  document.getElementById("LoadingText").innerHTML = "Loading..";
+  setTimeout(LoadingText3, 1000);
+}
+function LoadingText3() {
+  document.getElementById("LoadingText").innerHTML = "Loading...";
+  setTimeout(LoadingText1, 1000);
+}
+LoadingText1()
+//Eind Loading
