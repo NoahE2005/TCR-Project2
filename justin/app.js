@@ -76,11 +76,20 @@ function Shoot () {
 // Spawn Enemy
 function SpawnEnemy() {
   let enemy = new Circle(canvas.width, randomIntFromRange(40, canvas.height - 20), 10, 'red');
-  let level = randomIntFromRange(1, 2);
-  enemy.speed = randomIntFromRange(2, 3);
-  enemy.health = level;
+  let level = randomIntFromRange(1, 4);
+  enemy.speed = 2;
+  enemy.health = Math.ceil(level / 2);
   if (level == 2) {
     enemy.color = 'blue';
+    enemy.speed = 2,5;
+  }
+  else if (level == 3){
+    enemy.color = 'green';
+    enemy.speed = 3;
+  }
+  else if(level == 4){
+    enemy.color = 'yellow';
+    enemy.speed = 3,5;
   }
 
   enemies.push(enemy);
