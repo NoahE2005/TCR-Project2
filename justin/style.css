@@ -86,10 +86,3 @@ h1 {
     background-repeat: no-repeat;
     background-size: cover;
 }
-
-/*voor text in het spel*/
-.gametext {
-    font-size: 20px;
-    text-align: center;
-    font-weight: bolder;
-}
