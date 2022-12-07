@@ -52,9 +52,10 @@
             </div>
       </nav>
       <div class="GameScreen">
+        <section class="modal activemodal" id="modal"><h1 id="LoadingText">loading...</h1></section>
 
-<canvas id="Canvas" width="1080px" height="1920px"></canvas>
-<canvas id="Canvas2" width="1080px" height="1920px" class="maze"></canvas>
+<canvas id="Canvas" width="1450px" height="1920px"></canvas>
+<canvas id="Canvas2" width="1080px" height="1820px" class="maze"></canvas>
 
 </div>
 
@@ -62,6 +63,10 @@
 
 
 <style>
+    html {
+        height: 98vh;
+        width: 98vh;
+    }
     :root {
   --cursorXpos:50vw;
   --cursorYpos:50vh;
@@ -73,7 +78,7 @@
   height: 100%;
   position: fixed;
   background: radial-gradient(
-    circle 30rem at var(--cursorXpos) var(--cursorYpos), 
+    circle var(--Radius) at var(--cursorXpos) var(--cursorYpos), 
     rgba(0,0,0,0) 0%, rgba(0,0,0,0.95) 100%
   );
   z-index: 2;
