@@ -159,7 +159,7 @@ function Update () {
         if (enemy.health <= 0){
           enemies.splice(i, 1);
         }
-        points += 1;
+        points += 10;
       }
     }
 
