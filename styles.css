@@ -66,12 +66,17 @@ h1 {
 
 
 /* begin navigatiebar*/
+.nav {
+  z-index: 1;
+}
+
 /* Add a black background color to the top navigation */
 .topnav {
     background-color: black;
     overflow: hidden;
     width: 1vw;
     height: auto;
+    z-index: 1;
 }
 
 /* Style the links inside the navigation bar */
@@ -86,6 +91,7 @@ h1 {
     text-decoration: none;
     font-size: 1.4vw;
     transition: 0.5s;
+    z-index: 1;
 }
 
 /* Change the color of links on hover */
@@ -95,6 +101,7 @@ h1 {
     transition: 0.5s;
     padding-left: 1.8vw;
     padding-right: 1.8vw;
+    z-index: 1;
 }
 
 /* Add a color to the active/current link */
@@ -104,11 +111,13 @@ h1 {
 	animation: gradient 15s ease infinite;
     color: white;
     padding: 0.75vw 1.75vw;
+    z-index: 1;
 }
 
 /*de breete van de navbar*/
 .topnav {
     width: 100%;
+    z-index: 1;
 }
 
 
@@ -116,6 +125,7 @@ h1 {
   overflow: hidden;
   background-color: #333; 
   padding-bottom: 0;
+  z-index: 1;
 }
 
 .navbar a {
@@ -125,11 +135,13 @@ h1 {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  z-index: 1;
 }
 
 .subnav {
   float: left;
   overflow: hidden;
+  z-index: 1;
 }
 
 .subnav .subnavbtn {
@@ -141,10 +153,12 @@ h1 {
   background-color: inherit;
   font-family: inherit;
   margin: 0;
+  z-index: 1;
 }
 
 .navbar a:hover, .subnav:hover .subnavbtn {
   background-color: rgb(16, 16, 16);
+  z-index: 1;
 }
 
 .subnav-content {
@@ -156,21 +170,25 @@ h1 {
   z-index: 90;
   margin-top: 3.2em;
   border-bottom-color: white;
+  z-index: 1;
 }
 
 .subnav-content a {
   float: left;
   color: white;
   text-decoration: none;
+  z-index: 1;
 }
 
 .subnav-content a:hover {
   background-color: #eee;
   color: black;
+  z-index: 1;
 }
 
 .subnav:hover .subnav-content {
   display: block;
+  z-index: 1;
 }
 
 /* einde navigatiebar */
