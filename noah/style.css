@@ -163,11 +163,34 @@ h1 {
   border-radius: 50%;
   text-align: center;
   margin-top: 2em;
-  margin-left: 17em;
-  margin-right: 17em;
+  margin-left: 18em;
+  margin-right: 18em;
   padding-top: 7em;
   padding-bottom: 7em;
-  box-shadow: 0px 0px 40px 30px #0ff;
+  animation: box-shadow-color 10s infinite linear;
+}
+
+@keyframes box-shadow-color {
+  0% {
+    box-shadow: 0px 0px 40px 30px #0ff;
+    border-color: #0ff;
+  }
+  25% {
+    box-shadow: 0px 0px 40px 30px rgb(69, 249, 108);
+    border-color: rgb(69, 249, 108);
+  }
+  50% {
+    box-shadow: 0px 0px 40px 30px rgb(176, 210, 54);
+    border-color: rgb(176, 210, 54);
+  }
+  75% {
+    box-shadow: 0px 0px 40px 30px rgb(93, 36, 191);
+    border-color: rgb(93, 36, 191);
+  }
+  100% {
+    box-shadow: 0px 0px 40px 30px rgb(48, 200, 200);
+    border-color: rgb(48, 200, 200);
+  }
 }
 
 .PortfolioBubble span {
