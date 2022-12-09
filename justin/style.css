@@ -37,8 +37,12 @@ a {
     border-style: solid;
     border-radius: 1vh;
     border-width: 0.3vw;
+    box-shadow: 1vh 1vh 40px 30px yellow,
+                1vh 1vh 40px 20px orange,
+                1vh 1vh 40px 10px red;
     border-color: rgba(255, 255, 255, 0.3);
     background: black;
+    z-index: 0;
 }
 
 /*voor text*/
