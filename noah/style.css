@@ -168,6 +168,7 @@ h1 {
   margin-right: 18vw;
   padding-top: 9vw;
   padding-bottom: 9vw;
+  animation: box-shadow-color 10s infinite linear;
 }
 
 
