@@ -156,6 +156,24 @@ h1 {
   float: right;
 }
 
+.PortfolioBubble {
+  border-color: #0ff;
+  border-style: solid;
+  border-width: 2em;
+  border-radius: 50%;
+  text-align: center;
+  margin-top: 2em;
+  margin-left: 17em;
+  margin-right: 17em;
+  padding-top: 7em;
+  padding-bottom: 7em;
+  box-shadow: 0px 0px 40px 20px #0ff;
+}
+
+.PortfolioBubble span {
+  font-size: 50px;
+}
+
 /*Keyframes*/
 @keyframes waviy {
     0%,40%,100% {
