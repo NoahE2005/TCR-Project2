@@ -6,3 +6,8 @@ var text = "text";
 function Text(text) {
     document.getElementById("BeginText").style.animation = "Begintext 5s 5s forward"
 }
+
+function EindText() {
+    document.getElementsByClassName("PortfolioBubble").style.animation = "box-shadow-color 10s infinite linear";
+}
+EindText()
