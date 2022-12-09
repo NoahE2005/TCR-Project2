@@ -6,6 +6,9 @@
 
 //https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 
+
+//https://codersblock.com/blog/creating-glow-effects-with-css/
+
 const  Canvas = document.getElementById("Canvas")
 const ctx = Canvas.getContext("2d")
 const Character = Canvas.getContext("2d")
