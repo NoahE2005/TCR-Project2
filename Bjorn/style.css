@@ -1,0 +1,122 @@
+.waviy {
+    position: relative;
+    -webkit-box-reflect: below -37px linear-gradient(transparent, rgba(0,0,0,.2));
+    font-size: 60px;
+  }
+  .waviy span {
+    font-family: "Montserrat", sans-serif;
+    position: relative;
+    display: inline-block;
+    color: #fff;
+    text-transform: uppercase;
+    animation: waviy 1.3s infinite;
+    animation-delay: calc(.1s * var(--i));    
+  }
+
+  @keyframes waviy {
+    0%,40%,100% {
+      transform: translateY(0)
+    }
+    20% {
+      transform: translateY(-20px)
+    }
+  }
+
+  .BGGradient {
+    background: linear-gradient(to right, #02a2f2, #23a6d5, #03fdc2);
+    padding: 0 40px;
+    animation: GradientMove 1.3s infinite;
+  }
+  
+  .TextGradient {
+    background: linear-gradient(to right, #009dff, #0aa4ce, #30d7fc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: ColorMove 4s ease infinite;
+    animation-delay: calc(.1s * var(--i));    
+  }
+
+  .MainText {
+    padding: 1vw;
+    margin-top: 2vh;
+    margin-left: 4vw;
+    margin-top: 2vh;
+    margin-right: 4vw;
+    border-style: solid;
+    border-bottom-style: none;
+    border-top-style: none;
+    border-radius: 1vh;
+    border-width: 0.3vw;
+    border-color: rgba(255,255,255,0.1);
+    margin-bottom: 2em;
+}
+
+.textcolorgradient{
+    margin-top: 2vh;
+    margin-left: 4vw;
+    margin-top: 2vh;
+    margin-right: 4vw;
+   color: antiquewhite;
+  font-size: larger;
+}
+
+html, body {
+  height: 10%;
+}
+
+.wrap {
+  height: 10%;
+  width: 250px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.button {
+  min-width: 150px;
+  min-height: 30px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+  color: #313133;
+  background: #4FD1C5;
+background: linear-gradient(90deg, rgba(129,230,217,1) 0%, rgba(79,209,197,1) 100%);
+  border: none;
+  border-radius: 1000px;
+  box-shadow: 12px 12px 24px rgba(79,209,197,.64);
+  transition: all 0.3s ease-in-out 0s;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  padding: 10px;
+  }
+
+button::before {
+content: '';
+  border-radius: 1000px;
+  min-width: calc(300px + 12px);
+  min-height: calc(60px + 12px);
+  border: 6px solid #00FFCB;
+  box-shadow: 0 0 60px rgba(0,255,203,.64);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all .3s ease-in-out 0s;
+}
+
+.button:hover, .button:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+
+
+
+
+
+
