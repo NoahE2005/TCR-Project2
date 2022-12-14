@@ -68,6 +68,8 @@ h1 {
 /* begin navigatiebar*/
 .nav {
   z-index: 1;
+  position: sticky;
+  width: auto;
 }
 
 /* Add a black background color to the top navigation */

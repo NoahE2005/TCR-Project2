@@ -176,10 +176,10 @@
                     bullet.y += bullet.dy;<br>
                     <br>
                     if (<br>
-                      bullet.x < 0 ||<br>
-                      bullet.x > canvas.width ||<br>
-                      bullet.y < 0 ||<br>
-                      bullet.y > canvas.height<br>
+                      bullet.x < 0   <p1>//bepaalt waneer het de bullets moet verwijderen</p1><br>
+                      bullet.x > canvas.width   <p1>//bepaalt waneer het de bullets moet verwijderen</p1><br>
+                      bullet.y < 0   <p1>//bepaalt waneer het de bullets moet verwijderen</p1><br>
+                      bullet.y > canvas.height    <p1>//bepaalt waneer het de bullets moet verwijderen</p1><br>
                     ) {<br>
                       bullets.splice(i, 1);   <p1>//verwijderd de bullets</p1><br>
                       console.log(bullets);<br>
