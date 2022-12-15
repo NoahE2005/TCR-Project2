@@ -68,6 +68,8 @@ h1 {
 /* begin navigatiebar*/
 .nav {
   z-index: 1;
+  position: sticky;
+  width: auto;
 }
 
 /* Add a black background color to the top navigation */
@@ -206,17 +208,17 @@ h1 {
 }
 
 .Background {
-  background-color: white;
+  background-color: rgb(40, 40, 40);
 }
 
 /*Begin Homepagina*/
 .slideshowContainer {
   position: relative;
   overflow: hidden;
-  margin: 50px 0 75px;
-  height: 500px;
-  margin-left: 10em;
-  margin-right: 10em;
+  margin: 50px 0 50px;
+  height: 80vh;
+  margin-left: 5em;
+  margin-right: 5em;
   z-index: 2;
 }
 
@@ -233,6 +235,8 @@ h1 {
   transform: translate(-50%, -50%);
   min-width: 100%;
   min-height: 100%;
+  width: 50vw;
+  height: 50vh;
   opacity: 0;
   transition: opacity 1s ease-in-out;
   z-index: -1;

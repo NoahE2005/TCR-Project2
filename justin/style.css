@@ -5,6 +5,11 @@ main {
     z-index: 2;
 }
 
+/*voor de game code*/
+p1 {
+    color: rgb(0, 200, 0);
+}
+
 /*li is voor lists*/
 li {
     margin-left: 8vw;
@@ -37,9 +42,7 @@ a {
     border-style: solid;
     border-radius: 1vh;
     border-width: 0.3vw;
-    box-shadow: 1vh 1vh 40px 30px yellow,
-                1vh 1vh 40px 20px orange,
-                1vh 1vh 40px 10px red;
+    box-shadow: 5px 5px 30px 30px red;
     border-color: rgba(255, 255, 255, 0.3);
     background: black;
     z-index: 0;
@@ -77,7 +80,7 @@ h1 {
 }
 
 /*voor het spel*/
-#game {
+canvas {
     z-index: 2;
     margin-left: 15vw;
     margin-right: 15vw;
@@ -87,6 +90,9 @@ h1 {
     background-image: url("../assets/for_games/justin/castledef.png");
     background-repeat: no-repeat;
     background-size: cover;
+    border-width: 3px;
+    border-radius: 1vh;
+    box-shadow: 0px 0px 20px black;
 }
 
 .gametext {

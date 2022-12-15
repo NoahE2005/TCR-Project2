@@ -56,11 +56,206 @@
             </div>
     </nav>
 
+    <br>
+
     <main>
         <div class="MainText">
+            <p>const canvas = document.getElementById('game');<br>
+                const ctx = canvas.getContext('2d');<br>
+                <br>
+                let points = 0;   <p1>//begin punten</p1><br>
+                let enemies = [];<br>
+                let bullets = [];<br>
+                <br>
+                let mouse = {   <p1>//begin locatie van de muis</p1><br>
+                  x: canvas.width / 2,<br>
+                  y: canvas.height / 2<br>
+                }<br>
+                <br>
+                addEventListener('mousemove', (event) => {    <p1>//ziet de locatie van de muis</p1><br>
+                  mouse.x = event.pageX,<br>
+                  mouse.y = event.pageY<br>
+                });<br>
+                <br>
+                addEventListener('click', Shoot);   <p1>//conect de keys aan acties</p1><br>
+                addEventListener('keypress', (event) => {   <p1>//conect de keys aan acties</p1><br>
+                  if (event.code == "Space") {<br>
+                    Shoot();<br>
+                  }<br>
+                });<br>
+                <br>
+                addEventListener('keydown', (event) => {    <p1>//conect de keys aan acties</p1><br>
+                  if (event.code == "KeyW") {<br>
+                    MovePlayer(1);<br>
+                  }<br>
+                  if (event.code == "KeyS") {<br>
+                    MovePlayer(2);<br>
+                  } <br>
+                });<br>
+                <br>
+                class Circle {    <p1>//voor later als er een cirkel nodig is</p1><br>
+                  constructor(x, y, r, c) {<br>
+                    this.x = x;<br>
+                    this.y = y;<br>
+                    this.radius = r;<br>
+                    this.color = c;<br>
+                  }<br>
+                  <br>
+                  draw () {   <p1>//tekent een cirkel</p1><br>
+                    ctx.beginPath();<br>
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);<br>
+                    ctx.fillStyle = this.color;<br>
+                    ctx.fill();<br>
+                    ctx.closePath();<br>
+                  }<br>
+                  <br>
+                  update () {<br>
+                    this.draw();<br>
+                  }<br>
+                }<br>
+                <br>
+                function randomIntFromRange(min, max) {   <p1>//voor latere randomizers</p1><br>
+                  return Math.floor(Math.random() * (max-min+1) + min);<br>
+                }<br>
+                <br>
+                function Shoot () {<br>
+                  let bullet = new Circle(player.x, player.y, 8, 'white');<br> <p1>// says the x and y spawn value and the size than the color</p1><br>
+                  <br>
+                  let vx = mouse.x - bullet.x;    <p1>//<-- zegt hoe snel en waar de bullet naar toe moet bewegen</p1><br>
+                  let vy = mouse.y - bullet.y;<br>
+                  let speed = 6;<br>
+                  <br>
+                  let dist = Math.sqrt(vx * vx + vy + vy);<br>
+                  bullet.dx = vx / dist;<br>
+                  bullet.dy = vy / dist;<br>
+                  <br>
+                  bullet.dx *= speed;<br>
+                  bullet.dy *= speed;   //--><br>
+                  <br>
+                  bullets.push(bullet);   <p1>//beweegt de bullet</p1><br>
+                }<br>
+                <br>
+                // Spawn Enemy<br>
+                function SpawnEnemy() {<br>
+                  let enemy = new Circle(canvas.width, randomIntFromRange(40, canvas.height - 10), 10, 'red');    <p1>//level 1 vijand</p1><br>
+                  let level = randomIntFromRange(1, 4);   <p1>//bepaalt de level van vijanden</p1><br>
+                  enemy.speed = 2;    <p1>//vijand snelheid</p1><br>
+                  enemy.health = Math.ceil(level / 2);    <p1>//bepaalt health</p1><br>
+                  if (level == 2) {   <p1>//level 2 vijand</p1><br>
+                    enemy.color = 'blue';   <p1>//vijand kleur</p1><br>
+                    enemy.speed = 2,5;    <p1>//vijand snelheid</p1><br>
+                  }<br>
+                  else if (level == 3){   <p1>//level 3 vijand</p1><br>
+                    enemy.color = 'green';    <p1>//vijand kleur</p1><br>
+                    enemy.speed = 3;    <p1>//vijand snelheid</p1><br>
+                  }<br>
+                  else if(level == 4){    <p1>//level 4 vijand</p1><br>
+                    enemy.color = 'yellow';   <p1>//vijand kleur</p1><br>
+                    enemy.speed = 3,5;    <p1>//vijand snelheid</p1><br>
+                  }<br>
+                  <br>
+                  enemies.push(enemy);    <p1>//beweeg vijand</p1><br>
+                }<br>
+                <br>
+                let player;<br>
+                function Start () {   <p1>//start het spel</p1><br>
+                  player = new Circle(0, canvas.height/2, 20, 'orange');    <p1>//maakt de speler</p1><br>
+                }<br>
+                <br>
+                <br>
+                let originalTimer = 120;    <p1>//timer voor de vijanden</p1><br>
+                let spawnTimer = originalTimer;<br>
+                function Update () {<br>
+                  requestAnimationFrame(Update);<br>
+                  ctx.clearRect(0, 0, canvas.width, canvas.height);<br>
+                  <br>
+                  for (let i = 0; i < bullets.length; i++) {<br>
+                    let bullet = bullets[i];<br>
+                    <br>
+                    bullet.x += bullet.dx;<br>
+                    bullet.y += bullet.dy;<br>
+                    <br>
+                    if (<br>
+                      bullet.x < 0   <p1>//bepaalt waneer het de bullets moet verwijderen</p1><br>
+                      bullet.x > canvas.width   <p1>//bepaalt waneer het de bullets moet verwijderen</p1><br>
+                      bullet.y < 0   <p1>//bepaalt waneer het de bullets moet verwijderen</p1><br>
+                      bullet.y > canvas.height    <p1>//bepaalt waneer het de bullets moet verwijderen</p1><br>
+                    ) {<br>
+                      bullets.splice(i, 1);   <p1>//verwijderd de bullets</p1><br>
+                      console.log(bullets);<br>
+                    }<br>
+                    <br>
+                    bullet.update();    <p1>//update de bullets</p1><br>
+                  }<br>
+                  <br>
+                  // Enemies<br>
+                  spawnTimer--;<br>
+                  if (spawnTimer <= 0) {<br>
+                    originalTimer = (originalTimer * 0.98 > 60) ? originalTimer * 0.98 : 60;<br>
+                    spawnTimer = originalTimer;<br>
+                    SpawnEnemy();   <p1>//zecht dat de vijanden moeten spawnen</p1><br>
+                  }<br>
+                  for (let i = 0; i < enemies.length; i++) {<br>
+                    let enemy = enemies[i];<br>
+                    <br>
+                    enemy.x -= enemy.speed;   <p1>//beweegt de vijand</p1><br>
+                    <br>
+                    if (enemy.x < 45) {   <p1>// bepaald waar de vijanden verdwijnen</p1><br>
+                      enemies.splice(i, 1);   <p1>//verwijderd de vijand</p1><br>
+                      points = 0;<br>
+                      originalTimer = 150;<br>
+                      Start();<br>
+                    }<br>
+                    <br>
+                    for (let j = 0; j < bullets.length; j++) {<br>
+                      let bullet = bullets[j];<br>
+                      <br>
+                      let ax = bullet.x - enemy.x;<br>
+                      let ay = bullet.y - enemy.y;<br>
+                      let distance = Math.sqrt(ax * ax + ay * ay);<br>
+                      <br>
+                      if (distance < bullet.radius + enemy.radius) {<br>
+                        enemy.health--;   <p1>//damaged de vijand</p1><br>
+                        bullets.splice(j, 1);   <p1>//verwijderd de bullet</p1><br>
+                        if (enemy.health <= 0){<br>
+                          enemies.splice(i, 1);   <p1>//verwijderd de vijand</p1><br>
+                        }<br>
+                        points += 1;    <p1>//geeft punten</p1><br>
+                      }<br>
+                    }<br>
+                    <br>
+                    enemy.update();   <p1>//update de vijand</p1><br>
+                  }<br>
+                  <br>
+                  player.update();  <p1>//update de speler</p1><br>
+                  <br>
+                  ctx.fillStyle = "#FFFFFF";    <p1>//text kleur</p1><br>
+                  ctx.font = "20px sans-serif";   <p1>//text font</p1><br>
+                  ctx.textAlign = "center";   <p1>//waar de text staat</p1><br>
+                  ctx.fillText("Points: " + points, canvas.width/2, 22);    //de text</p1><br>
+                }<br>
+                <br>
+                function MovePlayer(direction) {<br>
+                  switch (direction) {<br>
+                    case 1:<br>
+                        player.y -= 10;   <p1>//beweegt de speler naar boven</p1><br>
+                      break;<br>
+                    case 2:<br>
+                      player.y += 10;   <p1>//beweegt de speler naar beneden</p1><br>
+                      break;<br>
+                    default:<br>
+                      break;<br>
+                  }<br>
+                }<br>
+                <br>
+                addEventListener('keypress', (event) => {<br>
+                  if (event.code == "Enter") {    <p1>//als enter is ingedrukt begin het spel</p1><br>
+                    Start();<br>
+                    Update();<br>
+                  }<br>
+                })<br>
+              </p>
         </div>
-
-
 
 </body>
 </html>
