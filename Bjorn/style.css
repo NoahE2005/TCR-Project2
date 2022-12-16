@@ -114,6 +114,13 @@ content: '';
   transform: translateY(-6px);
 }
 
+.images {
+  float: right;
+  width: 25vw;
+  height: auto;
+  margin-right: 5vw;
+}
+
 
 
 
