@@ -1,0 +1,105 @@
+.waviy {
+    position: relative;
+    -webkit-box-reflect: below -37px linear-gradient(transparent, rgba(0,0,0,.2));
+    font-size: 60px;
+  }
+  .waviy span {
+    font-family: "Montserrat", sans-serif;
+    position: relative;
+    display: inline-block;
+    color: #fff;
+    text-transform: uppercase;
+    animation: waviy 1.3s infinite;
+    animation-delay: calc(.1s * var(--i));    
+  }
+
+  @keyframes waviy {
+    0%,40%,100% {
+      transform: translateY(0)
+    }
+    20% {
+      transform: translateY(-20px)
+    }
+  }
+
+  .BGGradient {
+    background: linear-gradient(to right, #02f2aa, #5bd523, #c7fd03);
+    padding: 0 40px;
+    animation: GradientMove 1.3s infinite;
+  }
+  
+  .TextGradient {
+    background: linear-gradient(to right, #02f2aa, #5bd523, #c7fd03);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: ColorMove 4s ease infinite;
+    animation-delay: calc(.1s * var(--i));    
+  }
+
+  .MainText {
+    padding: 1vw;
+    margin-top: 2vh;
+    margin-left: 4vw;
+    margin-top: 2vh;
+    margin-right: 4vw;
+    border-style: solid;
+    border-bottom-style: none;
+    border-top-style: none;
+    border-radius: 1vh;
+    border-width: 0.3vw;
+    border-color: rgba(255,255,255,0.1);
+    margin-bottom: 2em;
+}
+
+.textcolorgradient{
+    margin-top: 2vh;
+    margin-left: 4vw;
+    margin-top: 2vh;
+    margin-right: 4vw;
+   color: antiquewhite;
+  font-size: larger;
+}
+
+html, body {
+  height: 10%;
+}
+
+.wrap {
+  height: 10%;
+  width: 250px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.button {
+  min-width: 150px;
+  min-height: 30px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+  color: #313133;
+  transition: all 0.3s ease-in-out 0s;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  padding: 10px;
+  }
+
+
+
+.button:hover, .button:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+.images {
+  float: right;
+  width: 25vw;
+  height: auto;
+  margin-right: 5vw;
+}
+
