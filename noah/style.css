@@ -381,6 +381,5 @@ canvas {
 
 /*portfolio*/
 .PortfolioBody {
-  background-color: linear-gradient(0.25turn, #00638d, #7bff16, #27ffc9);
-  background: linear-gradient(0.25turn, #00638d, #7bff16, #27ffc9);
+  background-image: url(../Assets/images/Noah/abstract-flat-green-and-blue-background-free-vector.jpg);
 }
