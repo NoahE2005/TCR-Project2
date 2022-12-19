@@ -70,6 +70,7 @@ nav {
   z-index: 10;
   position: sticky;
   top: 0;
+  bottom: 0;
 }
 
 /* Add a black background color to the top navigation */
@@ -114,6 +115,8 @@ nav {
     color: white;
     padding: 0.75vw 1.75vw;
     z-index: 1;
+  height: 4.2vh;
+  width: 8vw;
 }
 
 /*de breete van de navbar*/
@@ -209,6 +212,7 @@ nav {
 
 .Background {
   background-color: rgb(40, 40, 40);
+  margin-bottom: 0vh;
 }
 
 /*Begin Homepagina*/
@@ -298,10 +302,10 @@ nav {
 
 footer {
   background-color: rgb(22, 22, 22);
-  position: sticky;
+  position: fixed;
   bottom: 0;
   left: 0;
-  width: auto;
+  width: 100%;
   height: 5vh;
   z-index: 5;
   text-align: center;
