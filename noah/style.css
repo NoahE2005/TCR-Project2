@@ -96,6 +96,17 @@ h1 {
     padding-bottom: 2em;
   }
 
+  .PortfolieSection2 {
+    background-color: rgb(34, 34, 34);
+    padding-top: 5em; 
+    padding-bottom: 2em;
+  }
+
+  .PortfolioNaam {
+    margin-top: 7em;
+    margin-bottom: 10em;
+  }
+
   .TextColorgradientButton {
     color: white;
     border-width: 0.3vw;
@@ -369,3 +380,7 @@ canvas {
 }
 
 /*portfolio*/
+.PortfolioBody {
+  background-color: linear-gradient(0.25turn, #00638d, #7bff16, #27ffc9);
+  background: linear-gradient(0.25turn, #00638d, #7bff16, #27ffc9);
+}
