@@ -96,6 +96,17 @@ h1 {
     padding-bottom: 2em;
   }
 
+  .PortfolieSection2 {
+    background-color: rgb(34, 34, 34);
+    padding-top: 4em; 
+    padding-bottom: 2em;
+  }
+
+  .PortfolioNaam {
+    margin-top: 7em;
+    margin-bottom: 10em;
+  }
+
   .TextColorgradientButton {
     color: white;
     border-width: 0.3vw;
@@ -369,3 +380,6 @@ canvas {
 }
 
 /*portfolio*/
+.PortfolioBody {
+  background-image: url(../Assets/images/Noah/abstract-flat-green-and-blue-background-free-vector.jpg);
+}
