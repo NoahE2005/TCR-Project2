@@ -99,10 +99,9 @@ function SpawnEnemy() {
 }
 
 let player;
-function Start () {   //start het spel
+function Start() {   //start het spel
   player = new Circle(0, canvas.height/2, 20, 'orange');    //maakt de speler
 }
-
 
 let originalTimer = 120;    //timer voor de vijanden
 let spawnTimer = originalTimer;
