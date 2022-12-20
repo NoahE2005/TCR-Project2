@@ -382,4 +382,6 @@ canvas {
 /*portfolio*/
 .PortfolioBody {
   background-image: url(../Assets/images/Noah/abstract-flat-green-and-blue-background-free-vector.jpg);
+  padding: 0;
+  margin: 0;
 }
