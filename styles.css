@@ -1,7 +1,7 @@
 /**/
 body {
     padding: 0;
-    margin: 0;
+    margin-bottom: 15vh;
     background-color: rgb(40, 40, 40);
     color: white;
 }
@@ -12,6 +12,12 @@ header {
 	animation: gradient 15s ease infinite;
 	padding-top: 5vh;
     padding-bottom: 6vh;
+}
+
+button {
+  background: linear-gradient(-45deg, yellow, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
 }
 
 /**/
@@ -310,5 +316,17 @@ footer {
   height: 12vh;
   z-index: 5;
   text-align: center;
+}
+
+.column {
+  width: 50%;
+  float: left;
+  padding-top: 2vh;
+}
+
+@media screen and (max-width:600px) {
+  .column {
+    width: 100%;
+  }
 }
 /*Eind Homepagina*/
