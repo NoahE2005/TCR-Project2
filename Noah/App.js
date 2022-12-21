@@ -17,7 +17,7 @@ const coins = Canvas.getContext("2d")
 const PlayerWalkSpeed = 3; //De speler snelheid
 const PlayerColor = 000000;
 const PlayerScaleXY = 20;
-const MaxCoints = 8;
+const MaxCoins = 8;
 
 var Breed = 0;
 var Hoog = 0;
@@ -62,14 +62,14 @@ function ColorPLayer() {
 }
 
 function CoinsBegin() {
-    for (let i = 0; i < MaxCoints; i++) {
+    for (let i = 0; i < MaxCoins; i++) {
         coinlocationsX.push(Math.floor(Math.random() * 500))
         coinlocationsY.push(Math.floor(Math.random() * 500))
     }
 }
 
 function Coins() {
-    for (let i = 0; i < MaxCoints; i++) {
+    for (let i = 0; i < MaxCoins; i++) {
       coins.beginPath();
         coins.fillRect(500,500, 30, 30)
         coins.fillStyle = "white"; //fix
@@ -108,6 +108,28 @@ alert ("Test success")
     return !(ALeftB || ARightB || AaboveB || AbelowB)
 }
 
+function OuterWallCollision() { //Een Collision check voor de grootte van de canvas zelf
+  var breed = Canvas.offsetWidth - PlayerScaleXY; //breedte van canvas
+
+  var hoog = Canvas.offsetHeight - PlayerScaleXY; //hoogte van canvas
+
+  if(x <= 0){
+      x = 0;
+  }
+  if(y <= 0){
+      y = 0;
+  }
+  if(x >= breed)
+  {
+      x = breed;
+  }
+  if(y >= hoog)
+  {
+      y = hoog;
+  }
+  setTimeout(OuterWallCollision, 5)
+}
+OuterWallCollision()
 
 
 //Eind Input
