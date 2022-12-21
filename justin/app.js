@@ -57,8 +57,7 @@ function randomIntFromRange(min, max) {   //voor latere randomizers
 }
 
 function Shoot () {
-  let bullet = new Circle(player.x, player.y, 8, 'white');
-  // says the x and y spawn value and the size than the color
+  let bullet = new Circle(player.x, player.y, 8, 'white');    // says the x and y spawn value and the size than the color
   // bullet.mx = mouse.x;
   // bullet.my = mouse.y;
 
@@ -66,7 +65,7 @@ function Shoot () {
   let vy = mouse.y - bullet.y;
   let speed = 6;
 
-  let dist = Math.sqrt(vx * vx + vy + vy);
+  let dist = Math.sqrt(vx * vx + vy * vy);
   bullet.dx = vx / dist;
   bullet.dy = vy / dist;
 
@@ -100,7 +99,7 @@ function SpawnEnemy() {
 
 let player;
 function Start() {   //start het spel
-  player = new Circle(0, canvas.height/2, 20, 'orange');    //maakt de speler
+  player = new Circle(0, canvas.height/2, 22, 'orange');    //maakt de speler
 }
 
 let originalTimer = 120;    //timer voor de vijanden
@@ -143,7 +142,6 @@ function Update () {
     if (enemy.x < 45) { // bepaald waar de vijanden verdwijnen
       enemies.splice(i, 1);   //verwijderd de vijand
       originalTimer = 150;
-      Start();
     }
 
     for (let j = 0; j < bullets.length; j++) {
@@ -169,9 +167,9 @@ function Update () {
   player.update();  //update de speler
 
   ctx.fillStyle = "#FFFFFF";    //text kleur
-  ctx.font = "20px sans-serif";   //text font
+  ctx.font = "15px sans-serif";   //text font
   ctx.textAlign = "center";   //waar de text staat
-  ctx.fillText("coins: " + coins, canvas.width/2, 22);    //de text
+  ctx.fillText("coins: " + coins, canvas.width/2, 15);    //de text
 }
 
 function MovePlayer(direction) {
