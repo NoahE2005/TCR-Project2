@@ -108,6 +108,28 @@ alert ("Test success")
     return !(ALeftB || ARightB || AaboveB || AbelowB)
 }
 
+function OuterWallCollision() {
+  var breed = Canvas.offsetWidth - PlayerScaleXY; //breedte van canvas
+
+  var hoog = Canvas.offsetHeight - PlayerScaleXY; //hoogte van canvas
+
+  if(x <= 0){
+      x = 0;
+  }
+  if(y <= 0){
+      y = 0;
+  }
+  if(x >= breed)
+  {
+      x = breed;
+  }
+  if(y >= hoog)
+  {
+      y = hoog;
+  }
+  setTimeout(OuterWallCollision, 5)
+}
+OuterWallCollision()
 
 
 //Eind Input
