@@ -1,7 +1,7 @@
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 
-let points = 0;   //begin punten
+let coins = 0;   //begin punten
 let enemies = [];
 let bullets = [];
 
@@ -81,7 +81,7 @@ function SpawnEnemy() {
   let enemy = new Circle(canvas.width, randomIntFromRange(40, canvas.height - 10), 10, 'red');//level 1 vijand
   let level = randomIntFromRange(1, 4);   //bepaalt de level van vijanden
   enemy.speed = 2;    //vijand snelheid
-  enemy.health = Math.ceil(level / 2);    //bepaalt health
+  enemy.health = level;    //bepaalt health
   if (level == 2) {   //level 2 vijand
     enemy.color = 'blue';   //vijand kleur
     enemy.speed = 2,5;    //vijand snelheid
@@ -142,7 +142,6 @@ function Update () {
 
     if (enemy.x < 45) { // bepaald waar de vijanden verdwijnen
       enemies.splice(i, 1);   //verwijderd de vijand
-      points = 0;
       originalTimer = 150;
       Start();
     }
@@ -159,8 +158,8 @@ function Update () {
         bullets.splice(j, 1);   //verwijderd de bullet
         if (enemy.health <= 0){
           enemies.splice(i, 1);   //verwijderd de vijand
+          coins += 1;   //geeft punten
         }
-        points += 1;    //geeft punten
       }
     }
 
@@ -172,7 +171,7 @@ function Update () {
   ctx.fillStyle = "#FFFFFF";    //text kleur
   ctx.font = "20px sans-serif";   //text font
   ctx.textAlign = "center";   //waar de text staat
-  ctx.fillText("Points: " + points, canvas.width/2, 22);    //de text
+  ctx.fillText("coins: " + coins, canvas.width/2, 22);    //de text
 }
 
 function MovePlayer(direction) {
