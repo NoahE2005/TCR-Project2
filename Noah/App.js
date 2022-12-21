@@ -108,7 +108,7 @@ alert ("Test success")
     return !(ALeftB || ARightB || AaboveB || AbelowB)
 }
 
-function OuterWallCollision() {
+function OuterWallCollision() { //Een Collision check voor de grootte van de canvas zelf
   var breed = Canvas.offsetWidth - PlayerScaleXY; //breedte van canvas
 
   var hoog = Canvas.offsetHeight - PlayerScaleXY; //hoogte van canvas
