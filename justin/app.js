@@ -1,7 +1,7 @@
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 
-let coins = 0;   //begin punten
+let points = 0;   //begin punten
 let enemies = [];
 let bullets = [];
 
@@ -142,6 +142,7 @@ function Update () {
     if (enemy.x < 45) { // bepaald waar de vijanden verdwijnen
       enemies.splice(i, 1);   //verwijderd de vijand
       originalTimer = 150;
+      points = 0;
     }
 
     for (let j = 0; j < bullets.length; j++) {
@@ -156,7 +157,7 @@ function Update () {
         bullets.splice(j, 1);   //verwijderd de bullet
         if (enemy.health <= 0){
           enemies.splice(i, 1);   //verwijderd de vijand
-          coins += 1;   //geeft punten
+          points += 1;   //geeft punten
         }
       }
     }
@@ -169,7 +170,7 @@ function Update () {
   ctx.fillStyle = "#FFFFFF";    //text kleur
   ctx.font = "15px sans-serif";   //text font
   ctx.textAlign = "center";   //waar de text staat
-  ctx.fillText("coins: " + coins, canvas.width/2, 15);    //de text
+  ctx.fillText("points: " + points, canvas.width/2, 15);    //de text
 }
 
 function MovePlayer(direction) {
