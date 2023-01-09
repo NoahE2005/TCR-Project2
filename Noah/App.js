@@ -57,7 +57,6 @@ setTimeout(EindLoad, 15000)
 
 function ColorPLayer() {
     ctx.beginPath();
-    ctx.fillStyle = "white";
     ctx.closePath();
 }
 
@@ -283,3 +282,33 @@ function LoadingText3() {
 }
 LoadingText1()
 //Eind Loading
+
+ //Monster Begin
+ let Spr2x = 200;
+ let Spr2y = 220;
+
+ var Spr2formaat = 40; 
+ var telSpr2 = 0;
+ var maxSpr2 = 100;
+ var richtSpr2X = 1;
+ var richtSpr2Y = 1;
+ function Spr2() {
+     telSpr2++;
+     if (telSpr2 > maxSpr2) {
+         telSpr2 = 0;
+         richtSpr2X = Math.floor(Math.random()*3) -1;Spr2formaat
+         richtSpr2Y = Math.floor(Math.random()*3) -1;
+     }
+     Spr2x += richtSpr2X;  
+     Spr2y += richtSpr2Y;
+     if (Spr2x<0) {richtSpr2X = 1;}
+     if (Spr2x>Canvas.offsetWidth-Spr2formaat) {richtSpr2X = -1;}
+     if (Spr2y<0) {richtSpr2Y = 1;}
+     if (Spr2y>Canvas.offsetHeight-Spr2formaat) {richtSpr2Y = -1;}
+     ctx.fillStyle = "red"; // kleur spr2
+     ctx.fillRect(Spr2x, Spr2y, Spr2formaat, Spr2formaat);
+   }
+   setInterval(Spr2, 5)
+
+
+ //Monster Eind
