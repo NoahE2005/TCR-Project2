@@ -65,7 +65,7 @@ function ColorPLayer() {
 function CoinsBegin() {
     for (let i = 0; i < MaxCoins; i++) {
         coinlocationsX.push(Math.floor(Math.random() * 1000))
-        coinlocationsY.push(Math.floor(Math.random() * 800))
+        coinlocationsY.push(Math.floor(Math.random() * 600))
     }
 }
 
