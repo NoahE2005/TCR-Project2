@@ -35,6 +35,7 @@ var CoinsRef = coins.fillRect(0,0, 0, 0);
 var CoinCount = 0;
 var coinlocationsX = [];
 var coinlocationsY = [];
+var CoinscaleXY = 10;
 
 CoinsBegin()
 function UpdateScreen() {
@@ -47,7 +48,7 @@ function UpdateScreen() {
     y += vy;
     ctx.beginPath();
     player = Character.fillRect(x,y, PlayerScaleXY, PlayerScaleXY)
-    Character.fillStyle = "black";
+    Character.fillStyle = "white";
     ctx.closePath();
     ColorPLayer();
     Coins();
@@ -63,19 +64,30 @@ function ColorPLayer() {
 
 function CoinsBegin() {
     for (let i = 0; i < MaxCoins; i++) {
-        coinlocationsX.push(Math.floor(Math.random() * (Canvas.offsetWidth - PlayerScaleXY)))
-        coinlocationsY.push(Math.floor(Math.random() * (Canvas.offsetHeight - PlayerScaleXY)))
+        coinlocationsX.push(Math.floor(Math.random() * 1000))
+        coinlocationsY.push(Math.floor(Math.random() * 800))
     }
 }
+
+//coinlocationsX.push(Math.floor(Math.random() * (Canvas.offsetWidth - PlayerScaleXY)))
+//coinlocationsY.push(Math.floor(Math.random() * (Canvas.offsetHeight - PlayerScaleXY)))
 
 function Coins() {
     for (let i = 0; i < MaxCoins; i++) {
       coins.beginPath();
-      coins.fillRect(coinlocationsX.at(i),coinlocationsY.at(i), 30, 30)
+      coins.fillRect(coinlocationsX.at(i),coinlocationsY.at(i), CoinscaleXY, CoinscaleXY)
       coins.fillStyle = "yellow"; //fix
       coins.closePath();
     }
 }
+
+function CoinsCollisionCheck() {
+  if(x < coinlocationsX || y < coinlocationsY ) {
+   alert("Coin collected")
+  CoinCount = CoinCount + 1;
+  }
+}
+setInterval(CoinsCollisionCheck, 1)
 
 //Begin Input
 addEventListener('keydown', function (e){
