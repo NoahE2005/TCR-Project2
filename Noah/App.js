@@ -13,6 +13,7 @@ const  Canvas = document.getElementById("Canvas")
 const ctx = Canvas.getContext("2d")
 const Character = Canvas.getContext("2d")
 const coins = Canvas.getContext("2d")
+const Monster = Canvas.getContext("2d")
 
 const PlayerWalkSpeed = 3; //De speler snelheid
 const PlayerColor = 000000;
@@ -47,9 +48,9 @@ function UpdateScreen() {
     ctx.beginPath();
     player = Character.fillRect(x,y, PlayerScaleXY, PlayerScaleXY)
     Character.fillStyle = "black";
-    ctx.beginPath();
-    ColorPLayer()
-    Coins()
+    ctx.closePath();
+    ColorPLayer();
+    Coins();
     requestAnimationFrame(UpdateScreen)
 }
 setTimeout(UpdateScreen, 1000)
@@ -62,17 +63,17 @@ function ColorPLayer() {
 
 function CoinsBegin() {
     for (let i = 0; i < MaxCoins; i++) {
-        coinlocationsX.push(Math.floor(Math.random() * 500))
-        coinlocationsY.push(Math.floor(Math.random() * 500))
+        coinlocationsX.push(Math.floor(Math.random() * (Canvas.offsetWidth - PlayerScaleXY)))
+        coinlocationsY.push(Math.floor(Math.random() * (Canvas.offsetHeight - PlayerScaleXY)))
     }
 }
 
 function Coins() {
     for (let i = 0; i < MaxCoins; i++) {
       coins.beginPath();
-        coins.fillRect(500,500, 30, 30)
-        coins.fillStyle = "white"; //fix
-        coins.closePath();
+      coins.fillRect(coinlocationsX.at(i),coinlocationsY.at(i), 30, 30)
+      coins.fillStyle = "yellow"; //fix
+      coins.closePath();
     }
 }
 
@@ -305,8 +306,10 @@ LoadingText1()
      if (Spr2x>Canvas.offsetWidth-Spr2formaat) {richtSpr2X = -1;}
      if (Spr2y<0) {richtSpr2Y = 1;}
      if (Spr2y>Canvas.offsetHeight-Spr2formaat) {richtSpr2Y = -1;}
-     ctx.fillStyle = "red"; // kleur spr2
-     ctx.fillRect(Spr2x, Spr2y, Spr2formaat, Spr2formaat);
+     Monster.beginPath();
+     Monster.fillRect(Spr2x, Spr2y, Spr2formaat, Spr2formaat);
+     Monster.fillStyle = "red"; // kleur spr2
+     Monster.closePath();
    }
    setInterval(Spr2, 5)
 
