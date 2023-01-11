@@ -87,13 +87,23 @@ function Coins() {
 
 function CoinsCollisionCheck() {
   for (let i = 0; i < MaxCoins; i++) {
-  if((coinlocationsX.at(i) + CoinscaleXY) < Character.x || coinlocationsX.at(i) > (Character.x + Character.width) || (coinlocationsY.at(i) + CoinscaleXY) < Character.y || coinlocationsY.at(i) > (Character.y + Character.height)) {
-  alert("Coin collected")
+    if(coinlocationsX.at(i) >= -10 || coinlocationsY.at(i) >= -10) {
+  if((coinlocationsX.at(i) + CoinscaleXY) < x ||
+   coinlocationsX.at(i) > (x + PlayerScaleXY) ||
+    (coinlocationsY.at(i) + CoinscaleXY) < y ||
+     coinlocationsY.at(i) > (y + PlayerScaleXY)) {
+}
+else {
   CoinCount = CoinCount + 1;
+  console.log(CoinCount);
+  delete coinlocationsX[i];
+  delete coinlocationsY[i];
+  UpdateMonsterSpeed();
+}
 }
   }
 }
-setInterval(CoinsCollisionCheck(), 1)
+setInterval(CoinsCollisionCheck,3)
 
 //Begin Input
 addEventListener('keydown', function (e){
@@ -116,13 +126,24 @@ addEventListener("keyup", function(e) {
 })
 
 function collisionCheck(a, b) {
-    let ALeftB = (a.x + a.width) < b.x;
-    let ARightB = a.x > (b.x + b.width);
-    let AaboveB = (a.y + a.height) < b.y;
-    let AbelowB = a.y > (b.y + b.height)
-           
-    return !(ALeftB || ARightB || AaboveB || AbelowB)
+    if((a.x + a.width) < b.x ||
+    a.x > (b.x + b.width) ||
+    (a.y + a.height) < b.y ||
+    a.y > (b.y + b.height)) {
+      console.log(a.x);
+      console.log(b.x);
+      console.log("colliding");
+    }
+    else {
+      console.log(a.width);
+      console.log(b.width);
+      console.log("Not colliding")
+    }
+
+    return (ALeftB || ARightB || AaboveB || AbelowB)
 }
+
+
 
 function OuterWallCollision() { //Een Collision check voor de grootte van de canvas zelf
   var breed = Canvas.offsetWidth - PlayerScaleXY; //breedte van canvas
@@ -310,7 +331,7 @@ LoadingText1()
  var maxSpr2 = 100;
  var richtSpr2X = 1;
  var richtSpr2Y = 1;
- var SeesPlayer = false;
+ var SeesPlayer = true;
 
  var Spr1boven = x - (PlayerScaleXY / 2);
  var Spr1beneden = y + (PlayerScaleXY / 2);
@@ -352,16 +373,26 @@ LoadingText1()
      if (Spr2x>Canvas.offsetWidth-Spr2formaat) {richtSpr2X = MonsterSpeed * -1;}
      if (Spr2y<0) {richtSpr2Y = MonsterSpeed;}
      if (Spr2y>Canvas.offsetHeight-Spr2formaat) {richtSpr2Y = MonsterSpeed * -1;}
-     MonsterCollision()
    }
    setInterval(Spr2, 5)
 
-   function MonsterCollision() {
-    if (Spr1beneden < Spr2boven || Spr1boven > Spr2beneden || Spr1rechts < Spr2links || Spr1links > Spr2rechts) {
+   function MonstercollisionCheck() {
+    if((x + PlayerScaleXY) < Spr2x ||
+    x > (Spr2x + Spr2formaat) ||
+    (y + PlayerScaleXY) < Spr2y ||
+    y > (Spr2y + Spr2formaat)) {
+      console.log("Not colliding");
     }
     else {
-     alert("dead")
+      console.log("colliding")
     }
-   }
+  }
+setInterval(MonstercollisionCheck,5)
+
+function UpdateMonsterSpeed() {
+  richtSpr2X = 0;
+  richtSpr2Y = 0;
+  MonsterSpeed = MonsterSpeed + (CoinCount * 0.1);
+}
 
  //Monster Eind
