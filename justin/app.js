@@ -80,7 +80,7 @@ function SpawnEnemy() {
   let enemy = new Circle(canvas.width, randomIntFromRange(40, canvas.height - 10), 10, 'red');//level 1 vijand
   let level = randomIntFromRange(1, 4);   //bepaalt de level van vijanden
   enemy.speed = 2;    //vijand snelheid
-  enemy.health = level;    //bepaalt health
+  enemy.health = level/2;    //bepaalt health
   if (level == 2) {   //level 2 vijand
     enemy.color = 'blue';   //vijand kleur
     enemy.speed = 2,5;    //vijand snelheid
