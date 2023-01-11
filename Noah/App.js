@@ -46,10 +46,14 @@ function UpdateScreen() {
     x += vxl;
     x += vxr;
     y += vy;
-    ctx.beginPath();
+    Character.beginPath();
     player = Character.fillRect(x,y, PlayerScaleXY, PlayerScaleXY)
     Character.fillStyle = "white";
-    ctx.closePath();
+    Character.closePath();
+    Monster.beginPath();
+    Monster.fillRect(Spr2x, Spr2y, Spr2formaat, Spr2formaat);
+    Monster.fillStyle = "red"; // kleur spr2
+    Monster.closePath();
     ColorPLayer();
     Coins();
     requestAnimationFrame(UpdateScreen)
@@ -211,7 +215,7 @@ inputOuterWidth = document.getElementById('outerwidth')
 inputPathColor = document.getElementById('pathcolor')
 inputWallColor = document.getElementById('wallcolor')
 inputSeed = document.getElementById('seed')
-buttonRandomSeed = document.getElementById('randomseed')
+buttonRandomSeed = pathColor = '#222a33'
 
 settings = {
 
@@ -297,33 +301,67 @@ LoadingText1()
 //Eind Loading
 
  //Monster Begin
- let Spr2x = 200;
+ let Spr2x = 400;
  let Spr2y = 220;
+ let MonsterSpeed = 0.5;
 
- var Spr2formaat = 40; 
+ var Spr2formaat = 20; 
  var telSpr2 = 0;
  var maxSpr2 = 100;
  var richtSpr2X = 1;
  var richtSpr2Y = 1;
+ var SeesPlayer = false;
+
+ var Spr1boven = x - (PlayerScaleXY / 2);
+ var Spr1beneden = y + (PlayerScaleXY / 2);
+ var Spr1links = x - (PlayerScaleXY / 2);
+ var Spr1rechts = x + (PlayerScaleXY / 2);
+ var Spr2boven = Spr2y - (Spr2formaat / 2);
+ var Spr2beneden = Spr2y + (Spr2formaat / 2);
+ var Spr2links = Spr2x - (Spr2formaat / 2);
+ var Spr2rechts = Spr2x + (Spr2formaat / 2);
+
  function Spr2() {
+  if(SeesPlayer) {
+    if(x > Spr2x) {
+      richtSpr2X = MonsterSpeed;
+    }
+    if(x < Spr2x) {
+      richtSpr2X = MonsterSpeed * -1;
+    }
+    if(y > Spr2y) {
+      richtSpr2Y = MonsterSpeed;
+    }
+    if(y < Spr2y) {
+      richtSpr2Y = MonsterSpeed * -1;
+    }
+  }
+  else {
+
+
      telSpr2++;
      if (telSpr2 > maxSpr2) {
          telSpr2 = 0;
          richtSpr2X = Math.floor(Math.random()*3) -1;Spr2formaat
          richtSpr2Y = Math.floor(Math.random()*3) -1;
      }
+    }
      Spr2x += richtSpr2X;  
      Spr2y += richtSpr2Y;
-     if (Spr2x<0) {richtSpr2X = 1;}
-     if (Spr2x>Canvas.offsetWidth-Spr2formaat) {richtSpr2X = -1;}
-     if (Spr2y<0) {richtSpr2Y = 1;}
-     if (Spr2y>Canvas.offsetHeight-Spr2formaat) {richtSpr2Y = -1;}
-     Monster.beginPath();
-     Monster.fillRect(Spr2x, Spr2y, Spr2formaat, Spr2formaat);
-     Monster.fillStyle = "red"; // kleur spr2
-     Monster.closePath();
+     if (Spr2x<0) {richtSpr2X = MonsterSpeed;}
+     if (Spr2x>Canvas.offsetWidth-Spr2formaat) {richtSpr2X = MonsterSpeed * -1;}
+     if (Spr2y<0) {richtSpr2Y = MonsterSpeed;}
+     if (Spr2y>Canvas.offsetHeight-Spr2formaat) {richtSpr2Y = MonsterSpeed * -1;}
+     MonsterCollision()
    }
    setInterval(Spr2, 5)
 
+   function MonsterCollision() {
+    if (Spr1beneden < Spr2boven || Spr1boven > Spr2beneden || Spr1rechts < Spr2links || Spr1links > Spr2rechts) {
+    }
+    else {
+     alert("dead")
+    }
+   }
 
  //Monster Eind
