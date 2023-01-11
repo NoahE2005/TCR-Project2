@@ -82,12 +82,14 @@ function Coins() {
 }
 
 function CoinsCollisionCheck() {
-  if(x < coinlocationsX || y < coinlocationsY ) {
-   alert("Coin collected")
+  for (let i = 0; i < MaxCoins; i++) {
+  if((coinlocationsX.at(i) + CoinscaleXY) < Character.x || coinlocationsX.at(i) > (Character.x + Character.width) || (coinlocationsY.at(i) + CoinscaleXY) < Character.y || coinlocationsY.at(i) > (Character.y + Character.height)) {
+  alert("Coin collected")
   CoinCount = CoinCount + 1;
+}
   }
 }
-setInterval(CoinsCollisionCheck, 1)
+setInterval(CoinsCollisionCheck(), 1)
 
 //Begin Input
 addEventListener('keydown', function (e){
@@ -115,8 +117,6 @@ function collisionCheck(a, b) {
     let AaboveB = (a.y + a.height) < b.y;
     let AbelowB = a.y > (b.y + b.height)
            
-alert ("Test success")
-
     return !(ALeftB || ARightB || AaboveB || AbelowB)
 }
 
