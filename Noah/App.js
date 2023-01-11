@@ -392,7 +392,7 @@ setInterval(MonstercollisionCheck,5)
 function UpdateMonsterSpeed() {
   richtSpr2X = 0;
   richtSpr2Y = 0;
-  MonsterSpeed = MonsterSpeed + (CoinCount * 0.1);
+  MonsterSpeed = MonsterSpeed + (CoinCount * 0.05);
 }
 
  //Monster Eind
