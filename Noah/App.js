@@ -47,12 +47,12 @@ function UpdateScreen() {
     x += vxr;
     y += vy;
     Character.beginPath();
-    player = Character.fillRect(x,y, PlayerScaleXY, PlayerScaleXY)
     Character.fillStyle = "white";
+    player = Character.fillRect(x,y, PlayerScaleXY, PlayerScaleXY)
     Character.closePath();
     Monster.beginPath();
-    Monster.fillRect(Spr2x, Spr2y, Spr2formaat, Spr2formaat);
     Monster.fillStyle = "red"; // kleur spr2
+    Monster.fillRect(Spr2x, Spr2y, Spr2formaat, Spr2formaat);
     Monster.closePath();
     ColorPLayer();
     Coins();
@@ -79,8 +79,8 @@ function CoinsBegin() {
 function Coins() {
     for (let i = 0; i < MaxCoins; i++) {
       coins.beginPath();
-      coins.fillRect(coinlocationsX.at(i),coinlocationsY.at(i), CoinscaleXY, CoinscaleXY)
       coins.fillStyle = "yellow"; //fix
+      coins.fillRect(coinlocationsX.at(i),coinlocationsY.at(i), CoinscaleXY, CoinscaleXY)
       coins.closePath();
     }
 }

@@ -55,8 +55,10 @@
       <div class="GameScreen">
         <section class="modal activemodal" id="modal"><h1 id="LoadingText">loading...</h1></section>
 
+<canvas id="BoxShadow" width="1450px" height="820px"></canvas>   
 <canvas id="Canvas" width="1450px" height="820px"></canvas>
 <canvas id="Canvas2" width="1450px" height="820px" class="maze"></canvas>
+
 
 </div>
 
@@ -107,7 +109,7 @@ html {
 }
 
 #Canvas {
-    z-index: -2;
+    z-index: -3;
     float: left;
     align-self: center;
     position:absolute; top:0px; left:0px;
@@ -115,6 +117,14 @@ html {
     circle var(--Radius) at var(--cursorXpos) var(--cursorYpos), 
     rgba(0,0,0,0) 0%, rgba(0,0,0,0.95) 100%
   );
+}
+
+#BoxShadow {
+    background: radial-gradient(
+    circle var(--Radius) at var(--cursorXpos) var(--cursorYpos), 
+    rgba(0,0,0,0) 0%, rgba(0,0,0,0.95) 100%
+    );
+    z-index: 5;
 }
 
 .GameScreen {
