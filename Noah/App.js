@@ -54,27 +54,20 @@ function UpdateScreen() {
     Monster.fillStyle = "red"; // kleur spr2
     Monster.fillRect(Spr2x, Spr2y, Spr2formaat, Spr2formaat);
     Monster.closePath();
-    ColorPLayer();
     Coins();
     requestAnimationFrame(UpdateScreen)
 }
 setTimeout(UpdateScreen, 1000)
 setTimeout(EindLoad, 15000)
 
-function ColorPLayer() {
-    ctx.beginPath();
-    ctx.closePath();
-}
 
 function CoinsBegin() {
     for (let i = 0; i < MaxCoins; i++) {
-        coinlocationsX.push(Math.floor(Math.random() * 1000))
-        coinlocationsY.push(Math.floor(Math.random() * 600))
+        coinlocationsX.push(Math.floor(Math.random() * 1000)) //De willekeurige locatie X van de munten maken
+        coinlocationsY.push(Math.floor(Math.random() * 600)) //De willekeurige locatie Y van de munten maken
     }
 }
 
-//coinlocationsX.push(Math.floor(Math.random() * (Canvas.offsetWidth - PlayerScaleXY)))
-//coinlocationsY.push(Math.floor(Math.random() * (Canvas.offsetHeight - PlayerScaleXY)))
 
 function Coins() {
     for (let i = 0; i < MaxCoins; i++) {
@@ -393,6 +386,13 @@ function UpdateMonsterSpeed() {
   richtSpr2X = 0;
   richtSpr2Y = 0;
   MonsterSpeed = MonsterSpeed + (CoinCount * 0.05);
+}
+
+class Trace {
+  constructor(Character,Monster){
+    this.Character = Character
+    this.Monster = Monster
+  }
 }
 
  //Monster Eind
