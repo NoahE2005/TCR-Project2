@@ -21,6 +21,13 @@ const PlayerWalkSpeed = 3; //De speler snelheid
 const PlayerColor = 000000;
 const PlayerScaleXY = 20;
 const MaxCoins = 8;
+const MaxWalls = 50;
+
+let walls = [
+  {x: 100, y: 100, width: 50, height: 50},
+  {x: 300, y: 300, width: 50, height: 50},
+  {x: 400, y: 400, width: 50, height: 50}
+];
 
 var Breed = 0;
 var Hoog = 0;
@@ -391,11 +398,9 @@ function UpdateMonsterSpeed() {
 
  //Monster Eind
 
- const walls = [
-  {x: 100, y: 100, width: 50, height: 50},
-  {x: 300, y: 300, width: 50, height: 50},
-  {x: 400, y: 400, width: 50, height: 50}
-];
+ for (let i = 0; i < MaxWalls; i++) {
+  walls.push((Math.random() * 1000), Math.floor(Math.random() * 1000), 50, 50) 
+}
 
 function checkCollision() {
   for (let i = 0; i < walls.length; i++) {
@@ -441,7 +446,7 @@ function DrawWalls() {
   for (let i = 0; i < walls.length; i++) {
     let wall = walls[i];
     ctx.beginPath();
-    ctx.fillStyle = "black"; 
+    ctx.fillStyle = "white"; 
     ctx.fillRect(wall.x, wall.y, wall.width, wall.height);
     ctx.closePath();
   }
