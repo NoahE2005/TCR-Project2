@@ -1,3 +1,4 @@
+
 //https://www.google.nl/search?q=javascript+game+maze+generator&sxsrf=ALiCzsZGoyiaBb3uqTkY0tindzcRN_JrqA%3A1670324189364&ei=3R-PY73PFeyP9u8P3-upyAQ&oq=Javascript+game+maze+ge&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQARgAMgUIIRCgATIFCCEQoAEyBQghEKABMggIIRAWEB4QHTIICCEQFhAeEB0yCAghEBYQHhAdMggIIRAWEB4QHTIICCEQFhAeEB0yCgghEBYQHhAPEB0yCgghEBYQHhAPEB06CggAEEcQ1gQQsAM6BggAEBYQHkoECEEYAEoECEYYAFCiAljKBWDaEGgBcAF4AIABlgGIAbUCkgEDMi4xmAEAoAEByAEIwAEB&sclient=gws-wiz-serp
 //https://www.google.nl/search?q=javascript+game+collision+detection&sxsrf=ALiCzsZ9NYk6xQLOpbhnkXqobwPWaY256A%3A1670324152098&source=hp&ei=uB-PY_SqA4LtsAectYzgBQ&iflsig=AJiK0e8AAAAAY48tyEwHazw1f87AaKQuVwq9C93CI_N3&oq=Javasc&gs_lcp=Cgdnd3Mtd2l6EAEYADIECCMQJzIECCMQJzIECCMQJzIECAAQQzIECAAQQzIKCAAQsQMQgwEQQzIECAAQQzIECAAQQzIKCAAQsQMQgwEQQzIKCAAQsQMQgwEQQzoECAAQAzoICAAQsQMQgwE6CwgAEIAEELEDEIMBUABY9AdgjRNoAHAAeACAAWSIAfIDkgEDNS4xmAEAoAEB&sclient=gws-wiz
 
@@ -14,6 +15,7 @@ const ctx = Canvas.getContext("2d")
 const Character = Canvas.getContext("2d")
 const coins = Canvas.getContext("2d")
 const Monster = Canvas.getContext("2d")
+const Walls = Canvas.getContext("2d")
 
 const PlayerWalkSpeed = 3; //De speler snelheid
 const PlayerColor = 000000;
@@ -30,7 +32,6 @@ let vxr = 0; // de X rechts "velocity" van speler
 let vy = 0; // de Y "velocity" van speler
 
 var player = Character.fillRect(0,0, 0, 0);
-var walls = ctx.fillRect(200,200, 200, 200);
 var CoinsRef = coins.fillRect(0,0, 0, 0);
 var CoinCount = 0;
 var coinlocationsX = [];
@@ -54,6 +55,7 @@ function UpdateScreen() {
     Monster.fillStyle = "red"; // kleur spr2
     Monster.fillRect(Spr2x, Spr2y, Spr2formaat, Spr2formaat);
     Monster.closePath();
+    DrawWalls()
     Coins();
     requestAnimationFrame(UpdateScreen)
 }
@@ -352,7 +354,6 @@ LoadingText1()
   }
   else {
 
-
      telSpr2++;
      if (telSpr2 > maxSpr2) {
          telSpr2 = 0;
@@ -388,11 +389,60 @@ function UpdateMonsterSpeed() {
   MonsterSpeed = MonsterSpeed + (CoinCount * 0.05);
 }
 
-class Trace {
-  constructor(Character,Monster){
-    this.Character = Character
-    this.Monster = Monster
+ //Monster Eind
+
+ const walls = [
+  {x: 100, y: 100, width: 50, height: 50},
+  {x: 300, y: 300, width: 50, height: 50},
+  {x: 400, y: 400, width: 50, height: 50}
+];
+
+function checkCollision() {
+  for (let i = 0; i < walls.length; i++) {
+    let wall = walls[i];
+    if (x < wall.x + wall.width && x + PlayerScaleXY > wall.x &&
+      y < wall.y + wall.height && y + PlayerScaleXY > wall.y) {
+        console.log("Player collided with wall");
+        // Move player out of collision
+        if (vxl > 0 || vxr > 0) {
+          x = wall.x - PlayerScaleXY;
+        } else if (vxl < 0 || vxr < 0) {
+          x = wall.x + wall.width;
+        }
+        if (vy > 0) {
+          y = wall.x - PlayerScaleXY;
+        } else if (vy < 0) {
+          y = wall.x + wall.width;
+        }
+    }
+      if (Spr2x < wall.x + wall.width && Spr2x + Spr2formaat > wall.x &&
+          Spr2y < wall.y + wall.height && Spr2y + Spr2formaat > wall.y) {
+            console.log("Monster collided with wall");
+            // Move monster out of collision
+            if (richtSpr2X > 0) {
+                Spr2x = wall.x - Spr2formaat;
+            } else if (richtSpr2X < 0) {
+                Spr2x= wall.x + wall.width;
+            }
+            if (richtSpr2Y > 0) {
+                Spr2y = wall.y - Spr2formaat;
+            } else if (richtSpr2Y < 0) {
+                Spr2y = wall.y + wall.height;
+            }
+            // Reverse monster's velocity
+            richtSpr2X = richtSpr2X * -1;
+            richtSpr2Y = richtSpr2Y * -1;
+        }
   }
 }
+setInterval(checkCollision, 1)
 
- //Monster Eind
+function DrawWalls() {
+  for (let i = 0; i < walls.length; i++) {
+    let wall = walls[i];
+    ctx.beginPath();
+    ctx.fillStyle = "black"; 
+    ctx.fillRect(wall.x, wall.y, wall.width, wall.height);
+    ctx.closePath();
+  }
+}
