@@ -23,12 +23,6 @@ const PlayerScaleXY = 20;
 const MaxCoins = 8;
 const MaxWalls = 50;
 
-let walls = [
-  {x: 100, y: 100, width: 50, height: 50},
-  {x: 300, y: 300, width: 50, height: 50},
-  {x: 400, y: 400, width: 50, height: 50}
-];
-
 var Breed = 0;
 var Hoog = 0;
 
@@ -397,6 +391,12 @@ function UpdateMonsterSpeed() {
 }
 
  //Monster Eind
+
+ let walls = [
+  {x: 100, y: 100, width: 50, height: 50},
+  {x: 300, y: 300, width: 50, height: 50},
+  {x: 400, y: 400, width: 50, height: 50}
+];
 
  for (let i = 0; i < MaxWalls; i++) {
   walls.push((Math.random() * 1000), Math.floor(Math.random() * 1000), 50, 50) 
