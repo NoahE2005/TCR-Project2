@@ -21,7 +21,7 @@ const PlayerWalkSpeed = 3; //De speler snelheid
 const PlayerColor = 000000;
 const PlayerScaleXY = 20;
 const MaxCoins = 8;
-const MaxWalls = 50;
+const MaxWalls = 150;
 
 var Breed = 0;
 var Hoog = 0;
@@ -61,7 +61,7 @@ function UpdateScreen() {
     requestAnimationFrame(UpdateScreen)
 }
 setTimeout(UpdateScreen, 1000)
-setTimeout(EindLoad, 15000)
+setTimeout(EindLoad, 1)
 
 
 function CoinsBegin() {
@@ -176,120 +176,6 @@ function TrackPlayer() { //Locatie van player pakken en het setten voor de style
 TrackPlayer()
 //Eind Lighting
 
-//Begin Maze
-pathWidth = 90      //Width of the Maze Path
-wall = 40          //Width of the Walls between Paths
-outerWall = 50        //Width of the Outer most wall
-width = 15          //Number paths fitted horisontally
-height = 15          //Number paths fitted vertically
-delay = 0           //Delay between algorithm cycles
-x = width/2|0        //Horisontal starting position
-y = height/2|0       //Vertical starting position
-seed = Math.random()*100000|0//Seed for random numbers
-wallColor = '#000000'   //Color of the walls
-pathColor = '#222a33'//Color of the path
-
-randomGen = function(seed){
-	if(seed===undefined)var seed=performance.now()
-	return function(){
-    seed = (seed * 9301 + 49297) % 233280
-		return seed/233280
-	}
-}
-
-init = function(){
-  offset = pathWidth/2+outerWall
-  map = []
-  canvas = document.getElementById('Canvas2')
-  Maze = canvas.getContext("2d")
-  canvas.width = outerWall*2+width*(pathWidth+wall)-wall
-  canvas.height = outerWall*2+height*(pathWidth+wall)-wall
-  Maze.fillStyle = wallColor
-  Maze.fillRect(0,0,canvas.width,canvas.height)
-  random = randomGen(seed)
-  Maze.strokeStyle = pathColor
-  Maze.lineCap = 'square'
-  Maze.lineWidth = pathWidth
-  Maze.beginPath()
-  for(var i=0;i<height*2;i++){
-    map[i] = []
-    for(var j=0;j<width*2;j++){
-      map[i][j] = false
-    }
-  }
-  map[y*2][x*2] = true
-  route = [[x,y]]
-  Maze.moveTo(x*(pathWidth+wall)+offset,
-             y*(pathWidth+wall)+offset)
-}
-init()
-
-inputWidth = document.getElementById('width')
-inputHeight = document.getElementById('height')
-inputPathWidth = document.getElementById('pathwidth')
-inputWallWidth = document.getElementById('wallwidth')
-inputOuterWidth = document.getElementById('outerwidth')
-inputPathColor = document.getElementById('pathcolor')
-inputWallColor = document.getElementById('wallcolor')
-inputSeed = document.getElementById('seed')
-buttonRandomSeed = pathColor = '#222a33'
-
-settings = {
-
-  update: function(){
-    clearTimeout(timer)
-    width = parseFloat(inputWidth.value)
-    height = parseFloat(inputHeight.value)
-    pathWidth = parseFloat(inputPathWidth.value)
-    wall = parseFloat(inputWallWidth.value)
-    outerWall = parseFloat(inputOuterWidth.value)
-    pathColor = inputPathColor.value
-    wallColor = inputWallColor.value
-    seed = parseFloat(inputSeed.value)
-    x = width/2|0
-    y = height/2|0
-    init()
-    loop()
-  }
-}
-
-loop = function(){
-  x = route[route.length-1][0]|0
-  y = route[route.length-1][1]|0
-  
-  var directions = [[1,0],[-1,0],[0,1],[0,-1]],
-      alternatives = []
-  
-  for(var i=0;i<directions.length;i++){
-    if(map[(directions[i][1]+y)*2]!=undefined&&
-       map[(directions[i][1]+y)*2][(directions[i][0]+x)*2]===false){
-      alternatives.push(directions[i])
-    }
-  }
-  
-  if(alternatives.length===0){
-    route.pop()
-    if(route.length>0){
-      Maze.moveTo(route[route.length-1][0]*(pathWidth+wall)+offset,
-                 route[route.length-1][1]*(pathWidth+wall)+offset)
-      timer = setTimeout(loop,delay)
-    }
-    return;
-  }
-  direction = alternatives[random()*alternatives.length|0]
-  route.push([direction[0]+x,direction[1]+y])
-  Maze.lineTo((direction[0]+x)*(pathWidth+wall)+offset,
-             (direction[1]+y)*(pathWidth+wall)+offset)
-  map[(direction[1]+y)*2][(direction[0]+x)*2] = true
-  map[direction[1]+y*2][direction[0]+x*2] = true
-  Maze.stroke()
-  timer = setTimeout(loop,delay)
-}
-
-loop()
-setInterval(settings.check,400)
-//Eind Maze
-
 //Begin Modal
 
 //Begin Loading
@@ -298,7 +184,7 @@ var modal = document.getElementById("modal");
 modal.classList.remove("activemodal");
 document.getElementById("Canvas").style.animation = "CanvasZoom 2s forward";
 document.getElementById("Canvas2").style.animation = "CanvasZoom 2s forward";
-document.documentElement.style.setProperty('--Radius', 20 + "rem")
+document.documentElement.style.setProperty('--Radius', 2000 + "rem")
 }
 document.documentElement.style.setProperty('--Radius', 3000 + "rem")
 
@@ -327,7 +213,7 @@ LoadingText1()
  var maxSpr2 = 100;
  var richtSpr2X = 1;
  var richtSpr2Y = 1;
- var SeesPlayer = true;
+ var SeesPlayer = false;
 
  var Spr1boven = x - (PlayerScaleXY / 2);
  var Spr1beneden = y + (PlayerScaleXY / 2);
@@ -392,15 +278,29 @@ function UpdateMonsterSpeed() {
 
  //Monster Eind
 
- let walls = [
+ //Maze begin
+ const walls = [  
   {x: 100, y: 100, width: 50, height: 50},
   {x: 300, y: 300, width: 50, height: 50},
   {x: 400, y: 400, width: 50, height: 50}
 ];
 
+walls.push(
+  {x: 100, y: 150, width: 50, height: 50},
+  {x: 150, y: 150, width: 50, height: 50},
+  {x: 200, y: 150, width: 50, height: 50}
+)
+
+function wallsBegin() {
  for (let i = 0; i < MaxWalls; i++) {
-  walls.push((Math.random() * 1000), Math.floor(Math.random() * 1000), 50, 50) 
+  let RandomX = Math.floor(Math.random() * 1000);
+  let RandomY = Math.floor(Math.random() * 800);
+  RandomX = Math.round(RandomX / 50)*50;
+  RandomY = Math.round(RandomY / 50)*50;
+  walls.push({x:RandomX, y:RandomY,width:50, height:50}); 
 }
+}
+//wallsBegin() //Comment verwijderen om doolhof willekeurig later genereren
 
 function checkCollision() {
   for (let i = 0; i < walls.length; i++) {
@@ -438,6 +338,20 @@ function checkCollision() {
             richtSpr2X = richtSpr2X * -1;
             richtSpr2Y = richtSpr2Y * -1;
         }
+        //if (Spr2x < wall.x + wall.width && Spr2x + Spr2formaat > wall.x &&  //Maak deze nog
+          //Spr2y < wall.y + wall.height && Spr2y + Spr2formaat > wall.y) {
+            //console.log("Monster collided with wall");
+            // Move Coin out of collision
+           // if (richtSpr2X > 0) {
+             //   Spr2x = wall.x - Spr2formaat;
+           // } else if (richtSpr2X < 0) {
+           //     Spr2x= wall.x + wall.width;
+           // }
+           // if (richtSpr2Y > 0) {
+           //     Spr2y = wall.y - Spr2formaat;
+           // } else if (richtSpr2Y < 0) {
+           //     Spr2y = wall.y + wall.height;
+           // }
   }
 }
 setInterval(checkCollision, 1)
@@ -446,8 +360,9 @@ function DrawWalls() {
   for (let i = 0; i < walls.length; i++) {
     let wall = walls[i];
     ctx.beginPath();
-    ctx.fillStyle = "white"; 
+    ctx.fillStyle = "black"; 
     ctx.fillRect(wall.x, wall.y, wall.width, wall.height);
     ctx.closePath();
   }
 }
+//Maze eind
