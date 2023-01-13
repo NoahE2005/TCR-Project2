@@ -17,26 +17,27 @@ const coins = Canvas.getContext("2d")
 const Monster = Canvas.getContext("2d")
 const Walls = Canvas.getContext("2d")
 
-const PlayerWalkSpeed = 3; //De speler snelheid
-const PlayerColor = 000000;
-const PlayerScaleXY = 20;
-const MaxCoins = 8;
-const MaxWalls = 150;
+const PlayerWalkSpeed = 3; //Snelheid van de speler
+const PlayerColor = 000000; //Kleur van de speler
+const PlayerScaleXY = 20; //Grootte van de speler
+const MaxCoins = 8; //Maximaal aantal munten in het spel
+const minCoinDistance = 350; //Minimum afstand tussen de munten
+const MaxWalls = 150; //Maximaal aantal muren in het spel (alleen als willekeurig)
 
 var Breed = 0;
 var Hoog = 0;
 
-let x = 0; //X locatie van speler
-let y = 0; //Y locatie van speler
+let x = 50; //X locatie van speler
+let y = 50; //Y locatie van speler
 let vxl = 0; // de X links "velocity" van speler
 let vxr = 0; // de X rechts "velocity" van speler
 let vy = 0; // de Y "velocity" van speler
 
-var player = Character.fillRect(0,0, 0, 0);
-var CoinsRef = coins.fillRect(0,0, 0, 0);
-var CoinCount = 0;
-var coinlocationsX = [];
-var coinlocationsY = [];
+var player = Character.fillRect(0,0, 0, 0); //Tekent de speler op het canvas
+var CoinsRef = coins.fillRect(0,0, 0, 0); //Tekent de munten op het canvas
+var CoinCount = 0; //Houdt bij hoeveel munten de speler verzameld heeft
+var coinlocationsX = []; //Slaat X-locaties van munten op
+var coinlocationsY = []; //Slaat Y-locaties van munten op
 var CoinscaleXY = 10;
 
 CoinsBegin()
@@ -45,9 +46,6 @@ function UpdateScreen() {
   var Hoog = Canvas.offsetWidth - PlayerScaleXY;
   ctx.clearRect(0,0, Canvas.width, Canvas.height)
   Character.clearRect(0,0, Canvas.width, Canvas.height)
-    x += vxl;
-    x += vxr;
-    y += vy;
     Character.beginPath();
     Character.fillStyle = "white";
     player = Character.fillRect(x,y, PlayerScaleXY, PlayerScaleXY)
@@ -56,6 +54,7 @@ function UpdateScreen() {
     Monster.fillStyle = "red"; // kleur spr2
     Monster.fillRect(Spr2x, Spr2y, Spr2formaat, Spr2formaat);
     Monster.closePath();
+    UpdatePlayerLocation()
     DrawWalls()
     Coins();
     requestAnimationFrame(UpdateScreen)
@@ -63,11 +62,25 @@ function UpdateScreen() {
 setTimeout(UpdateScreen, 1000)
 setTimeout(EindLoad, 1)
 
+function UpdatePlayerLocation() {
+  if (checkWallCollision(x + vxl, y + vy, PlayerScaleXY)) {
+    vxl = 0;
+  }
+  if (checkWallCollision(x + vxr, y + vy, PlayerScaleXY )) {
+    vxr = 0;
+  }
+  if (checkWallCollision(x + vxl + vxr, y + vy, PlayerScaleXY)) {
+    vy = 0;
+  }
+  x += vxl;
+  x += vxr;
+  y += vy;
+}
 
 function CoinsBegin() {
     for (let i = 0; i < MaxCoins; i++) {
-        coinlocationsX.push(Math.floor(Math.random() * 1000)) //De willekeurige locatie X van de munten maken
-        coinlocationsY.push(Math.floor(Math.random() * 600)) //De willekeurige locatie Y van de munten maken
+        coinlocationsX.push(Math.floor(Math.random() * 1400)) //De willekeurige locatie X van de munten maken
+        coinlocationsY.push(Math.floor(Math.random() * 800)) //De willekeurige locatie Y van de munten maken
     }
 }
 
@@ -78,7 +91,43 @@ function Coins() {
       coins.fillStyle = "yellow"; //fix
       coins.fillRect(coinlocationsX.at(i),coinlocationsY.at(i), CoinscaleXY, CoinscaleXY)
       coins.closePath();
+      for (let i = 0; i < coinlocationsX.length; i++) {
+        let coinX = coinlocationsX[i];
+        let coinY = coinlocationsY[i];
+        // Check if coin collides with a wall, if so, move the coin out of the wall
+        if (checkCoinWallCollision(coinX, coinY)) {
+            coinX = Math.random() * (Canvas.width - 20);
+            coinY = Math.random() * (Canvas.height - 20);
+        }
+        coinlocationsX[i] = coinX;
+        coinlocationsY[i] = coinY;
+      }
     }
+    for (let i = 0; i < coinlocationsX.length; i++) {
+      let coinX = coinlocationsX[i];
+      let coinY = coinlocationsY[i];
+      // Check if coin collides with a wall, if so, move the coin out of the wall
+      if (checkCoinWallCollision(coinX, coinY)) {
+          coinX = Math.random() * (Canvas.width - 20);
+          coinY = Math.random() * (Canvas.height - 20);
+      }
+  
+      // Check if coin is too close to other coins, if so, move the coin to a new location
+      for (let j = 0; j < coinlocationsX.length; j++) {
+          if (i !== j) {
+              let otherCoinX = coinlocationsX[j];
+              let otherCoinY = coinlocationsY[j];
+              let distance = Math.sqrt(Math.pow(coinX - otherCoinX, 2) + Math.pow(coinY - otherCoinY, 2));
+              if (distance < minCoinDistance) {
+                  coinX = Math.random() * (Canvas.width - 20);
+                  coinY = Math.random() * (Canvas.height - 20);
+              }
+          }
+      }
+  
+      coinlocationsX[i] = coinX;
+      coinlocationsY[i] = coinY;
+  }
 }
 
 function CoinsCollisionCheck() {
@@ -95,6 +144,7 @@ else {
   delete coinlocationsX[i];
   delete coinlocationsY[i];
   UpdateMonsterSpeed();
+  document.getElementById("CoinsCounter").textContent = "Coins: " + CoinCount;
 }
 }
   }
@@ -118,7 +168,7 @@ addEventListener("keyup", function(e) {
 
 
 function OuterWallCollision() { //Een Collision check voor de grootte van de canvas zelf
-  var breed = Canvas.offsetWidth - PlayerScaleXY; //breedte van canvas
+  var breed = Canvas.offsetWidth - PlayerScaleXY; //breedte van canvassd
 
   var hoog = Canvas.offsetHeight - PlayerScaleXY; //hoogte van canvas
 
@@ -160,7 +210,7 @@ var modal = document.getElementById("modal");
 modal.classList.remove("activemodal");
 document.getElementById("Canvas").style.animation = "CanvasZoom 2s forward";
 document.getElementById("Canvas2").style.animation = "CanvasZoom 2s forward";
-document.documentElement.style.setProperty('--Radius', 2000 + "rem")
+document.documentElement.style.setProperty('--Radius',15 + "rem")
 }
 document.documentElement.style.setProperty('--Radius', 3000 + "rem")
 
@@ -224,6 +274,13 @@ LoadingText1()
          richtSpr2Y = Math.floor(Math.random()*3) -1;
      }
     }
+    if (checkWallCollision(Spr2x + richtSpr2X, Spr2y + richtSpr2Y, Spr2formaat)) {
+      richtSpr2X = 0;
+  }
+    if (checkWallCollision(Spr2x + richtSpr2X, Spr2y + richtSpr2Y, Spr2formaat)) {
+      richtSpr2Y = 0;
+}
+
      Spr2x += richtSpr2X;  
      Spr2y += richtSpr2Y;
      if (Spr2x<0) {richtSpr2X = MonsterSpeed;}
@@ -272,7 +329,208 @@ walls.push(
   {x: 150, y: 0, width: 50, height: 50},
   {x: 100, y: 0, width: 50, height: 50},
   {x: 200, y: 0, width: 50, height: 50},
-)
+  {x: 150, y: 0, width: 50, height: 50},
+  {x: 100, y: 0, width: 50, height: 50},
+  {x: 50, y: 0, width: 50, height: 50},
+  {x: 0, y: 0, width: 50, height: 50},
+  {x: 0, y: 50, width: 50, height: 50},
+  {x: 0, y: 100, width: 50, height: 50},
+  {x: 0, y: 150, width: 50, height: 50},
+  {x: 0, y: 200, width: 50, height: 50},
+  {x: 0, y: 250, width: 50, height: 50},
+  {x: 0, y: 300, width: 50, height: 50},
+  {x: 0, y: 350, width: 50, height: 50},
+  {x: 50, y: 250, width: 50, height: 50},
+  {x: 50, y: 300, width: 50, height: 50},
+  {x: 100, y: 250, width: 50, height: 50},
+  {x: 200, y: 300, width: 50, height: 50},
+  {x: 200, y: 350, width: 50, height: 50},
+  {x: 150, y: 350, width: 50, height: 50},
+  {x: 150, y: 400, width: 50, height: 50},
+  {x: 100, y: 400, width: 50, height: 50},
+  {x: 50, y: 450, width: 50, height: 50},
+  {x: 100, y: 450, width: 50, height: 50},
+  {x: 50, y: 500, width: 50, height: 50},
+  {x: 50, y: 550, width: 50, height: 50},
+  {x: 50, y: 600, width: 50, height: 50},
+  {x: 50, y: 700, width: 50, height: 50},
+  {x: 100, y: 700, width: 50, height: 50},
+  {x: 100, y: 600, width: 50, height: 50},
+  {x: 100, y: 750, width: 50, height: 50},
+  {x: 150, y: 700, width: 50, height: 50},
+  {x: 200, y: 700, width: 50, height: 50},
+  {x: 250, y: 700, width: 50, height: 50},
+  {x: 250, y: 650, width: 50, height: 50},
+  {x: 250, y: 550, width: 50, height: 50},
+  {x: 200, y: 550, width: 50, height: 50},
+  {x: 100, y: 550, width: 50, height: 50},
+  {x: 100, y: 500, width: 50, height: 50},
+  {x: 200, y: 500, width: 50, height: 50},
+  {x: 250, y: 500, width: 50, height: 50},
+  {x: 300, y: 500, width: 50, height: 50},
+  {x: 350, y: 500, width: 50, height: 50},
+  {x: 450, y: 500, width: 50, height: 50},
+  {x: 550, y: 500, width: 50, height: 50},
+  {x: 350, y: 400, width: 50, height: 50},
+  {x: 300, y: 400, width: 50, height: 50},
+  {x: 200, y: 400, width: 50, height: 50},
+  {x: 300, y: 350, width: 50, height: 50},
+  {x: 300, y: 250, width: 50, height: 50},
+  {x: 350, y: 250, width: 50, height: 50},
+  {x: 400, y: 250, width: 50, height: 50},
+  {x: 450, y: 250, width: 50, height: 50},
+  {x: 450, y: 300, width: 50, height: 50},
+  {x: 300, y: 100, width: 50, height: 50},
+  {x: 300, y: 50, width: 50, height: 50},
+  {x: 350, y: 50, width: 50, height: 50},
+  {x: 400, y: 50, width: 50, height: 50},
+  {x: 500, y: 50, width: 50, height: 50},
+  {x: 500, y: 100, width: 50, height: 50},
+  {x: 500, y: 150, width: 50, height: 50},
+  {x: 450, y: 150, width: 50, height: 50},
+  {x: 400, y: 150, width: 50, height: 50},
+  {x: 600, y: 50, width: 50, height: 50},
+  {x: 600, y: 0, width: 50, height: 50},
+  {x: 600, y: 50, width: 50, height: 50},
+  {x: 550, y: 150, width: 50, height: 50},
+  {x: 600, y: 150, width: 50, height: 50},
+  {x: 650, y: 150, width: 50, height: 50},
+  {x: 700, y: 150, width: 50, height: 50},
+  {x: 700, y: 50, width: 50, height: 50},
+  {x: 750, y: 50, width: 50, height: 50},
+  {x: 800, y: 50, width: 50, height: 50},
+  {x: 850, y: 50, width: 50, height: 50},
+  {x: 800, y: 100, width: 50, height: 50},
+  {x: 800, y: 150, width: 50, height: 50},
+  {x: 800, y: 250, width: 50, height: 50},
+  {x: 800, y: 200, width: 50, height: 50},
+  {x: 500, y: 250, width: 50, height: 50},
+  {x: 550, y: 250, width: 50, height: 50},
+  {x: 650, y: 250, width: 50, height: 50},
+  {x: 650, y: 300, width: 50, height: 50},
+  {x: 650, y: 350, width: 50, height: 50},
+  {x: 600, y: 350, width: 50, height: 50},
+  {x: 550, y: 350, width: 50, height: 50},
+  {x: 550, y: 400, width: 50, height: 50},
+  {x: 500, y: 500, width: 50, height: 50},
+  {x: 500, y: 550, width: 50, height: 50},
+  {x: 500, y: 600, width: 50, height: 50},
+  {x: 450, y: 600, width: 50, height: 50},
+  {x: 400, y: 600, width: 50, height: 50},
+  {x: 400, y: 650, width: 50, height: 50},
+  {x: 400, y: 700, width: 50, height: 50},
+  {x: 400, y: 750, width: 50, height: 50},
+  {x: 350, y: 600, width: 50, height: 50},
+  {x: 350, y: 700, width: 50, height: 50},
+  {x: 450, y: 700, width: 50, height: 50},
+  {x: 450, y: 650, width: 50, height: 50},
+  {x: 500, y: 650, width: 50, height: 50},
+  {x: 500, y: 700, width: 50, height: 50},
+  {x: 600, y: 700, width: 50, height: 50},
+  {x: 650, y: 700, width: 50, height: 50},
+  {x: 700, y: 700, width: 50, height: 50},
+  {x: 600, y: 650, width: 50, height: 50},
+  {x: 600, y: 600, width: 50, height: 50},
+  {x: 650, y: 600, width: 50, height: 50},
+  {x: 650, y: 550, width: 50, height: 50},
+  {x: 650, y: 500, width: 50, height: 50},
+  {x: 650, y: 450, width: 50, height: 50},
+  {x: 650, y: 400, width: 50, height: 50},
+  {x: 700, y: 250, width: 50, height: 50},
+  {x: 800, y: 300, width: 50, height: 50},
+  {x: 800, y: 350, width: 50, height: 50},
+  {x: 750, y: 350, width: 50, height: 50},
+  {x: 750, y: 400, width: 50, height: 50},
+  {x: 750, y: 500, width: 50, height: 50},
+  {x: 750, y: 550, width: 50, height: 50},
+  {x: 750, y: 600, width: 50, height: 50},
+  {x: 800, y: 600, width: 50, height: 50},
+  {x: 800, y: 650, width: 50, height: 50},
+  {x: 800, y: 700, width: 50, height: 50},
+  {x: 800, y: 750, width: 50, height: 50},
+  {x: 850, y: 600, width: 50, height: 50},
+  {x: 900, y: 600, width: 50, height: 50},
+  {x: 950, y: 600, width: 50, height: 50},
+  {x: 1000, y: 600, width: 50, height: 50},
+  {x: 1000, y: 550, width: 50, height: 50},
+  {x: 1000, y: 500, width: 50, height: 50},
+  {x: 1000, y: 450, width: 50, height: 50},
+  {x: 1000, y: 400, width: 50, height: 50},
+  {x: 1000, y: 350, width: 50, height: 50},
+  {x: 950, y: 350, width: 50, height: 50},
+  {x: 900, y: 350, width: 50, height: 50},
+  {x: 900, y: 300, width: 50, height: 50},
+  {x: 900, y: 250, width: 50, height: 50},
+  {x: 900, y: 150, width: 50, height: 50},
+  {x: 950, y: 150, width: 50, height: 50},
+  {x: 950, y: 100, width: 50, height: 50},
+  {x: 950, y: 50, width: 50, height: 50},
+  {x: 950, y: 0, width: 50, height: 50},
+  {x: 950, y: 250, width: 50, height: 50},
+  {x: 1000, y: 250, width: 50, height: 50},
+  {x: 1100, y: 250, width: 50, height: 50},
+  {x: 1100, y: 300, width: 50, height: 50},
+  {x: 1100, y: 350, width: 50, height: 50},
+  {x: 1100, y: 400, width: 50, height: 50},
+  {x: 1100, y: 500, width: 50, height: 50},
+  {x: 1100, y: 550, width: 50, height: 50},
+  {x: 1100, y: 600, width: 50, height: 50},
+  {x: 1100, y: 650, width: 50, height: 50},
+  {x: 1100, y: 700, width: 50, height: 50},
+  {x: 1100, y: 800, width: 50, height: 50},
+  {x: 1150, y: 700, width: 50, height: 50},
+  {x: 1200, y: 700, width: 50, height: 50},
+  {x: 1250, y: 650, width: 50, height: 50},
+  {x: 1300, y: 650, width: 50, height: 50},
+  {x: 1400, y: 650, width: 50, height: 50},
+  {x: 1400, y: 600, width: 50, height: 50},
+  {x: 1400, y: 700, width: 50, height: 50},
+  {x: 1400, y: 750, width: 50, height: 50},
+  {x: 1350, y: 750, width: 50, height: 50},
+  {x: 1300, y: 750, width: 50, height: 50},
+  {x: 1200, y: 650, width: 50, height: 50},
+  {x: 1000, y: 700, width: 50, height: 50},
+  {x: 1000, y: 650, width: 50, height: 50},
+  {x: 900, y: 700, width: 50, height: 50},
+  {x: 900, y: 750, width: 50, height: 50},
+  {x: 1350, y: 550, width: 50, height: 50},
+  {x: 1400, y: 550, width: 50, height: 50},
+  {x: 1300, y: 550, width: 50, height: 50},
+  {x: 1200, y: 550, width: 50, height: 50},
+  {x: 1200, y: 500, width: 50, height: 50},
+  {x: 1200, y: 400, width: 50, height: 50},
+  {x: 1200, y: 350, width: 50, height: 50},
+  {x: 1200, y: 450, width: 50, height: 50},
+  {x: 1250, y: 350, width: 50, height: 50},
+  {x: 1250, y: 450, width: 50, height: 50},
+  {x: 1300, y: 450, width: 50, height: 50},
+  {x: 1350, y: 450, width: 50, height: 50},
+  {x: 1350, y: 350, width: 50, height: 50},
+  {x: 1400, y: 350, width: 50, height: 50},
+  {x: 1400, y: 300, width: 50, height: 50},
+  {x: 1400, y: 250, width: 50, height: 50},
+  {x: 1400, y: 200, width: 50, height: 50},
+  {x: 1350, y: 200, width: 50, height: 50},
+  {x: 1300, y: 200, width: 50, height: 50},
+  {x: 1250, y: 200, width: 50, height: 50},
+  {x: 1200, y: 200, width: 50, height: 50},
+  {x: 1150, y: 150, width: 50, height: 50},
+  {x: 1200, y: 150, width: 50, height: 50},
+  {x: 1050, y: 150, width: 50, height: 50},
+  {x: 1050, y: 100, width: 50, height: 50},
+  {x: 1050, y: 50, width: 50, height: 50},
+  {x: 1050, y: 0, width: 50, height: 50},
+  {x: 1150, y: 100, width: 50, height: 50},
+  {x: 1150, y: 0, width: 50, height: 50},
+  {x: 1350, y: 50, width: 50, height: 50},
+  {x: 1350, y: 100, width: 50, height: 50},
+  {x: 1300, y: 50, width: 50, height: 50},
+  {x: 1300, y: 100, width: 50, height: 50},
+  {x: 1250, y: 50, width: 50, height: 50},
+  {x: 0, y: 800, width: 5000, height: 50},
+  )
+
+
 
 function wallsBegin() {
  for (let i = 0; i < MaxWalls; i++) {
@@ -285,54 +543,19 @@ function wallsBegin() {
 }
 //wallsBegin() //Comment verwijderen om doolhof willekeurig later genereren
 
-function checkCollision() {
+
+
+// Function to check if player collides with a wall
+function checkWallCollision(playerX, playerY, scale) {
   for (let i = 0; i < walls.length; i++) {
-    let wall = walls[i];
-    let index = i
-    if (x < wall.x + wall.width && x + PlayerScaleXY > wall.x &&
-      y < wall.y + wall.height && y + PlayerScaleXY > wall.y) {
-        console.log("Player collided with wall");
-        // Move player out of collision
-        if (vxl > 0 || vxr > 0) {
-          x = wall.x - PlayerScaleXY;
-        } else if (vxl < 0 || vxr < 0) {
-          x = wall.x + wall.width;
-        }
-        if (vy > 0) {
-          y = wall.x - PlayerScaleXY;
-        } else if (vy < 0) {
-          y = wall.x + wall.width;
-        }
-    }
-      if (Spr2x < wall.x + wall.width && Spr2x + Spr2formaat > wall.x &&
-          Spr2y < wall.y + wall.height && Spr2y + Spr2formaat > wall.y) {
-            console.log("Monster collided with wall");
-            // Move monster out of collision
-            if (richtSpr2X > 0) {
-                Spr2x = wall.x - Spr2formaat;
-            } else if (richtSpr2X < 0) {
-                Spr2x= wall.x + wall.width;
-            }
-            if (richtSpr2Y > 0) {
-                Spr2y = wall.y - Spr2formaat;
-            } else if (richtSpr2Y < 0) {
-                Spr2y = wall.y + wall.height;
-            }
-            // Reverse monster's velocity
-            richtSpr2X = richtSpr2X * -1;
-            richtSpr2Y = richtSpr2Y * -1;
-        }
-        for (let c = 0; c < MaxCoins; c++) {
-        if (coinlocationsX.at(c) < wall.x + wall.width && coinlocationsX.at(c) + CoinscaleXY > wall.x &&  //Maak deze nog
-          coinlocationsY.at(c) < wall.y + wall.height && coinlocationsY.at(c) + CoinscaleXY > wall.y) {
-            console.log("Coin collided with wall");
-             //Move Coin out of collision
-            coinlocationsY.at(c) == coinlocationsY.at(c) + 5; //Fix
-          }
+      let wall = walls[i];
+      // Check if player's x and y positions intersect with the wall's x and y positions
+      if (playerX + scale > wall.x && playerX < wall.x + wall.width && playerY + scale > wall.y && playerY < wall.y + wall.height) {
+          return true;
+      }
   }
+  return false;
 }
-}
-setInterval(checkCollision, 1)
 
 function DrawWalls() {
   for (let i = 0; i < walls.length; i++) {
@@ -343,6 +566,23 @@ function DrawWalls() {
     ctx.closePath();
   }
 }
+
+// Function to check if a coin collides with a wall
+function checkCoinWallCollision(coinX, coinY) {
+  for (let i = 0; i < walls.length; i++) {
+      let wall = walls[i];
+      // Check if coin's x and y positions intersect with the wall's x and y positions
+      if (coinX + 20 > wall.x && coinX < wall.x + wall.width && coinY + 20 > wall.y && coinY < wall.y + wall.height) {
+        console.log("CoinColidw")
+          return true;
+      }
+  }
+  return false;
+}
+
+
+
+
 //Maze eind
 
 //Raycast Begin

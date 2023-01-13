@@ -56,7 +56,7 @@
         <section class="modal activemodal" id="modal"><h1 id="LoadingText">loading...</h1></section>
 
 
-<canvas class="BoxShadow" width="1450px" height="820px"></canvas>   
+<canvas class="BoxShadow" width="1470px" height="840px"></canvas>   
 <h1 id="CoinsCounter">Coins: 0</h1>
 <canvas id="Canvas" width="1450px" height="820px"></canvas>
 <canvas id="Canvas2" width="1450px" height="820px" class="maze"></canvas>
@@ -104,9 +104,7 @@ html {
     z-index: -4;
     width: 98vw;
     height: 98vh;
-    border-style: solid;
-    border-color: black;
-    border-width: 0.5vw;
+
 }
 
 #Canvas {
@@ -114,6 +112,9 @@ html {
     float: left;
     align-self: center;
     position:absolute; top:0px; left:0px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0.8vw;
 }
 
 .BoxShadow {
@@ -122,7 +123,7 @@ html {
     position:absolute; top:0px; left:0px;
     background: radial-gradient(
     circle var(--Radius) at var(--cursorXpos) var(--cursorYpos), 
-    rgba(0,0,0,0) 0%, rgb(0, 0, 0) 100%
+    rgba(234, 255, 114, 0) 0%, rgb(0, 0, 0) 100%
     );
     z-index: 5;
 }
