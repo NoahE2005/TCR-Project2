@@ -366,3 +366,4 @@ function DrawWalls() {
   }
 }
 //Maze eind
+alert("gedaan")
