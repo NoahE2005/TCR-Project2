@@ -264,7 +264,14 @@ function UpdateMonsterSpeed() {
 walls.push(
   {x: 100, y: 150, width: 50, height: 50},
   {x: 150, y: 150, width: 50, height: 50},
-  {x: 200, y: 150, width: 50, height: 50}
+  {x: 200, y: 150, width: 50, height: 50},
+  {x: 300, y: 150, width: 50, height: 50},
+  {x: 350, y: 150, width: 50, height: 50},
+  {x: 200, y: 250, width: 50, height: 50},
+  {x: 200, y: 50, width: 50, height: 50},
+  {x: 150, y: 0, width: 50, height: 50},
+  {x: 100, y: 0, width: 50, height: 50},
+  {x: 200, y: 0, width: 50, height: 50},
 )
 
 function wallsBegin() {
@@ -281,6 +288,7 @@ function wallsBegin() {
 function checkCollision() {
   for (let i = 0; i < walls.length; i++) {
     let wall = walls[i];
+    let index = i
     if (x < wall.x + wall.width && x + PlayerScaleXY > wall.x &&
       y < wall.y + wall.height && y + PlayerScaleXY > wall.y) {
         console.log("Player collided with wall");
@@ -314,21 +322,15 @@ function checkCollision() {
             richtSpr2X = richtSpr2X * -1;
             richtSpr2Y = richtSpr2Y * -1;
         }
-        //if (Spr2x < wall.x + wall.width && Spr2x + Spr2formaat > wall.x &&  //Maak deze nog
-          //Spr2y < wall.y + wall.height && Spr2y + Spr2formaat > wall.y) {
-            //console.log("Monster collided with wall");
-            // Move Coin out of collision
-           // if (richtSpr2X > 0) {
-             //   Spr2x = wall.x - Spr2formaat;
-           // } else if (richtSpr2X < 0) {
-           //     Spr2x= wall.x + wall.width;
-           // }
-           // if (richtSpr2Y > 0) {
-           //     Spr2y = wall.y - Spr2formaat;
-           // } else if (richtSpr2Y < 0) {
-           //     Spr2y = wall.y + wall.height;
-           // }
+        for (let c = 0; c < MaxCoins; c++) {
+        if (coinlocationsX.at(c) < wall.x + wall.width && coinlocationsX.at(c) + CoinscaleXY > wall.x &&  //Maak deze nog
+          coinlocationsY.at(c) < wall.y + wall.height && coinlocationsY.at(c) + CoinscaleXY > wall.y) {
+            console.log("Coin collided with wall");
+             //Move Coin out of collision
+            coinlocationsY.at(c) == coinlocationsY.at(c) + 5; //Fix
+          }
   }
+}
 }
 setInterval(checkCollision, 1)
 
@@ -380,4 +382,5 @@ function checkPlayerAndWalls() {
   console.log("seesPlayer: ", SeesPlayer);
 }
 setInterval(checkPlayerAndWalls, 1000);
+
 //RaycastEind
