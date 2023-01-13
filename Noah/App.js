@@ -107,12 +107,6 @@ addEventListener('keydown', function (e){
     if(e.code == 'KeyA') vxl = PlayerWalkSpeed * -1;
     if(e.code == 'KeyS') vy = PlayerWalkSpeed;
     if(e.code == 'KeyW') vy = PlayerWalkSpeed * -1;
-    if( collisionCheck(player, walls)) {
-        vxr = 0;
-        vxl = 0;
-        vy = 0;
-        this.alert ("Collision")
-    }
 })
 addEventListener("keyup", function(e) {
     if(e.code == 'KeyD') vxr = 0;
@@ -120,24 +114,6 @@ addEventListener("keyup", function(e) {
     if(e.code == 'KeyS') vy = 0;
     if(e.code == 'KeyW') vy = 0;
 })
-
-function collisionCheck(a, b) {
-    if((a.x + a.width) < b.x ||
-    a.x > (b.x + b.width) ||
-    (a.y + a.height) < b.y ||
-    a.y > (b.y + b.height)) {
-      console.log(a.x);
-      console.log(b.x);
-      console.log("colliding");
-    }
-    else {
-      console.log(a.width);
-      console.log(b.width);
-      console.log("Not colliding")
-    }
-
-    return (ALeftB || ARightB || AaboveB || AbelowB)
-}
 
 
 
@@ -366,4 +342,42 @@ function DrawWalls() {
   }
 }
 //Maze eind
-alert("gedaan")
+
+//Raycast Begin
+function doLinesIntersect(x1, y1, x2, y2, x3, y3, x4, y4) {
+  let denominator = ((x2 - x1) * (y4 - y3)) - ((y2 - y1) * (x4 - x3));
+  let numerator1 = ((y1 - y3) * (x4 - x3)) - ((x1 - x3) * (y4 - y3));
+  let numerator2 = ((y1 - y3) * (x2 - x1)) - ((x1 - x3) * (y2 - y1));
+
+  if (denominator == 0) {
+      return numerator1 == 0 && numerator2 == 0;
+  }
+
+  let r = numerator1 / denominator;
+  let s = numerator2 / denominator;
+
+  return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
+}
+
+function checkPlayerAndWalls() {
+  // Initialize starting point of the ray (the monster's position)
+  let rayStartX = Spr2x + Spr2formaat/2;
+  let rayStartY = Spr2y + Spr2formaat/2;
+
+  // Initialize end point of the ray (the player's position)
+  let rayEndX = x + PlayerScaleXY/2;
+  let rayEndY = y + PlayerScaleXY/2;
+
+  for (let i = 0; i < walls.length; i++) {
+      let wall = walls[i];
+      if (doLinesIntersect(rayStartX, rayStartY, rayEndX, rayEndY, wall.x, wall.y, wall.x + wall.width, wall.y + wall.height)) {
+          SeesPlayer = false;
+          break;
+      } else {
+          SeesPlayer = true;
+      }
+  }
+  console.log("seesPlayer: ", SeesPlayer);
+}
+setInterval(checkPlayerAndWalls, 1000);
+//RaycastEind
