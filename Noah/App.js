@@ -26,6 +26,7 @@ const MaxWalls = 150; //Maximaal aantal muren in het spel (alleen als willekeuri
 
 var Breed = 0;
 var Hoog = 0;
+var Loading = true;
 
 let x = 50; //X locatie van speler
 let y = 50; //Y locatie van speler
@@ -39,6 +40,7 @@ var CoinCount = 0; //Houdt bij hoeveel munten de speler verzameld heeft
 var coinlocationsX = []; //Slaat X-locaties van munten op
 var coinlocationsY = []; //Slaat Y-locaties van munten op
 var CoinscaleXY = 10;
+var CoinColor = "yellow";
 
 CoinsBegin()
 function UpdateScreen() {
@@ -60,7 +62,7 @@ function UpdateScreen() {
     requestAnimationFrame(UpdateScreen)
 }
 setTimeout(UpdateScreen, 1000)
-setTimeout(EindLoad, 1)
+setTimeout(EindLoad, 3000)
 
 function UpdatePlayerLocation() {
   if (checkWallCollision(x + vxl, y + vy, PlayerScaleXY)) {
@@ -86,9 +88,9 @@ function CoinsBegin() {
 
 
 function Coins() {
-    for (let i = 0; i < MaxCoins; i++) {
+    for (let i = 0; i < coinlocationsX.length; i++) {
       coins.beginPath();
-      coins.fillStyle = "yellow"; //fix
+      coins.fillStyle = CoinColor; 
       coins.fillRect(coinlocationsX.at(i),coinlocationsY.at(i), CoinscaleXY, CoinscaleXY)
       coins.closePath();
       for (let i = 0; i < coinlocationsX.length; i++) {
@@ -131,7 +133,7 @@ function Coins() {
 }
 
 function CoinsCollisionCheck() {
-  for (let i = 0; i < MaxCoins; i++) {
+  for (let i = 0; i < coinlocationsX.length; i++) {
     if(coinlocationsX.at(i) >= -10 || coinlocationsY.at(i) >= -10) {
   if((coinlocationsX.at(i) + CoinscaleXY) < x ||
    coinlocationsX.at(i) > (x + PlayerScaleXY) ||
@@ -139,12 +141,21 @@ function CoinsCollisionCheck() {
      coinlocationsY.at(i) > (y + PlayerScaleXY)) {
 }
 else {
+  if(!Loading) {
   CoinCount = CoinCount + 1;
   console.log(CoinCount);
   delete coinlocationsX[i];
   delete coinlocationsY[i];
   UpdateMonsterSpeed();
   document.getElementById("CoinsCounter").textContent = "Coins: " + CoinCount;
+  if(CoinCount >= MaxCoins) {
+    EndCoin()
+    if (EndCoinReady) {
+      document.getElementById("CoinsCounter").textContent = "You Win";
+      document.getElementById("CoinsCounter").style.color = "green";
+    }
+  }
+}
 }
 }
   }
@@ -211,6 +222,7 @@ modal.classList.remove("activemodal");
 document.getElementById("Canvas").style.animation = "CanvasZoom 2s forward";
 document.getElementById("Canvas2").style.animation = "CanvasZoom 2s forward";
 document.documentElement.style.setProperty('--Radius',15 + "rem")
+Loading = false;
 }
 document.documentElement.style.setProperty('--Radius', 3000 + "rem")
 
@@ -233,6 +245,7 @@ LoadingText1()
  let Spr2x = 400;
  let Spr2y = 220;
  let MonsterSpeed = 0.5;
+ 
 
  var Spr2formaat = 20; 
  var telSpr2 = 0;
@@ -624,3 +637,17 @@ function checkPlayerAndWalls() {
 setInterval(checkPlayerAndWalls, 1000);
 
 //RaycastEind
+
+let EndCoinReady = false
+function EndCoin() {
+  document.getElementById("CoinsCounter").textContent = "Escape";
+  document.getElementById("CoinsCounter").style.color = "red";
+  CoinColor = "green";
+  coinlocationsX.push(Math.floor(Math.random() * 1400)) //De willekeurige locatie X van de munten maken
+  coinlocationsY.push(Math.floor(Math.random() * 800)) //De willekeurige locatie Y van de munten maken
+  setTimeout(EndCoinReadyToggle, 50)
+}
+
+function EndCoinReadyToggle() {
+  EndCoinReady = true
+}
