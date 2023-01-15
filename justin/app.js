@@ -11,8 +11,11 @@ let mouse = {   //begin locatie van de muis
 }
 
 addEventListener('mousemove', (event) => {    //ziet de locatie van de muis
-  mouse.x = event.pageX,
-  mouse.y = event.pageY
+  reallocation = canvas.getBoundingClientRect(), // absolute afmetingen van de canvas
+  schaalX = canvas.width / reallocation.width,   
+  schaalY = canvas.height / reallocation.height,
+  mouse.x = (event.pageX - reallocation.left)*schaalX,
+  mouse.y = (event.pageY - reallocation.top)*schaalY
 });
 
 addEventListener('click', Shoot);   //conect de keys aan acties
@@ -56,7 +59,7 @@ function randomIntFromRange(min, max) {   //voor latere randomizers
   return Math.floor(Math.random() * (max-min+1) + min);
 }
 
-function Shoot () {
+function Shoot() {
   let bullet = new Circle(player.x, player.y, 8, 'white');    // says the x and y spawn value and the size than the color
   // bullet.mx = mouse.x;
   // bullet.my = mouse.y;
@@ -168,7 +171,7 @@ function Update () {
   player.update();  //update de speler
 
   ctx.fillStyle = "#FFFFFF";    //text kleur
-  ctx.font = "15px sans-serif";   //text font
+  ctx.font = "12px sans-serif";   //text font
   ctx.textAlign = "center";   //waar de text staat
   ctx.fillText("points: " + points, canvas.width/2, 15);    //de text
 }
