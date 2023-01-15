@@ -73,8 +73,11 @@
                 }<br>
                 <br>
                 addEventListener('mousemove', (event) => {    <p1>//ziet de locatie van de muis</p1><br>
-                  mouse.x = event.pageX,<br>
-                  mouse.y = event.pageY<br>
+                  reallocation = canvas.getBoundingClientRect(), // absolute afmetingen van de canvas
+                  schaalX = canvas.width / reallocation.width,   
+                  schaalY = canvas.height / reallocation.height,
+                  mouse.x = (event.pageX - reallocation.left)*schaalX,
+                  mouse.y = (event.pageY - reallocation.top)*schaalY
                 });<br>
                 <br>
                 addEventListener('click', Shoot);   <p1>//conect de keys aan acties</p1><br>
@@ -230,7 +233,7 @@
                   player.update();  <p1>//update de speler</p1><br>
                   <br>
                   ctx.fillStyle = "#FFFFFF";    <p1>//text kleur</p1><br>
-                  ctx.font = "20px sans-serif";   <p1>//text font</p1><br>
+                  ctx.font = "12px sans-serif";   <p1>//text font</p1><br>
                   ctx.textAlign = "center";   <p1>//waar de text staat</p1><br>
                   ctx.fillText("Points: " + points, canvas.width/2, 22);    //de text</p1><br>
                 }<br>
