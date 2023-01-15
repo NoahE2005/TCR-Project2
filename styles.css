@@ -314,13 +314,22 @@ nav {
 
 footer {
   background-color: rgb(22, 22, 22);
-  position: fixed;
+  position: sticky;
+  display: flex;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 12vh;
   z-index: 5;
   text-align: center;
+  margin-top: 1vh;
+}
+
+.FooterButtons {
+  display: flex;
+  flex-direction: row;
+  margin-left: 1vw;
+  margin-right: 1vw;
 }
 
 .column {
@@ -328,6 +337,23 @@ footer {
   float: left;
   padding-top: 2vh;
 }
+
+.FooterButton {
+  margin-left: 1vw;
+  margin-right: 1vw;
+  padding: 1vw 2vw;
+  font-size: large;
+  transition: 0.2s;
+}
+
+.FooterButton:hover {
+  margin-left: 1vw;
+  margin-right: 1vw;
+  padding: 1vw 2.5vw;
+  font-size: x-large;
+  transition: 0.2s;
+}
+
 
 @media screen and (max-width:600px) {
   .column {
