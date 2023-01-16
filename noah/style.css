@@ -341,7 +341,7 @@ canvas {
 .content, .modal {
   top:0;
   left:0;
-  height:98vh;
+  height: 840px;
   width: 98vw;
   text-align: center;
 }
