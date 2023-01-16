@@ -39,32 +39,30 @@ var CoinsRef = coins.fillRect(0,0, 0, 0); //Tekent de munten op het canvas
 var CoinCount = 0; //Houdt bij hoeveel munten de speler verzameld heeft
 var coinlocationsX = []; //Slaat X-locaties van munten op
 var coinlocationsY = []; //Slaat Y-locaties van munten op
-var CoinscaleXY = 10;
-var CoinColor = "yellow";
+var CoinscaleXY = 10; //Slaat de XY grootte van de munten op
+var CoinColor = "yellow"; //Slaat de kleur van de munten op
 
 CoinsBegin()
 function UpdateScreen() {
-  var Breed = Canvas.offsetWidth - PlayerScaleXY;
-  var Hoog = Canvas.offsetWidth - PlayerScaleXY;
-  ctx.clearRect(0,0, Canvas.width, Canvas.height)
-  Character.clearRect(0,0, Canvas.width, Canvas.height)
+  ctx.clearRect(0,0, Canvas.width, Canvas.height) //canvas schoonmaken
+  Character.clearRect(0,0, Canvas.width, Canvas.height) //De speler van het canvas verwijderen
     Character.beginPath();
-    Character.fillStyle = "white";
-    player = Character.fillRect(x,y, PlayerScaleXY, PlayerScaleXY)
+    Character.fillStyle = "white"; //De kleur van de speler
+    player = Character.fillRect(x,y, PlayerScaleXY, PlayerScaleXY) //De speler op het canvas toevoegen
     Character.closePath();
     Monster.beginPath();
-    Monster.fillStyle = "red"; // kleur spr2
-    Monster.fillRect(Spr2x, Spr2y, Spr2formaat, Spr2formaat);
+    Monster.fillStyle = "red"; //De kleur van het monster
+    Monster.fillRect(Spr2x, Spr2y, Spr2formaat, Spr2formaat); //De monster op de canvas toevoegen
     Monster.closePath();
-    UpdatePlayerLocation()
-    DrawWalls()
+    UpdatePlayerLocation();
+    DrawWalls();
     Coins();
     requestAnimationFrame(UpdateScreen)
 }
 setTimeout(UpdateScreen, 1000)
 setTimeout(EindLoad, 3000)
 
-function UpdatePlayerLocation() {
+function UpdatePlayerLocation() { //De locatie van de speler updaten
   if (checkWallCollision(x + vxl, y + vy, PlayerScaleXY)) {
     vxl = 0;
   }
@@ -79,7 +77,7 @@ function UpdatePlayerLocation() {
   y += vy;
 }
 
-function CoinsBegin() {
+function CoinsBegin() { // een array van de X en Y locatie van de munten maken
     for (let i = 0; i < MaxCoins; i++) {
         coinlocationsX.push(Math.floor(Math.random() * 1400)) //De willekeurige locatie X van de munten maken
         coinlocationsY.push(Math.floor(Math.random() * 800)) //De willekeurige locatie Y van de munten maken
@@ -90,13 +88,13 @@ function CoinsBegin() {
 function Coins() {
     for (let i = 0; i < coinlocationsX.length; i++) {
       coins.beginPath();
-      coins.fillStyle = CoinColor; 
-      coins.fillRect(coinlocationsX.at(i),coinlocationsY.at(i), CoinscaleXY, CoinscaleXY)
+      coins.fillStyle = CoinColor; //de munten een kleur geven
+      coins.fillRect(coinlocationsX.at(i),coinlocationsY.at(i), CoinscaleXY, CoinscaleXY); //de munten op het canvas toevoegen
       coins.closePath();
       for (let i = 0; i < coinlocationsX.length; i++) {
-        let coinX = coinlocationsX[i];
-        let coinY = coinlocationsY[i];
-        // Check if coin collides with a wall, if so, move the coin out of the wall
+        let coinX = coinlocationsX[i]; //de coinX variable maken
+        let coinY = coinlocationsY[i]; //de coinY variable maken
+        //Kijken of de munten in een muur zitten
         if (checkCoinWallCollision(coinX, coinY)) {
             coinX = Math.random() * (Canvas.width - 20);
             coinY = Math.random() * (Canvas.height - 20);
