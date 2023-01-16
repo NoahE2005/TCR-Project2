@@ -6,8 +6,8 @@ main {
 }
 
 /*voor de game code*/
-p1 {
-    color: rgb(0, 200, 0);
+p {
+    padding-left: 5vw;
 }
 
 /*li is voor lists*/
