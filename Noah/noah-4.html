@@ -53,25 +53,673 @@
       </nav>
 
     <main>
-        <section>
+        <h1 class="GameDetailsBigText">Game details</h1>
+        <section class="MainText">
             <h1>Wat voor soort spel is dit?</h1>
             <p>
-
+                Dit is een soort doolhof-horror spel waar de speler munten moeten pakken, en een monster ontwijken.<br>
+                je moet in totaal 9 munten pakken om het spel te halen, een het monster word steeds sneller.<br>
             </p>
+            <br><br>
         </section>
 
-        <section>
-            <h1>Waren er opstakels voor dit spel te maken?</h1>
+        <section class="MainText">
+            <h1>Waren er obstakels voor dit spel te maken?</h1>
+            <p>
+                Ja, ik had wel een paar obstakels. maar de obstakels hadden het meest te maken met Collision.<br>
+                maar met de hulp van het internet had ik het na een lange tijd werkend te krijgen.<br>
+            </p>
+            <br><br>
+        </section>
+
+        <section class="MainText">
+            <h1>Hoe speel je het spel?</h1>
             <p>
 
             </p>
+            <br><br>
         </section>
 
-        <section>
+        <section class="MainText">
             <h1>Hoe ziet de volledige code eruit?</h1>
             <p>
-
+                deze code voor het speel is wel complex met meer dan 600 lines van code
             </p>
+            <p>
+                <h2>Code</h2>
+
+                <br>const  Canvas = document.getElementById("Canvas")
+                <br>const ctx = Canvas.getContext("2d")
+                <br>const Character = Canvas.getContext("2d")
+                <br>const coins = Canvas.getContext("2d")
+                <br>const Monster = Canvas.getContext("2d")
+                <br>const Walls = Canvas.getContext("2d")
+                <br>
+                <br>const PlayerWalkSpeed = 3; <p1 class="Comment">//Snelheid van de speler</p1>
+                <br>const PlayerColor = 000000; //Kleur van de speler
+                <br>const PlayerScaleXY = 20; //Grootte van de speler
+                <br>const MaxCoins = 8; //Maximaal aantal munten in het spel
+                <br>const minCoinDistance = 350; //Minimum afstand tussen de munten
+                <br>const MaxWalls = 150; //Maximaal aantal muren in het spel (alleen als willekeurig)
+                <br>
+                <br>var Breed = 0;
+                <br>var Hoog = 0;
+                <br>var Loading = true;
+                <br>
+                <br>let x = 50; //X locatie van speler
+                <br>let y = 50; //Y locatie van speler
+                <br>let vxl = 0; // de X links "velocity" van speler
+                <br>let vxr = 0; // de X rechts "velocity" van speler
+                <br>let vy = 0; // de Y "velocity" van speler
+                <br>
+                <br>var player = Character.fillRect(0,0, 0, 0); //Tekent de speler op het canvas
+                <br>var CoinsRef = coins.fillRect(0,0, 0, 0); //Tekent de munten op het canvas
+                <br>var CoinCount = 0; //Houdt bij hoeveel munten de speler verzameld heeft
+                <br>var coinlocationsX = []; //Slaat X-locaties van munten op
+                <br>var coinlocationsY = []; //Slaat Y-locaties van munten op
+                <br>var CoinscaleXY = 10; //Slaat de XY grootte van de munten op
+                <br>var CoinColor = "yellow"; //Slaat de kleur van de munten op
+                <br>
+                <br>CoinsBegin()
+                <br>function UpdateScreen() {
+                <br>  ctx.clearRect(0,0, Canvas.width, Canvas.height) //canvas schoonmaken
+                <br>Character.clearRect(0,0, Canvas.width, Canvas.height) //De speler van het canvas verwijderen
+                <br>Character.beginPath();
+                <br>Character.fillStyle = "white"; //De kleur van de speler
+                <br>player = Character.fillRect(x,y, PlayerScaleXY, PlayerScaleXY) //De speler op het canvas toevoegen
+                <br>Character.closePath();
+                <br>Monster.beginPath();
+                <br>Monster.fillStyle = "red"; //De kleur van het monster
+                <br>Monster.fillRect(Spr2x, Spr2y, Spr2formaat, Spr2formaat); //De monster op de canvas toevoegen
+                <br>Monster.closePath();
+                <br>UpdatePlayerLocation();
+                <br>DrawWalls();
+                <br>Coins();
+                <br>requestAnimationFrame(UpdateScreen)
+                <br>}
+                <br>setTimeout(UpdateScreen, 1000)
+                <br>setTimeout(EindLoad, 7000) //7 seconden loaden
+                <br>
+                <br>function UpdatePlayerLocation() { //De locatie van de speler updaten
+                    <br>//eerst checken voor collision
+                    <br>if (checkWallCollision(x + vxl, y + vy, PlayerScaleXY)) {
+                        <br>vxl = 0;
+                        <br>}
+                        <br>if (checkWallCollision(x + vxr, y + vy, PlayerScaleXY )) {
+                            <br>vxr = 0;
+                            <br>}
+                            <br>if (checkWallCollision(x + vxl + vxr, y + vy, PlayerScaleXY)) {
+                                <br>vy = 0;
+                                <br>}
+                                <br>x += vxl;
+                                <br>x += vxr;
+                                <br>y += vy;
+                                <br>}
+                                <br>
+                                <br>function CoinsBegin() { // een array van de X en Y locatie van de munten maken
+                                    <br>for (let i = 0; i < MaxCoins; i++) {
+                                        <br>coinlocationsX.push(Math.floor(Math.random() * 1400)) //De willekeurige locatie X van de munten maken
+                                        <br>coinlocationsY.push(Math.floor(Math.random() * 800)) //De willekeurige locatie Y van de munten maken
+                                        <br>}
+                                        <br>}
+                                        <br>
+                                        <br>
+                <br>function Coins() {
+                    <br>for (let i = 0; i < coinlocationsX.length; i++) {
+                        <br>coins.beginPath();
+                        <br>coins.fillStyle = CoinColor; //de munten een kleur geven
+                        <br>coins.fillRect(coinlocationsX.at(i),coinlocationsY.at(i), CoinscaleXY, CoinscaleXY); //de munten op het canvas toevoegen
+                        <br>coins.closePath();
+                        <br>for (let i = 0; i < coinlocationsX.length; i++) {
+                            <br>let coinX = coinlocationsX[i]; //de coinX variable maken
+                            <br>let coinY = coinlocationsY[i]; //de coinY variable maken
+                            <br>//Kijken of de munten in een muur zitten
+                            <br>if (checkCoinWallCollision(coinX, coinY)) {
+                                <br>coinX = Math.random() * (Canvas.width - 20);
+                                <br>coinY = Math.random() * (Canvas.height - 20);
+                                <br>        }
+                                <br>        coinlocationsX[i] = coinX;
+                                <br>        coinlocationsY[i] = coinY;
+                                <br>      }
+                                <br>    }
+                                <br>    for (let i = 0; i < coinlocationsX.length; i++) {
+                                    <br>      let coinX = coinlocationsX[i];
+                                    <br>      let coinY = coinlocationsY[i];
+                                    <br>      //Een 2de check voor de munten in een muur, en als ze in een muur zitten worden ze uit de muur gehaald
+                                    <br>      if (checkCoinWallCollision(coinX, coinY)) {
+                                        <br>          coinX = Math.random() * (Canvas.width - 20);
+                                        <br>         coinY = Math.random() * (Canvas.height - 20);
+                                        <br>      }
+                                        <br> 
+                                        <br>     //Een check of munten te dichtbij elkaar zijn, als ja worden ze naar een nieuwe locatie gezet
+                                        <br>     for (let j = 0; j < coinlocationsX.length; j++) {
+                                            <br>          if (i !== j) {
+                                                <br>              let otherCoinX = coinlocationsX[j];
+                                                <br>              let otherCoinY = coinlocationsY[j];
+                                                <br>              let distance = Math.sqrt(Math.pow(coinX - otherCoinX, 2) + Math.pow(coinY - otherCoinY, 2));
+                                                <br>              if (distance < minCoinDistance) {
+                                                    <br>                  coinX = Math.random() * (Canvas.width - 20);
+                                                    <br>                  coinY = Math.random() * (Canvas.height - 20);
+                                                    <br>             }
+                                                    <br>         }
+                                                    <br>      }
+                                                    <br> 
+                                                    <br>     coinlocationsX[i] = coinX;
+                                                    <br>     coinlocationsY[i] = coinY;
+                                                    <br> }
+                                                    <br>}
+                                                    <br>
+    <br>function CoinsCollisionCheck() { //een functie om munten op te pakken
+        <br>for (let i = 0; i < coinlocationsX.length; i++) {
+            <br>    if(coinlocationsX.at(i) >= -10 || coinlocationsY.at(i) >= -10) {
+                <br>  if((coinlocationsX.at(i) + CoinscaleXY) < x ||
+                <br>  coinlocationsX.at(i) > (x + PlayerScaleXY) ||
+                <br>    (coinlocationsY.at(i) + CoinscaleXY) < y ||
+                <br>     coinlocationsY.at(i) > (y + PlayerScaleXY)) {
+                    <br>}
+                    <br>else {
+                        <br>  if(!Loading) { // zorgen dat je geen munten op kan pakken als het spel aan het laden is
+                            <br>  CoinCount = CoinCount + 1; //coin count 1 omhoog
+                            <br>  console.log(CoinCount);
+                            <br>  delete coinlocationsX[i];
+                            <br>  delete coinlocationsY[i];
+                            <br>  UpdateMonsterSpeed(); //de monster sneller maken
+                            <br>  document.getElementById("CoinsCounter").textContent = "Coins: " + CoinCount; //de tekst updaten
+                            <br>  if(CoinCount >= MaxCoins) {
+                                <br>    EndCoin() //kijken of de EndCoin kan spawnen
+                                <br>    if (EndCoinReady) {
+                                    <br>      document.getElementById("CoinsCounter").textContent = "You Win";
+                                    <br>      document.getElementById("CoinsCounter").style.color = "green";
+                                    <br>    }
+                                    <br>  }
+                                    <br>}
+                                    <br>}
+                                    <br>}
+                                    <br>  }
+                                    <br>}
+                                    <br>setInterval(CoinsCollisionCheck,3)
+                                    <br>
+                                    <br>//Begin Input
+                                    <br>addEventListener('keydown', function (e){ //kijken welke toetsen zijn ingedrukt met een Const voor de snelheid van de speler
+                                        <br>    if(e.code == 'KeyD') vxr = PlayerWalkSpeed;
+                                        <br>    if(e.code == 'KeyA') vxl = PlayerWalkSpeed * -1;
+                                        <br>    if(e.code == 'KeyS') vy = PlayerWalkSpeed;
+                                        <br>    if(e.code == 'KeyW') vy = PlayerWalkSpeed * -1;
+                                        <br>})
+                                        <br>addEventListener("keyup", function(e) { //de speler stoppen als de toets is los gelaten
+                                            <br>    if(e.code == 'KeyD') vxr = 0;
+                                            <br>    if(e.code == 'KeyA') vxl = 0;
+                                            <br>    if(e.code == 'KeyS') vy = 0;
+                                            <br>    if(e.code == 'KeyW') vy = 0;
+                                            <br>})
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>function OuterWallCollision() { //Een Collision check voor de grootte van de canvas zelf
+                                                <br>  var breed = Canvas.offsetWidth - PlayerScaleXY; //breedte van canvassd
+                                                <br>
+                                                <br>  var hoog = Canvas.offsetHeight - PlayerScaleXY; //hoogte van canvas
+                                                <br>
+                                                <br>  if(x <= 0){
+                                                    <br>      x = 0;
+                                                    <br>  }
+                                                    <br>  if(y <= 0){
+                                                        <br>      y = 0;
+                                                        <br>  }
+                                                        <br>  if(x >= breed)
+                                                        <br>  {
+                                                            <br>     x = breed;
+                                                            <br>  }
+                                                            <br>  if(y >= hoog)
+                                                            <br>  {
+                                                                <br>      y = hoog;
+                                                                <br> }
+                                                                <br> setTimeout(OuterWallCollision, 5)
+                                                                <br>}
+                                                                <br>OuterWallCollision()
+                                                                <br>
+                                                                <br>
+                                                                <br>//Eind Input
+                                                                <br>
+                                                                <br>//Begin Lighting
+                                                                <br>function TrackPlayer() { //Locatie van player pakken en het setten voor de style
+                                                                    <br>    document.documentElement.style.setProperty('--cursorXpos', x + parseFloat(25) + "px") //de parsefloat om het te centreren
+                                                                    <br>    document.documentElement.style.setProperty('--cursorYpos', y + parseFloat(75) + "px") //de parsefloat om het te centreren
+                                                                    <br>    setTimeout(TrackPlayer, 50)
+                                                                    <br>}
+                                                                    <br>TrackPlayer()
+                                                                    <br>//Eind Lighting
+                                                                    <br>
+                                                                    <br>//Begin Modal
+                                                                    <br>//Begin Loading
+                                                                    <br>function EindLoad() { //de functie voor het einde van het loaden
+                                                                        <br>var modal = document.getElementById("modal");
+                                                                        <br>modal.classList.remove("activemodal");
+                                                                        <br>document.getElementById("Canvas").style.animation = "CanvasZoom 2s forward";
+                                                                        <br>document.getElementById("Canvas2").style.animation = "CanvasZoom 2s forward";
+                                                                        <br>document.documentElement.style.setProperty('--Radius',15 + "rem")
+                                                                        <br>document.getElementById("CoinsCounter").textContent = "Coins: 0";
+                                                                        <br>Loading = false;
+                                                                        <br>}
+                                                                        <br>document.documentElement.style.setProperty('--Radius', 3000 + "rem")
+                                                                        <br>
+                                                                        <br>//de loading tekst animatie
+                                                                        <br>function LoadingText1() {
+                                                                            <br>  document.getElementById("LoadingText").innerHTML = "Loading.";
+                                                                            <br>  setTimeout(LoadingText2, 1500);
+                                                                            <br>}
+                                                                            <br>function LoadingText2() {
+                                                                                <br>  document.getElementById("LoadingText").innerHTML = "Loading..";
+                                                                                <br>  setTimeout(LoadingText3, 1000);
+                                                                                <br>}
+                                                                                <br>function LoadingText3() {
+                                                                                    <br>  document.getElementById("LoadingText").innerHTML = "Loading...";
+                                                                                    <br>  setTimeout(LoadingText1, 1000);
+                                                                                    <br>}
+                                                                                    <br>LoadingText1()
+                                                                                    <br>//Eind Loading
+                                                                                    <br>
+                                                                                    <br> //Monster Begin
+                                                                                    <br> let Spr2x = 400; //X locatie van monster
+                                                                                    <br> let Spr2y = 220; //Y locatie van monster
+                                                                                    <br> let MonsterSpeed = 0.5; //De normalen snelheid van monster
+                                                                                    <br> 
+                                                                                    <br>
+                                                                                    <br> var Spr2formaat = 20; //De XY scale van monster
+                                                                                    <br> var telSpr2 = 0;
+                                                                                    <br>var maxSpr2 = 100;
+                                                                                    <br> var richtSpr2X = 1; //De X velocity van monster
+                                                                                    <br> var richtSpr2Y = 1; //De Y velocity van monster
+                                                                                    <br> var SeesPlayer = false; //Boolean om te checken of de speler de monster ziet
+                                                                                    <br>
+                                                                                    <br> function Spr2() {
+                                                                                        <br>  if(SeesPlayer) { //Checken of SeesPlayer is True
+                                                                                            <br>    //De monster naar de speler bewegen
+                                                                                            <br>    if(x > Spr2x) {
+                                                                                                <br>      richtSpr2X = MonsterSpeed;
+                                                                                                <br>    }
+                                                                                                <br>    if(x < Spr2x) {
+                                                                                                    <br>      richtSpr2X = MonsterSpeed * -1;
+                                                                                                    <br>    }
+                                                                                                    <br>    if(y > Spr2y) {
+                                                                                                        <br>      richtSpr2Y = MonsterSpeed;
+                                                                                                        <br>    }
+                                                                                                        <br>   if(y < Spr2y) {
+                                                                                                            <br>     richtSpr2Y = MonsterSpeed * -1;
+                                                                                                            <br>   }
+                                                                                                            <br> }
+                                                                                                            <br> else {
+                                                                                                                <br>   //Als SeesPlayer False is gaat de monster een willekeurige richting op
+                                                                                                                <br>    telSpr2++;
+                                                                                                                <br>    if (telSpr2 > maxSpr2) {
+                                                                                                                    <br>        telSpr2 = 0;
+                                                                                                                    <br>        richtSpr2X = Math.floor(Math.random()*3) -1;Spr2formaat
+                                                                                                                    <br>        richtSpr2Y = Math.floor(Math.random()*3) -1;
+                                                                                                                    <br>    }
+                                                                                                                    <br>   }
+                                                                                                                    <br>   if (checkWallCollision(Spr2x + richtSpr2X, Spr2y + richtSpr2Y, Spr2formaat)) {
+                                                                                                                        <br>    richtSpr2X = 0;
+                                                                                                                        <br> }
+                                                                                                                        <br>   if (checkWallCollision(Spr2x + richtSpr2X, Spr2y + richtSpr2Y, Spr2formaat)) {
+                                                                                                                            <br>    richtSpr2Y = 0;
+                                                                                                                            <br>}
+                                                                                                                            <br>
+                                                                                                                            <br>    Spr2x += richtSpr2X; //De X locatie van monster updaten
+                                                                                                                            <br>    Spr2y += richtSpr2Y; //De Y locatie van monster updaten
+                                                                                                                            <br>    if (Spr2x<0) {richtSpr2X = MonsterSpeed;}
+                                                                                                                            <br>    if (Spr2x>Canvas.offsetWidth-Spr2formaat) {richtSpr2X = MonsterSpeed * -1;}
+                                                                                                                            <br>    if (Spr2y<0) {richtSpr2Y = MonsterSpeed;}
+                                                                                                                            <br>    if (Spr2y>Canvas.offsetHeight-Spr2formaat) {richtSpr2Y = MonsterSpeed * -1;}
+                                                                                                                            <br> }
+                                                                                                                            <br> setInterval(Spr2, 5)
+                                                                                                                            <br>
+                                                                                                                            <br>   function MonstercollisionCheck() { //Kijken of de speler de monster aan het aanraken is
+                                                                                                                                <br>    if((x + PlayerScaleXY) < Spr2x ||
+                                                                                                                                <br>    x > (Spr2x + Spr2formaat) ||
+                                                                                                                                <br>    (y + PlayerScaleXY) < Spr2y ||
+                                                                                                                                <br>    y > (Spr2y + Spr2formaat)) {
+                                                                                                                                    <br>      console.log("Not colliding");
+                                                                                                                                    <br>    }
+                                                                                                                                    <br>   else {
+                                                                                                                                        <br>      console.log("colliding")
+                                                                                                                                        <br>    }
+                                                                                                                                        <br> }
+                                                                                                                                        <br>setInterval(MonstercollisionCheck,5)
+                                                                                                                                        <br>
+                                                                                                                                        <br>function UpdateMonsterSpeed() {
+                                                                                                                                            <br>  richtSpr2X = 0;
+                                                                                                                                            <br>  richtSpr2Y = 0;
+                                                                                                                                            <br>  MonsterSpeed = MonsterSpeed + (CoinCount * 0.05); //De monster sneller maken de hoger dat de CoinCount is
+                                                                                                                                            <br>}
+                                                                                                                                            <br>
+                                                                                                                                            <br> //Monster Eind
+                                                                                                                                            <br>
+                                                                                                                                            <br> //Maze begin
+                                                                                                                                            <br> const walls = [  
+                                                                                                                                            <br>  {x: 100, y: 100, width: 50, height: 50},
+                                                                                                                                            <br> {x: 300, y: 300, width: 50, height: 50},
+                                                                                                                                            <br> {x: 400, y: 400, width: 50, height: 50}
+                                                                                                                                            <br>];
+                                                                                                                                            <br>
+                                                                                                                                            <br>walls.push( //De Muren zelf gemaakt
+                                                                                                                                            <br> {x: 100, y: 150, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 150, y: 150, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 200, y: 150, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 300, y: 150, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 350, y: 150, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 200, y: 250, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 200, y: 50, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 150, y: 0, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 100, y: 0, width: 50, height: 50},
+                                                                                                                                            <br> {x: 200, y: 0, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 150, y: 0, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 100, y: 0, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 50, y: 0, width: 50, height: 50},
+                                                                                                                                            <br> {x: 0, y: 0, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 0, y: 50, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 0, y: 100, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 0, y: 150, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 0, y: 200, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 0, y: 250, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 0, y: 300, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 0, y: 350, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 50, y: 250, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 50, y: 300, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 100, y: 250, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 200, y: 300, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 200, y: 350, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 150, y: 350, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 150, y: 400, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 100, y: 400, width: 50, height: 50},
+                                                                                                                                            <br> {x: 50, y: 450, width: 50, height: 50},
+                                                                                                                                            <br> {x: 100, y: 450, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 50, y: 500, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 50, y: 550, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 50, y: 600, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 50, y: 700, width: 50, height: 50},
+                                                                                                                                            <br> {x: 100, y: 700, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 100, y: 600, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 100, y: 750, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 150, y: 700, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 200, y: 700, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 250, y: 700, width: 50, height: 50},
+                                                                                                                                            <br> {x: 250, y: 650, width: 50, height: 50},
+                                                                                                                                            <br> {x: 250, y: 550, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 200, y: 550, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 100, y: 550, width: 50, height: 50},
+                                                                                                                                            <br> {x: 100, y: 500, width: 50, height: 50},
+                                                                                                                                            <br> {x: 200, y: 500, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 250, y: 500, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 300, y: 500, width: 50, height: 50},
+                                                                                                                                            <br> {x: 350, y: 500, width: 50, height: 50},
+                                                                                                                                            <br> {x: 450, y: 500, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 550, y: 500, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 350, y: 400, width: 50, height: 50},
+                                                                                                                                            <br> {x: 300, y: 400, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 200, y: 400, width: 50, height: 50},
+                                                                                                                                            <br> {x: 300, y: 350, width: 50, height: 50},
+                                                                                                                                            <br> {x: 300, y: 250, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 350, y: 250, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 400, y: 250, width: 50, height: 50},
+                                                                                                                                            <br> {x: 450, y: 250, width: 50, height: 50},
+                                                                                                                                            <br> {x: 450, y: 300, width: 50, height: 50},
+                                                                                                                                            <br> {x: 300, y: 100, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 300, y: 50, width: 50, height: 50},
+                                                                                                                                            <br> {x: 350, y: 50, width: 50, height: 50},
+                                                                                                                                            <br> {x: 400, y: 50, width: 50, height: 50},
+                                                                                                                                            <br> {x: 500, y: 50, width: 50, height: 50},
+                                                                                                                                            <br> {x: 500, y: 100, width: 50, height: 50},
+                                                                                                                                            <br> {x: 500, y: 150, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 450, y: 150, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 400, y: 150, width: 50, height: 50},
+                                                                                                                                            <br> {x: 600, y: 50, width: 50, height: 50},
+                                                                                                                                            <br> {x: 600, y: 0, width: 50, height: 50},
+                                                                                                                                            <br> {x: 600, y: 50, width: 50, height: 50},
+                                                                                                                                            <br> {x: 550, y: 150, width: 50, height: 50},
+                                                                                                                                            <br> {x: 600, y: 150, width: 50, height: 50},
+                                                                                                                                            <br> {x: 650, y: 150, width: 50, height: 50},
+                                                                                                                                            <br> {x: 700, y: 150, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 700, y: 50, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 750, y: 50, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 800, y: 50, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 850, y: 50, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 800, y: 100, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 800, y: 150, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 800, y: 250, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 800, y: 200, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 500, y: 250, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 550, y: 250, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 650, y: 250, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 650, y: 300, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 650, y: 350, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 600, y: 350, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 550, y: 350, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 550, y: 400, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 500, y: 500, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 500, y: 550, width: 50, height: 50},
+                                                                                                                                            <br>  {x: 500, y: 600, width: 50, height: 50},
+<br>{x: 450, y: 600, width: 50, height: 50},
+<br>  {x: 400, y: 600, width: 50, height: 50},
+<br>  {x: 400, y: 650, width: 50, height: 50},
+<br> {x: 400, y: 700, width: 50, height: 50},
+<br>  {x: 400, y: 750, width: 50, height: 50},
+<br>  {x: 350, y: 600, width: 50, height: 50},
+<br>  {x: 350, y: 700, width: 50, height: 50},
+<br>  {x: 450, y: 700, width: 50, height: 50},
+<br>  {x: 450, y: 650, width: 50, height: 50},
+<br>  {x: 500, y: 650, width: 50, height: 50},
+<br>  {x: 500, y: 700, width: 50, height: 50},
+<br>  {x: 600, y: 700, width: 50, height: 50},
+<br>  {x: 650, y: 700, width: 50, height: 50},
+<br>  {x: 700, y: 700, width: 50, height: 50},
+<br>  {x: 600, y: 650, width: 50, height: 50},
+<br>  {x: 600, y: 600, width: 50, height: 50},
+<br>  {x: 650, y: 600, width: 50, height: 50},
+<br>  {x: 650, y: 550, width: 50, height: 50},
+<br>  {x: 650, y: 500, width: 50, height: 50},
+<br>  {x: 650, y: 450, width: 50, height: 50},
+<br>  {x: 650, y: 400, width: 50, height: 50},                                                                                                                                        <br>  {x: 700, y: 250, width: 50, height: 50},
+<br>  {x: 800, y: 300, width: 50, height: 50},
+<br>  {x: 800, y: 350, width: 50, height: 50},
+<br>  {x: 750, y: 350, width: 50, height: 50},
+<br>  {x: 750, y: 400, width: 50, height: 50},
+<br>  {x: 750, y: 500, width: 50, height: 50},
+<br>  {x: 750, y: 550, width: 50, height: 50},
+<br>  {x: 750, y: 600, width: 50, height: 50},
+<br>  {x: 800, y: 600, width: 50, height: 50},
+<br>  {x: 800, y: 650, width: 50, height: 50},
+<br>  {x: 800, y: 700, width: 50, height: 50},
+<br>  {x: 800, y: 750, width: 50, height: 50},
+<br>  {x: 850, y: 600, width: 50, height: 50},
+<br>  {x: 900, y: 600, width: 50, height: 50},
+<br>  {x: 950, y: 600, width: 50, height: 50},
+<br> {x: 1000, y: 600, width: 50, height: 50},
+<br> {x: 1000, y: 550, width: 50, height: 50},
+<br>  {x: 1000, y: 500, width: 50, height: 50},
+<br> {x: 1000, y: 450, width: 50, height: 50},
+<br>  {x: 1000, y: 400, width: 50, height: 50},
+<br>  {x: 1000, y: 350, width: 50, height: 50},
+<br>  {x: 950, y: 350, width: 50, height: 50},
+<br>  {x: 900, y: 350, width: 50, height: 50},
+<br> {x: 900, y: 300, width: 50, height: 50},
+<br>  {x: 900, y: 250, width: 50, height: 50},
+<br>  {x: 900, y: 150, width: 50, height: 50},
+<br>  {x: 950, y: 150, width: 50, height: 50},
+<br> {x: 950, y: 100, width: 50, height: 50},
+<br> {x: 950, y: 50, width: 50, height: 50},
+<br> {x: 950, y: 0, width: 50, height: 50},
+<br> {x: 950, y: 250, width: 50, height: 50},
+<br>  {x: 1000, y: 250, width: 50, height: 50},
+<br>  {x: 1100, y: 250, width: 50, height: 50},
+<br>  {x: 1100, y: 300, width: 50, height: 50},
+<br>  {x: 1100, y: 350, width: 50, height: 50},
+<br>  {x: 1100, y: 400, width: 50, height: 50},
+<br>  {x: 1100, y: 500, width: 50, height: 50},
+<br>  {x: 1100, y: 550, width: 50, height: 50},
+<br>{x: 1100, y: 600, width: 50, height: 50},
+<br>  {x: 1100, y: 650, width: 50, height: 50},
+<br>  {x: 1100, y: 700, width: 50, height: 50},
+<br>  {x: 1100, y: 800, width: 50, height: 50},
+<br> {x: 1150, y: 700, width: 50, height: 50},
+<br>  {x: 1200, y: 700, width: 50, height: 50},
+<br>  {x: 1250, y: 650, width: 50, height: 50},
+<br>  {x: 1300, y: 650, width: 50, height: 50},
+<br>  {x: 1400, y: 650, width: 50, height: 50},
+<br>  {x: 1400, y: 600, width: 50, height: 50},
+<br>  {x: 1400, y: 700, width: 50, height: 50},
+<br> {x: 1400, y: 750, width: 50, height: 50},
+<br> {x: 1350, y: 750, width: 50, height: 50},
+<br>  {x: 1300, y: 750, width: 50, height: 50},
+<br>  {x: 1200, y: 650, width: 50, height: 50},
+<br>  {x: 1000, y: 700, width: 50, height: 50},
+<br> {x: 1000, y: 650, width: 50, height: 50},
+<br> {x: 900, y: 700, width: 50, height: 50},
+<br> {x: 900, y: 750, width: 50, height: 50},
+<br>  {x: 1350, y: 550, width: 50, height: 50},
+<br>  {x: 1400, y: 550, width: 50, height: 50},
+<br> {x: 1300, y: 550, width: 50, height: 50},
+<br>{x: 1200, y: 550, width: 50, height: 50},
+<br> {x: 1200, y: 500, width: 50, height: 50},
+<br>{x: 1200, y: 400, width: 50, height: 50},
+<br> {x: 1200, y: 350, width: 50, height: 50},
+<br>{x: 1200, y: 450, width: 50, height: 50},
+<br> {x: 1250, y: 350, width: 50, height: 50},
+<br> {x: 1250, y: 450, width: 50, height: 50},
+<br> {x: 1300, y: 450, width: 50, height: 50},
+<br> {x: 1350, y: 450, width: 50, height: 50},
+<br> {x: 1350, y: 350, width: 50, height: 50},
+<br>{x: 1400, y: 350, width: 50, height: 50},
+<br> {x: 1400, y: 300, width: 50, height: 50},
+<br>{x: 1400, y: 250, width: 50, height: 50},
+<br> {x: 1400, y: 200, width: 50, height: 50},
+<br> {x: 1350, y: 200, width: 50, height: 50},
+<br>{x: 1300, y: 200, width: 50, height: 50},
+<br>{x: 1250, y: 200, width: 50, height: 50},
+<br>{x: 1200, y: 200, width: 50, height: 50},
+<br> {x: 1150, y: 150, width: 50, height: 50},
+<br> {x: 1200, y: 150, width: 50, height: 50},
+<br> {x: 1050, y: 150, width: 50, height: 50},
+<br> {x: 1050, y: 100, width: 50, height: 50},
+<br> {x: 1050, y: 50, width: 50, height: 50},
+<br>{x: 1050, y: 0, width: 50, height: 50},
+<br> {x: 1150, y: 100, width: 50, height: 50},
+<br>  {x: 1150, y: 0, width: 50, height: 50},
+<br> {x: 1350, y: 50, width: 50, height: 50},
+<br> {x: 1350, y: 100, width: 50, height: 50},
+<br> {x: 1300, y: 50, width: 50, height: 50},
+<br>{x: 1300, y: 100, width: 50, height: 50},
+<br> {x: 1250, y: 50, width: 50, height: 50},
+<br> {x: 0, y: 800, width: 5000, height: 50},
+<br> )
+<br>
+<br>
+<br>
+<br>function wallsBegin() { //een functie om een willekeurige locatie maken X en Y voor de muren, met een MaxWalls const variable
+<br> for (let i = 0; i < MaxWalls; i++) {
+<br>  let RandomX = Math.floor(Math.random() * 1000);
+<br>let RandomY = Math.floor(Math.random() * 800);
+<br> RandomX = Math.round(RandomX / 50)*50;
+<br>RandomY = Math.round(RandomY / 50)*50;
+<br>walls.push({x:RandomX, y:RandomY,width:50, height:50}); 
+<br>}
+<br>}
+<br>//wallsBegin() //Comment verwijderen om doolhof willekeurig later genereren
+<br>
+<br>
+<br>function checkWallCollision(playerX, playerY, scale) { //Een functie om te kijken of de monster of speler in een muur zitten 
+<br>  for (let i = 0; i < walls.length; i++) {
+<br>      let wall = walls[i];
+<br>      //Kijken of een speler/monster x of y in 1 van de muren x of y zit
+<br>      if (playerX + scale > wall.x && playerX < wall.x + wall.width && playerY + scale > wall.y && playerY < wall.y + wall.height) {
+<br>          return true;
+<br>      }
+<br>  }
+<br>  return false;
+<br>}
+<br>
+<br>function DrawWalls() { //Een functie met een loop om alle muren op het canvas zetten
+<br>  for (let i = 0; i < walls.length; i++) {
+<br>    let wall = walls[i];
+<br>    ctx.beginPath();
+<br>   ctx.fillStyle = "black"; 
+<br>    ctx.fillRect(wall.x, wall.y, wall.width, wall.height);
+<br>    ctx.closePath();
+<br> }
+<br>}
+<br>
+<br>function checkCoinWallCollision(coinX, coinY) { //Een functie om te kijken of een munt in een muur zit
+<br>  for (let i = 0; i < walls.length; i++) {
+<br>      let wall = walls[i];
+<br>     if (coinX + 20 > wall.x && coinX < wall.x + wall.width && coinY + 20 > wall.y && coinY < wall.y + wall.height) {
+<br>       console.log("CoinColidw")
+<br>         return true;
+<br>      }
+<br>  }
+<br>  return false;
+<br>}
+<br>//Maze eind
+<br>
+<br>//Raycast Begin
+<br>function doLinesIntersect(x1, y1, x2, y2, x3, y3, x4, y4) { //Functie om te controleren of twee lijnen (de ray en de muur) elkaar snijden
+<br>    //Bereken de noemer van het snijpunt
+<br>  let denominator = ((x2 - x1) * (y4 - y3)) - ((y2 - y1) * (x4 - x3));
+<br>  let numerator1 = ((y1 - y3) * (x4 - x3)) - ((x1 - x3) * (y4 - y3));
+<br>  let numerator2 = ((y1 - y3) * (x2 - x1)) - ((x1 - x3) * (y2 - y1));
+<br>
+<br>   //Als de denominator 0 is, dan zijn de lijnen parallel
+<br> if (denominator == 0) {
+<br>     //Als ook numerator1 en numerator2 0 zijn, dan liggen de lijnen op elkaar
+<br>     return numerator1 == 0 && numerator2 == 0;
+<br> }
+<br>
+<br>    //Bereken de r- en s-waardes van het snijpunt
+<br>  let r = numerator1 / denominator;
+<br>  let s = numerator2 / denominator;
+<br>
+<br>    //Als r en s tussen 0 en 1 liggen, dan snijden de lijnen elkaar
+<br>  return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
+<br>}
+<br>
+<br>function checkPlayerAndWalls() { //Functie om te controleren of de speler gezien wordt door het monster
+<br> //Initialiseer de startpositie van de ray (de positie van het monster)
+<br>  let rayStartX = Spr2x + Spr2formaat/2;
+<br>  let rayStartY = Spr2y + Spr2formaat/2;
+<br>
+<br> //Initialiseer de eindpositie van de ray (de positie van de speler)
+<br> let rayEndX = x + PlayerScaleXY/2;
+<br>  let rayEndY = y + PlayerScaleXY/2;
+<br>
+<br>  for (let i = 0; i < walls.length; i++) { // Controleer of de ray een muur snijdt
+<br>      let wall = walls[i];
+<br>      if (doLinesIntersect(rayStartX, rayStartY, rayEndX, rayEndY, wall.x, wall.y, wall.x + wall.width, wall.y + wall.height)) {
+<br>         SeesPlayer = false; //De SeesPlayer variable naar False veranderen
+<br>         break;
+<br>     } else {
+<br>        SeesPlayer = true; //De SeesPlayer variable naar True veranderen
+<br>     }
+<br>  }
+<br> console.log("seesPlayer: ", SeesPlayer);
+<br>}
+<br>// Voer de functie elke seconde uit
+<br>setInterval(checkPlayerAndWalls, 1000);
+<br>
+<br>//RaycastEind
+<br>
+<br>let EndCoinReady = false
+<br>function EndCoin() { //Een functie om de EndCoin te maken
+<br>  document.getElementById("CoinsCounter").textContent = "Escape";
+<br>  document.getElementById("CoinsCounter").style.color = "red"; //De tekst (coin counter) veranderen
+<br>  CoinColor = "green"; //De munten een nieuwe kleur geven
+<br>  coinlocationsX.push(Math.floor(Math.random() * 1400)) //De willekeurige locatie X van de munten maken
+<br>  coinlocationsY.push(Math.floor(Math.random() * 800)) //De willekeurige locatie Y van de munten maken
+<br> setTimeout(EndCoinReadyToggle, 50)
+<br>}
+<br>
+<br>function EndCoinReadyToggle() {
+<br>  EndCoinReady = true
+<br>}
+            </p>
+            <br><br>
         </section>
     </main>
 </body>

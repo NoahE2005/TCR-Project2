@@ -24,6 +24,10 @@ main {
     margin-bottom: 2em;
 }
 
+.Comment {
+  color: green;
+}
+
 a {
   text-decoration: none;
   list-style: none;
@@ -366,6 +370,10 @@ canvas {
 
 #LoadingText {
   overflow: hidden;
+}
+
+.GameDetailsBigText {
+  font-size: 4.5vw;
 }
 
 @keyframes CanvasZoom {
