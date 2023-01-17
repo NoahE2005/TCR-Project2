@@ -75,7 +75,9 @@
         <section class="MainText">
             <h1>Hoe speel je het spel?</h1>
             <p>
-
+                Je speelt het spel om met WASD te bewegen en door het doolhof te lopen.<br>
+                Je moet het rode vierkant (monster) ontwijken en de gele vierkanten (munten) pakken.<br> 
+                Na de achtste munt moet je nog een groene munt pakken.
             </p>
             <br><br>
         </section>
@@ -209,7 +211,7 @@
                                                     <br> }
                                                     <br>}
                                                     <br>
-    <br>function CoinsCollisionCheck() { //een functie om munten op te pakken
+    <br>function CoinsCollisionCheck() { <p1 class="Comment">//een functie om munten op te pakken</p1>
         <br>for (let i = 0; i < coinlocationsX.length; i++) {
             <br>    if(coinlocationsX.at(i) >= -10 || coinlocationsY.at(i) >= -10) {
                 <br>  if((coinlocationsX.at(i) + CoinscaleXY) < x ||
@@ -218,15 +220,15 @@
                 <br>     coinlocationsY.at(i) > (y + PlayerScaleXY)) {
                     <br>}
                     <br>else {
-                        <br>  if(!Loading) { // zorgen dat je geen munten op kan pakken als het spel aan het laden is
+                        <br>  if(!Loading) { <p1 class="Comment">// zorgen dat je geen munten op kan pakken als het spel aan het laden is</p1>
                             <br>  CoinCount = CoinCount + 1; //coin count 1 omhoog
                             <br>  console.log(CoinCount);
                             <br>  delete coinlocationsX[i];
                             <br>  delete coinlocationsY[i];
-                            <br>  UpdateMonsterSpeed(); //de monster sneller maken
-                            <br>  document.getElementById("CoinsCounter").textContent = "Coins: " + CoinCount; //de tekst updaten
+                            <br>  UpdateMonsterSpeed(); <p1 class="Comment">//de monster sneller maken</p1>
+                            <br>  document.getElementById("CoinsCounter").textContent = "Coins: " + CoinCount; <p1 class="Comment">//de tekst updaten</p1>
                             <br>  if(CoinCount >= MaxCoins) {
-                                <br>    EndCoin() //kijken of de EndCoin kan spawnen
+                                <br>    EndCoin() <p1 class="Comment">//kijken of de EndCoin kan spawnen</p1>
                                 <br>    if (EndCoinReady) {
                                     <br>      document.getElementById("CoinsCounter").textContent = "You Win";
                                     <br>      document.getElementById("CoinsCounter").style.color = "green";
@@ -239,14 +241,14 @@
                                     <br>}
                                     <br>setInterval(CoinsCollisionCheck,3)
                                     <br>
-                                    <br>//Begin Input
-                                    <br>addEventListener('keydown', function (e){ //kijken welke toetsen zijn ingedrukt met een Const voor de snelheid van de speler
+                                    <br><p1 class="Comment">//Begin Input</p1>
+                                    <br>addEventListener('keydown', function (e){ <p1 class="Comment">//kijken welke toetsen zijn ingedrukt met een Const voor de snelheid van de speler</p1>
                                         <br>    if(e.code == 'KeyD') vxr = PlayerWalkSpeed;
                                         <br>    if(e.code == 'KeyA') vxl = PlayerWalkSpeed * -1;
                                         <br>    if(e.code == 'KeyS') vy = PlayerWalkSpeed;
                                         <br>    if(e.code == 'KeyW') vy = PlayerWalkSpeed * -1;
                                         <br>})
-                                        <br>addEventListener("keyup", function(e) { //de speler stoppen als de toets is los gelaten
+                                        <br>addEventListener("keyup", function(e) { <p1 class="Comment">//de speler stoppen als de toets is los gelaten</p1>
                                             <br>    if(e.code == 'KeyD') vxr = 0;
                                             <br>    if(e.code == 'KeyA') vxl = 0;
                                             <br>    if(e.code == 'KeyS') vy = 0;
@@ -255,10 +257,10 @@
                                             <br>
                                             <br>
                                             <br>
-                                            <br>function OuterWallCollision() { //Een Collision check voor de grootte van de canvas zelf
-<br>  var breed = Canvas.offsetWidth - PlayerScaleXY; //breedte van canvassd
+                                            <br>function OuterWallCollision() { <p1 class="Comment">//Een Collision check voor de grootte van de canvas zelf</p1>
+<br>  var breed = Canvas.offsetWidth - PlayerScaleXY; <p1 class="Comment">//breedte van canvass</p1>
 <br>
-<br>  var hoog = Canvas.offsetHeight - PlayerScaleXY; //hoogte van canvas
+<br>  var hoog = Canvas.offsetHeight - PlayerScaleXY; <p1 class="Comment">//hoogte van canvas</p1>
 <br>
 <br>  if(x <= 0){
 <br>      x = 0;
@@ -278,20 +280,20 @@
 <br>OuterWallCollision()
 <br>
 <br>
-<br>//Eind Input
+<br><p1 class="Comment">//Eind Input</p1>
 <br>
-<br>//Begin Lighting
-<br>function TrackPlayer() { //Locatie van player pakken en het setten voor de style
-<br>    document.documentElement.style.setProperty('--cursorXpos', x + parseFloat(25) + "px") //de parsefloat om het te centreren
-<br>    document.documentElement.style.setProperty('--cursorYpos', y + parseFloat(75) + "px") //de parsefloat om het te centreren
+<br><p1 class="Comment">//Begin Lighting</p1>
+<br>function TrackPlayer() { <p1 class="Comment">//Locatie van player pakken en het setten voor de style</p1>
+<br>    document.documentElement.style.setProperty('--cursorXpos', x + parseFloat(25) + "px") <p1 class="Comment">//de parsefloat om het te centreren</p1>
+<br>    document.documentElement.style.setProperty('--cursorYpos', y + parseFloat(75) + "px") <p1 class="Comment">//de parsefloat om het te centreren</p1>
 <br>    setTimeout(TrackPlayer, 50)
 <br>}
 <br>TrackPlayer()
-<br>//Eind Lighting
+<br><p1 class="Comment">//Eind Lighting</p1>
 <br>
-<br>//Begin Modal
-<br>//Begin Loading
-<br>function EindLoad() { //de functie voor het einde van het loaden
+<br><p1 class="Comment">//Begin Modal</p1>
+<br><p1 class="Comment">//Begin Loading</p1>
+<br>function EindLoad() { <p1 class="Comment">//de functie voor het einde van het loaden</p1>
 <br>var modal = document.getElementById("modal");
 <br>modal.classList.remove("activemodal");
 <br>document.getElementById("Canvas").style.animation = "CanvasZoom 2s forward";
@@ -302,7 +304,7 @@
 <br>}
 <br>document.documentElement.style.setProperty('--Radius', 3000 + "rem")
 <br>
-<br>//de loading tekst animatie
+<br><p1 class="Comment">//de loading tekst animatie</p1>
 <br>function LoadingText1() {
 <br>  document.getElementById("LoadingText").innerHTML = "Loading.";
 <br>  setTimeout(LoadingText2, 1500);
@@ -316,24 +318,24 @@
 <br>  setTimeout(LoadingText1, 1000);
 <br>}
 <br>LoadingText1()
-<br>//Eind Loading
+<br><p1 class="Comment">//Eind Loading</p1>
 <br>
-<br> //Monster Begin
-<br> let Spr2x = 400; //X locatie van monster
-<br> let Spr2y = 220; //Y locatie van monster
-<br> let MonsterSpeed = 0.5; //De normalen snelheid van monster
+<br> <p1 class="Comment">//Monster Begin</p1>
+<br> let Spr2x = 400; <p1 class="Comment">//X locatie van monster</p1>
+<br> let Spr2y = 220; <p1 class="Comment">//Y locatie van monster</p1>
+<br> let MonsterSpeed = 0.5; <p1 class="Comment">//De normalen snelheid van monster</p1>
 <br> 
 <br>
-<br> var Spr2formaat = 20; //De XY scale van monster
+<br> var Spr2formaat = 20; <p1 class="Comment">//De XY scale van monster</p1>
 <br> var telSpr2 = 0;
 <br>var maxSpr2 = 100;
-<br> var richtSpr2X = 1; //De X velocity van monster
-<br> var richtSpr2Y = 1; //De Y velocity van monster
-<br> var SeesPlayer = false; //Boolean om te checken of de speler de monster ziet
+<br> var richtSpr2X = 1; <p1 class="Comment">//De X velocity van monster</p1>
+<br> var richtSpr2Y = 1; <p1 class="Comment">//De Y velocity van monster</p1>
+<br> var SeesPlayer = false; <p1 class="Comment">//Boolean om te checken of de speler de monster ziet</p1>
 <br>
 <br> function Spr2() {
-<br>  if(SeesPlayer) { //Checken of SeesPlayer is True
-<br>    //De monster naar de speler bewegen
+<br>  if(SeesPlayer) { <p1 class="Comment">//Checken of SeesPlayer is True</p1>
+<br>    <p1 class="Comment">//De monster naar de speler bewegen</p1>
 <br>    if(x > Spr2x) {
 <br>      richtSpr2X = MonsterSpeed;
 <br>    }
@@ -348,7 +350,7 @@
 <br>   }
 <br> }
 <br> else {
-<br>   //Als SeesPlayer False is gaat de monster een willekeurige richting op
+<br>   <p1 class="Comment">//Als SeesPlayer False is gaat de monster een willekeurige richting op</p1>
 <br>    telSpr2++;
 <br>    if (telSpr2 > maxSpr2) {
 <br>        telSpr2 = 0;
@@ -363,8 +365,8 @@
 <br>    richtSpr2Y = 0;
 <br>}
 <br>
-<br>    Spr2x += richtSpr2X; //De X locatie van monster updaten
-<br>    Spr2y += richtSpr2Y; //De Y locatie van monster updaten
+<br>    Spr2x += richtSpr2X; <p1 class="Comment">//De X locatie van monster updaten</p1>
+<br>    Spr2y += richtSpr2Y; <p1 class="Comment">//De Y locatie van monster updaten</p1>
 <br>    if (Spr2x<0) {richtSpr2X = MonsterSpeed;}
 <br>    if (Spr2x>Canvas.offsetWidth-Spr2formaat) {richtSpr2X = MonsterSpeed * -1;}
 <br>    if (Spr2y<0) {richtSpr2Y = MonsterSpeed;}
@@ -372,7 +374,7 @@
 <br> }
 <br> setInterval(Spr2, 5)
 <br>
-<br>   function MonstercollisionCheck() { //Kijken of de speler de monster aan het aanraken is
+<br>   function MonstercollisionCheck() { <p1 class="Comment">//Kijken of de speler de monster aan het aanraken is</p1>
 <br>    if((x + PlayerScaleXY) < Spr2x ||
 <br>    x > (Spr2x + Spr2formaat) ||
 <br>    (y + PlayerScaleXY) < Spr2y ||
@@ -388,7 +390,7 @@
 <br>function UpdateMonsterSpeed() {
 <br>  richtSpr2X = 0;
 <br>  richtSpr2Y = 0;
-<br>  MonsterSpeed = MonsterSpeed + (CoinCount * 0.05); //De monster sneller maken de hoger dat de CoinCount is
+<br>  MonsterSpeed = MonsterSpeed + (CoinCount * 0.05); <p1 class="Comment">//De monster sneller maken de hoger dat de CoinCount is</p1>
 <br>}
 <br>
 <br> //Monster Eind
@@ -400,7 +402,7 @@
 <br> {x: 400, y: 400, width: 50, height: 50}
 <br>];
 <br>
-<br>walls.push( //De Muren zelf gemaakt
+<br>walls.push( <p1 class="Comment">//De Muren zelf gemaakt</p1>
 <br> {x: 100, y: 150, width: 50, height: 50},
 <br>  {x: 150, y: 150, width: 50, height: 50},
 <br>  {x: 200, y: 150, width: 50, height: 50},
@@ -613,7 +615,7 @@
 <br>
 <br>
 <br>
-<br>function wallsBegin() { //een functie om een willekeurige locatie maken X en Y voor de muren, met een MaxWalls const variable
+<br>function wallsBegin() { <p1 class="Comment">//een functie om een willekeurige locatie maken X en Y voor de muren, met een MaxWalls const variable</p1>
 <br> for (let i = 0; i < MaxWalls; i++) {
 <br>  let RandomX = Math.floor(Math.random() * 1000);
 <br>let RandomY = Math.floor(Math.random() * 800);
@@ -622,13 +624,13 @@
 <br>walls.push({x:RandomX, y:RandomY,width:50, height:50}); 
 <br>}
 <br>}
-<br>//wallsBegin() //Comment verwijderen om doolhof willekeurig later genereren
+<br><p1 class="Comment">//wallsBegin() //Comment verwijderen om doolhof willekeurig later genereren</p1>
 <br>
 <br>
-<br>function checkWallCollision(playerX, playerY, scale) { //Een functie om te kijken of de monster of speler in een muur zitten 
+<br>function checkWallCollision(playerX, playerY, scale) { <p1 class="Comment">//Een functie om te kijken of de monster of speler in een muur zitten </p1>
 <br>  for (let i = 0; i < walls.length; i++) {
 <br>      let wall = walls[i];
-<br>      //Kijken of een speler/monster x of y in 1 van de muren x of y zit
+<br>      <p1 class="Comment">//Kijken of een speler/monster x of y in 1 van de muren x of y zit</p1>
 <br>      if (playerX + scale > wall.x && playerX < wall.x + wall.width && playerY + scale > wall.y && playerY < wall.y + wall.height) {
 <br>          return true;
 <br>      }
@@ -636,7 +638,7 @@
 <br>  return false;
 <br>}
 <br>
-<br>function DrawWalls() { //Een functie met een loop om alle muren op het canvas zetten
+<br>function DrawWalls() { <p1 class="Comment">//Een functie met een loop om alle muren op het canvas zetten</p1>
 <br>  for (let i = 0; i < walls.length; i++) {
 <br>    let wall = walls[i];
 <br>    ctx.beginPath();
@@ -646,7 +648,7 @@
 <br> }
 <br>}
 <br>
-<br>function checkCoinWallCollision(coinX, coinY) { //Een functie om te kijken of een munt in een muur zit
+<br>function checkCoinWallCollision(coinX, coinY) { <p1 class="Comment">//Een functie om te kijken of een munt in een muur zit</p1>
 <br>  for (let i = 0; i < walls.length; i++) {
 <br>      let wall = walls[i];
 <br>     if (coinX + 20 > wall.x && coinX < wall.x + wall.width && coinY + 20 > wall.y && coinY < wall.y + wall.height) {
@@ -656,39 +658,39 @@
 <br>  }
 <br>  return false;
 <br>}
-<br>//Maze eind
+<br><p1 class="Comment">//Maze eind</p1>
 <br>
-<br>//Raycast Begin
-<br>function doLinesIntersect(x1, y1, x2, y2, x3, y3, x4, y4) { //Functie om te controleren of twee lijnen (de ray en de muur) elkaar snijden
-<br>    //Bereken de noemer van het snijpunt
+<br><p1 class="Comment">//Raycast Begin</p1>
+<br>function doLinesIntersect(x1, y1, x2, y2, x3, y3, x4, y4) { <p1 class="Comment">//Functie om te controleren of twee lijnen (de ray en de muur) elkaar snijden</p1>
+<br>    <p1 class="Comment">//Bereken de noemer van het snijpunt</p1>
 <br>  let denominator = ((x2 - x1) * (y4 - y3)) - ((y2 - y1) * (x4 - x3));
 <br>  let numerator1 = ((y1 - y3) * (x4 - x3)) - ((x1 - x3) * (y4 - y3));
 <br>  let numerator2 = ((y1 - y3) * (x2 - x1)) - ((x1 - x3) * (y2 - y1));
 <br>
-<br>   //Als de denominator 0 is, dan zijn de lijnen parallel
+<br>   <p1 class="Comment">//Als de denominator 0 is, dan zijn de lijnen parallel</p1>
 <br> if (denominator == 0) {
-<br>     //Als ook numerator1 en numerator2 0 zijn, dan liggen de lijnen op elkaar
+<br>     <p1 class="Comment">//Als ook numerator1 en numerator2 0 zijn, dan liggen de lijnen op elkaar</p1>
 <br>     return numerator1 == 0 && numerator2 == 0;
 <br> }
 <br>
-<br>    //Bereken de r- en s-waardes van het snijpunt
+<br>    <p1 class="Comment">//Bereken de r- en s-waardes van het snijpunt</p1>
 <br>  let r = numerator1 / denominator;
 <br>  let s = numerator2 / denominator;
 <br>
-<br>    //Als r en s tussen 0 en 1 liggen, dan snijden de lijnen elkaar
+<br>    <p1 class="Comment">//Als r en s tussen 0 en 1 liggen, dan snijden de lijnen elkaar</p1>
 <br>  return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
 <br>}
 <br>
-<br>function checkPlayerAndWalls() { //Functie om te controleren of de speler gezien wordt door het monster
-<br> //Initialiseer de startpositie van de ray (de positie van het monster)
+<br>function checkPlayerAndWalls() { <p1 class="Comment">//Functie om te controleren of de speler gezien wordt door het monster</p1>
+<br> <p1 class="Comment">//Initialiseer de startpositie van de ray (de positie van het monster)</p1>
 <br>  let rayStartX = Spr2x + Spr2formaat/2;
 <br>  let rayStartY = Spr2y + Spr2formaat/2;
 <br>
-<br> //Initialiseer de eindpositie van de ray (de positie van de speler)
+<br> <p1 class="Comment">//Initialiseer de eindpositie van de ray (de positie van de speler)</p1>
 <br> let rayEndX = x + PlayerScaleXY/2;
 <br>  let rayEndY = y + PlayerScaleXY/2;
 <br>
-<br>  for (let i = 0; i < walls.length; i++) { // Controleer of de ray een muur snijdt
+<br>  for (let i = 0; i < walls.length; i++) { <p1 class="Comment">// Controleer of de ray een muur snijdt</p1>
 <br>      let wall = walls[i];
 <br>      if (doLinesIntersect(rayStartX, rayStartY, rayEndX, rayEndY, wall.x, wall.y, wall.x + wall.width, wall.y + wall.height)) {
 <br>         SeesPlayer = false; //De SeesPlayer variable naar False veranderen
@@ -699,18 +701,18 @@
 <br>  }
 <br> console.log("seesPlayer: ", SeesPlayer);
 <br>}
-<br>// Voer de functie elke seconde uit
+<br><p1 class="Comment">// Voer de functie elke seconde uit</p1>
 <br>setInterval(checkPlayerAndWalls, 1000);
 <br>
-<br>//RaycastEind
+<br><p1 class="Comment">//RaycastEind</p1>
 <br>
 <br>let EndCoinReady = false
-<br>function EndCoin() { //Een functie om de EndCoin te maken
+<br>function EndCoin() { <p1 class="Comment">//Een functie om de EndCoin te maken</p1>
 <br>  document.getElementById("CoinsCounter").textContent = "Escape";
-<br>  document.getElementById("CoinsCounter").style.color = "red"; //De tekst (coin counter) veranderen
-<br>  CoinColor = "green"; //De munten een nieuwe kleur geven
-<br>  coinlocationsX.push(Math.floor(Math.random() * 1400)) //De willekeurige locatie X van de munten maken
-<br>  coinlocationsY.push(Math.floor(Math.random() * 800)) //De willekeurige locatie Y van de munten maken
+<br>  document.getElementById("CoinsCounter").style.color = "red"; <p1 class="Comment">//De tekst (coin counter) veranderen</p1>
+<br>  CoinColor = "green"; <p1 class="Comment">//De munten een nieuwe kleur geven</p1>
+<br>  coinlocationsX.push(Math.floor(Math.random() * 1400)) <p1 class="Comment">//De willekeurige locatie X van de munten maken</p1>
+<br>  coinlocationsY.push(Math.floor(Math.random() * 800)) <p1 class="Comment">//De willekeurige locatie Y van de munten maken</p1>
 <br> setTimeout(EndCoinReadyToggle, 50)
 <br>}
 <br>
