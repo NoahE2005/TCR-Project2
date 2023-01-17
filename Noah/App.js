@@ -138,8 +138,7 @@ else {
   if(CoinCount >= MaxCoins) {
     EndCoin() //kijken of de EndCoin kan spawnen
     if (EndCoinReady) {
-      document.getElementById("CoinsCounter").textContent = "You Win";
-      document.getElementById("CoinsCounter").style.color = "green";
+      WinScreen()
     }
   }
 }
@@ -204,19 +203,22 @@ TrackPlayer()
 //Begin Loading
 function EindLoad() { //de functie voor het einde van het loaden
 var modal = document.getElementById("modal");
-modal.classList.remove("activemodal");
+modal.style.visibility = "hidden";
 document.getElementById("Canvas").style.animation = "CanvasZoom 2s forward";
 document.getElementById("Canvas2").style.animation = "CanvasZoom 2s forward";
 document.documentElement.style.setProperty('--Radius',15 + "rem")
 document.getElementById("CoinsCounter").textContent = "Coins: 0";
 Loading = false;
+MonsterCanMove = true;
 }
 document.documentElement.style.setProperty('--Radius', 3000 + "rem")
 
 //de loading tekst animatie
 function LoadingText1() {
+  if(Loading) {
   document.getElementById("LoadingText").innerHTML = "Loading.";
   setTimeout(LoadingText2, 1500);
+}
 }
 function LoadingText2() {
   document.getElementById("LoadingText").innerHTML = "Loading..";
@@ -241,6 +243,7 @@ LoadingText1()
  var richtSpr2X = 1; //De X velocity van monster
  var richtSpr2Y = 1; //De Y velocity van monster
  var SeesPlayer = false; //Boolean om te checken of de speler de monster ziet
+ var MonsterCanMove = false;
 
  function Spr2() {
   if(SeesPlayer) { //Checken of SeesPlayer is True
@@ -273,9 +276,15 @@ LoadingText1()
     if (checkWallCollision(Spr2x + richtSpr2X, Spr2y + richtSpr2Y, Spr2formaat)) {
       richtSpr2Y = 0;
 }
-
+if(MonsterCanMove) {
      Spr2x += richtSpr2X; //De X locatie van monster updaten
      Spr2y += richtSpr2Y; //De Y locatie van monster updaten
+    }
+    else{
+      richtSpr2X = 0;
+      richtSpr2Y = 0;
+    }
+
      if (Spr2x<0) {richtSpr2X = MonsterSpeed;}
      if (Spr2x>Canvas.offsetWidth-Spr2formaat) {richtSpr2X = MonsterSpeed * -1;}
      if (Spr2y<0) {richtSpr2Y = MonsterSpeed;}
@@ -292,6 +301,7 @@ LoadingText1()
     }
     else {
       console.log("colliding")
+      window.location.reload;
     }
   }
 setInterval(MonstercollisionCheck,5)
@@ -628,4 +638,15 @@ function EndCoin() { //Een functie om de EndCoin te maken
 
 function EndCoinReadyToggle() {
   EndCoinReady = true
+}
+
+function WinScreen() {
+  document.getElementById("modal").style.display = "block";
+  document.getElementById("modal").style.visibility = "visible";
+  MonsterCanMove = false;
+  modal.style.display = "block";
+  modal.style.visibility = "visible";
+  document.getElementById("LoadingText").innerHTML = "You Win";
+  document.getElementById("LoadingText").textContent = "You Win";
+  document.getElementById("LoadingText").style.color = "green";
 }
