@@ -655,11 +655,7 @@ function EndCoinReadyToggle() {
 }
 
 function WinScreen() {
-  document.getElementById("modal").style.display = "block";
-  document.getElementById("modal").style.visibility = "visible";
   MonsterCanMove = false;
-  modal.style.display = "block";
-  modal.style.visibility = "visible";
   document.getElementById("LoadingText").innerHTML = "You Win";
   document.getElementById("LoadingText").textContent = "You Win";
   document.getElementById("LoadingText").style.color = "green";
