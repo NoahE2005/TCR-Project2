@@ -5,7 +5,7 @@ const coins = Canvas.getContext("2d")
 const Monster = Canvas.getContext("2d")
 const Walls = Canvas.getContext("2d")
 
-const PlayerWalkSpeed = 3; //Snelheid van de speler
+let PlayerWalkSpeed = 3; //Snelheid van de speler
 const PlayerColor = 000000; //Kleur van de speler
 const PlayerScaleXY = 20; //Grootte van de speler
 const MaxCoins = 8; //Maximaal aantal munten in het spel
@@ -15,6 +15,7 @@ const MaxWalls = 150; //Maximaal aantal muren in het spel (alleen als willekeuri
 var Breed = 0;
 var Hoog = 0;
 var Loading = true;
+var Dead = false;
 
 let x = 50; //X locatie van speler
 let y = 50; //Y locatie van speler
@@ -150,10 +151,16 @@ setInterval(CoinsCollisionCheck,3)
 
 //Begin Input
 addEventListener('keydown', function (e){ //kijken welke toetsen zijn ingedrukt met een Const voor de snelheid van de speler
+  if(!Dead) {
     if(e.code == 'KeyD') vxr = PlayerWalkSpeed;
     if(e.code == 'KeyA') vxl = PlayerWalkSpeed * -1;
     if(e.code == 'KeyS') vy = PlayerWalkSpeed;
     if(e.code == 'KeyW') vy = PlayerWalkSpeed * -1;
+  }
+  else{
+    PlayerWalkSpeed = 0;
+    SeesPlayer = false;
+  }
 })
 addEventListener("keyup", function(e) { //de speler stoppen als de toets is los gelaten
     if(e.code == 'KeyD') vxr = 0;
@@ -301,7 +308,9 @@ if(MonsterCanMove) {
     }
     else {
       console.log("colliding")
-      window.location.reload;
+      document.getElementById("CoinsCounter").textContent = "You died";
+      document.getElementById("CoinsCounter").style.color = "red";
+      Dead = true;
     }
   }
 setInterval(MonstercollisionCheck,5)
@@ -616,7 +625,12 @@ function checkPlayerAndWalls() { //Functie om te controleren of de speler gezien
           SeesPlayer = false; //De SeesPlayer variable naar False veranderen
           break;
       } else {
+        if(!Dead) {
           SeesPlayer = true; //De SeesPlayer variable naar True veranderen
+        }
+          else {
+            SeesPlayer = false;
+          }
       }
   }
   console.log("seesPlayer: ", SeesPlayer);
