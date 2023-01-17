@@ -24,6 +24,10 @@ main {
     margin-bottom: 2em;
 }
 
+.Comment {
+  color: green;
+}
+
 a {
   text-decoration: none;
   list-style: none;
@@ -341,7 +345,7 @@ canvas {
 .content, .modal {
   top:0;
   left:0;
-  height:98vh;
+  height: 840px;
   width: 98vw;
   text-align: center;
 }
@@ -366,6 +370,10 @@ canvas {
 
 #LoadingText {
   overflow: hidden;
+}
+
+.GameDetailsBigText {
+  font-size: 4.5vw;
 }
 
 @keyframes CanvasZoom {

@@ -1,15 +1,3 @@
-
-//https://www.google.nl/search?q=javascript+game+maze+generator&sxsrf=ALiCzsZGoyiaBb3uqTkY0tindzcRN_JrqA%3A1670324189364&ei=3R-PY73PFeyP9u8P3-upyAQ&oq=Javascript+game+maze+ge&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQARgAMgUIIRCgATIFCCEQoAEyBQghEKABMggIIRAWEB4QHTIICCEQFhAeEB0yCAghEBYQHhAdMggIIRAWEB4QHTIICCEQFhAeEB0yCgghEBYQHhAPEB0yCgghEBYQHhAPEB06CggAEEcQ1gQQsAM6BggAEBYQHkoECEEYAEoECEYYAFCiAljKBWDaEGgBcAF4AIABlgGIAbUCkgEDMi4xmAEAoAEByAEIwAEB&sclient=gws-wiz-serp
-//https://www.google.nl/search?q=javascript+game+collision+detection&sxsrf=ALiCzsZ9NYk6xQLOpbhnkXqobwPWaY256A%3A1670324152098&source=hp&ei=uB-PY_SqA4LtsAectYzgBQ&iflsig=AJiK0e8AAAAAY48tyEwHazw1f87AaKQuVwq9C93CI_N3&oq=Javasc&gs_lcp=Cgdnd3Mtd2l6EAEYADIECCMQJzIECCMQJzIECCMQJzIECAAQQzIECAAQQzIKCAAQsQMQgwEQQzIECAAQQzIECAAQQzIKCAAQsQMQgwEQQzIKCAAQsQMQgwEQQzoECAAQAzoICAAQsQMQgwE6CwgAEIAEELEDEIMBUABY9AdgjRNoAHAAeACAAWSIAfIDkgEDNS4xmAEAoAEB&sclient=gws-wiz
-
-//https://www.youtube.com/watch?v=_MyPLZSGS3s&ab_channel=ChrisCourses
-//https://www.youtube.com/watch?v=-UJpgZucQGs&ab_channel=SemicolonDotDev
-
-//https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
-
-
-//https://codersblock.com/blog/creating-glow-effects-with-css/
-
 const  Canvas = document.getElementById("Canvas")
 const ctx = Canvas.getContext("2d")
 const Character = Canvas.getContext("2d")
@@ -60,9 +48,10 @@ function UpdateScreen() {
     requestAnimationFrame(UpdateScreen)
 }
 setTimeout(UpdateScreen, 1000)
-setTimeout(EindLoad, 3000)
+setTimeout(EindLoad, 7000) //7 seconden loaden
 
 function UpdatePlayerLocation() { //De locatie van de speler updaten
+  //eerst checken voor collision
   if (checkWallCollision(x + vxl, y + vy, PlayerScaleXY)) {
     vxl = 0;
   }
@@ -106,13 +95,13 @@ function Coins() {
     for (let i = 0; i < coinlocationsX.length; i++) {
       let coinX = coinlocationsX[i];
       let coinY = coinlocationsY[i];
-      // Check if coin collides with a wall, if so, move the coin out of the wall
+      //Een 2de check voor de munten in een muur, en als ze in een muur zitten worden ze uit de muur gehaald
       if (checkCoinWallCollision(coinX, coinY)) {
           coinX = Math.random() * (Canvas.width - 20);
           coinY = Math.random() * (Canvas.height - 20);
       }
   
-      // Check if coin is too close to other coins, if so, move the coin to a new location
+      //Een check of munten te dichtbij elkaar zijn, als ja worden ze naar een nieuwe locatie gezet
       for (let j = 0; j < coinlocationsX.length; j++) {
           if (i !== j) {
               let otherCoinX = coinlocationsX[j];
@@ -130,7 +119,7 @@ function Coins() {
   }
 }
 
-function CoinsCollisionCheck() {
+function CoinsCollisionCheck() { //een functie om munten op te pakken
   for (let i = 0; i < coinlocationsX.length; i++) {
     if(coinlocationsX.at(i) >= -10 || coinlocationsY.at(i) >= -10) {
   if((coinlocationsX.at(i) + CoinscaleXY) < x ||
@@ -139,15 +128,15 @@ function CoinsCollisionCheck() {
      coinlocationsY.at(i) > (y + PlayerScaleXY)) {
 }
 else {
-  if(!Loading) {
-  CoinCount = CoinCount + 1;
+  if(!Loading) { // zorgen dat je geen munten op kan pakken als het spel aan het laden is
+  CoinCount = CoinCount + 1; //coin count 1 omhoog
   console.log(CoinCount);
   delete coinlocationsX[i];
   delete coinlocationsY[i];
-  UpdateMonsterSpeed();
-  document.getElementById("CoinsCounter").textContent = "Coins: " + CoinCount;
+  UpdateMonsterSpeed(); //de monster sneller maken
+  document.getElementById("CoinsCounter").textContent = "Coins: " + CoinCount; //de tekst updaten
   if(CoinCount >= MaxCoins) {
-    EndCoin()
+    EndCoin() //kijken of de EndCoin kan spawnen
     if (EndCoinReady) {
       document.getElementById("CoinsCounter").textContent = "You Win";
       document.getElementById("CoinsCounter").style.color = "green";
@@ -161,13 +150,13 @@ else {
 setInterval(CoinsCollisionCheck,3)
 
 //Begin Input
-addEventListener('keydown', function (e){
+addEventListener('keydown', function (e){ //kijken welke toetsen zijn ingedrukt met een Const voor de snelheid van de speler
     if(e.code == 'KeyD') vxr = PlayerWalkSpeed;
     if(e.code == 'KeyA') vxl = PlayerWalkSpeed * -1;
     if(e.code == 'KeyS') vy = PlayerWalkSpeed;
     if(e.code == 'KeyW') vy = PlayerWalkSpeed * -1;
 })
-addEventListener("keyup", function(e) {
+addEventListener("keyup", function(e) { //de speler stoppen als de toets is los gelaten
     if(e.code == 'KeyD') vxr = 0;
     if(e.code == 'KeyA') vxl = 0;
     if(e.code == 'KeyS') vy = 0;
@@ -212,18 +201,19 @@ TrackPlayer()
 //Eind Lighting
 
 //Begin Modal
-
 //Begin Loading
-function EindLoad() {
+function EindLoad() { //de functie voor het einde van het loaden
 var modal = document.getElementById("modal");
 modal.classList.remove("activemodal");
 document.getElementById("Canvas").style.animation = "CanvasZoom 2s forward";
 document.getElementById("Canvas2").style.animation = "CanvasZoom 2s forward";
 document.documentElement.style.setProperty('--Radius',15 + "rem")
+document.getElementById("CoinsCounter").textContent = "Coins: 0";
 Loading = false;
 }
 document.documentElement.style.setProperty('--Radius', 3000 + "rem")
 
+//de loading tekst animatie
 function LoadingText1() {
   document.getElementById("LoadingText").innerHTML = "Loading.";
   setTimeout(LoadingText2, 1500);
@@ -240,29 +230,21 @@ LoadingText1()
 //Eind Loading
 
  //Monster Begin
- let Spr2x = 400;
- let Spr2y = 220;
- let MonsterSpeed = 0.5;
+ let Spr2x = 400; //X locatie van monster
+ let Spr2y = 220; //Y locatie van monster
+ let MonsterSpeed = 0.5; //De normalen snelheid van monster
  
 
- var Spr2formaat = 20; 
+ var Spr2formaat = 20; //De XY scale van monster
  var telSpr2 = 0;
  var maxSpr2 = 100;
- var richtSpr2X = 1;
- var richtSpr2Y = 1;
- var SeesPlayer = false;
-
- var Spr1boven = x - (PlayerScaleXY / 2);
- var Spr1beneden = y + (PlayerScaleXY / 2);
- var Spr1links = x - (PlayerScaleXY / 2);
- var Spr1rechts = x + (PlayerScaleXY / 2);
- var Spr2boven = Spr2y - (Spr2formaat / 2);
- var Spr2beneden = Spr2y + (Spr2formaat / 2);
- var Spr2links = Spr2x - (Spr2formaat / 2);
- var Spr2rechts = Spr2x + (Spr2formaat / 2);
+ var richtSpr2X = 1; //De X velocity van monster
+ var richtSpr2Y = 1; //De Y velocity van monster
+ var SeesPlayer = false; //Boolean om te checken of de speler de monster ziet
 
  function Spr2() {
-  if(SeesPlayer) {
+  if(SeesPlayer) { //Checken of SeesPlayer is True
+    //De monster naar de speler bewegen
     if(x > Spr2x) {
       richtSpr2X = MonsterSpeed;
     }
@@ -277,7 +259,7 @@ LoadingText1()
     }
   }
   else {
-
+    //Als SeesPlayer False is gaat de monster een willekeurige richting op
      telSpr2++;
      if (telSpr2 > maxSpr2) {
          telSpr2 = 0;
@@ -292,8 +274,8 @@ LoadingText1()
       richtSpr2Y = 0;
 }
 
-     Spr2x += richtSpr2X;  
-     Spr2y += richtSpr2Y;
+     Spr2x += richtSpr2X; //De X locatie van monster updaten
+     Spr2y += richtSpr2Y; //De Y locatie van monster updaten
      if (Spr2x<0) {richtSpr2X = MonsterSpeed;}
      if (Spr2x>Canvas.offsetWidth-Spr2formaat) {richtSpr2X = MonsterSpeed * -1;}
      if (Spr2y<0) {richtSpr2Y = MonsterSpeed;}
@@ -301,7 +283,7 @@ LoadingText1()
    }
    setInterval(Spr2, 5)
 
-   function MonstercollisionCheck() {
+   function MonstercollisionCheck() { //Kijken of de speler de monster aan het aanraken is
     if((x + PlayerScaleXY) < Spr2x ||
     x > (Spr2x + Spr2formaat) ||
     (y + PlayerScaleXY) < Spr2y ||
@@ -317,7 +299,7 @@ setInterval(MonstercollisionCheck,5)
 function UpdateMonsterSpeed() {
   richtSpr2X = 0;
   richtSpr2Y = 0;
-  MonsterSpeed = MonsterSpeed + (CoinCount * 0.05);
+  MonsterSpeed = MonsterSpeed + (CoinCount * 0.05); //De monster sneller maken de hoger dat de CoinCount is
 }
 
  //Monster Eind
@@ -329,7 +311,7 @@ function UpdateMonsterSpeed() {
   {x: 400, y: 400, width: 50, height: 50}
 ];
 
-walls.push(
+walls.push( //De Muren zelf gemaakt
   {x: 100, y: 150, width: 50, height: 50},
   {x: 150, y: 150, width: 50, height: 50},
   {x: 200, y: 150, width: 50, height: 50},
@@ -543,7 +525,7 @@ walls.push(
 
 
 
-function wallsBegin() {
+function wallsBegin() { //een functie om een willekeurige locatie maken X en Y voor de muren, met een MaxWalls const variable
  for (let i = 0; i < MaxWalls; i++) {
   let RandomX = Math.floor(Math.random() * 1000);
   let RandomY = Math.floor(Math.random() * 800);
@@ -555,12 +537,10 @@ function wallsBegin() {
 //wallsBegin() //Comment verwijderen om doolhof willekeurig later genereren
 
 
-
-// Function to check if player collides with a wall
-function checkWallCollision(playerX, playerY, scale) {
+function checkWallCollision(playerX, playerY, scale) { //Een functie om te kijken of de monster of speler in een muur zitten 
   for (let i = 0; i < walls.length; i++) {
       let wall = walls[i];
-      // Check if player's x and y positions intersect with the wall's x and y positions
+      //Kijken of een speler/monster x of y in 1 van de muren x of y zit
       if (playerX + scale > wall.x && playerX < wall.x + wall.width && playerY + scale > wall.y && playerY < wall.y + wall.height) {
           return true;
       }
@@ -568,7 +548,7 @@ function checkWallCollision(playerX, playerY, scale) {
   return false;
 }
 
-function DrawWalls() {
+function DrawWalls() { //Een functie met een loop om alle muren op het canvas zetten
   for (let i = 0; i < walls.length; i++) {
     let wall = walls[i];
     ctx.beginPath();
@@ -578,11 +558,9 @@ function DrawWalls() {
   }
 }
 
-// Function to check if a coin collides with a wall
-function checkCoinWallCollision(coinX, coinY) {
+function checkCoinWallCollision(coinX, coinY) { //Een functie om te kijken of een munt in een muur zit
   for (let i = 0; i < walls.length; i++) {
       let wall = walls[i];
-      // Check if coin's x and y positions intersect with the wall's x and y positions
       if (coinX + 20 > wall.x && coinX < wall.x + wall.width && coinY + 20 > wall.y && coinY < wall.y + wall.height) {
         console.log("CoinColidw")
           return true;
@@ -590,57 +568,59 @@ function checkCoinWallCollision(coinX, coinY) {
   }
   return false;
 }
-
-
-
-
 //Maze eind
 
 //Raycast Begin
-function doLinesIntersect(x1, y1, x2, y2, x3, y3, x4, y4) {
+function doLinesIntersect(x1, y1, x2, y2, x3, y3, x4, y4) { //Functie om te controleren of twee lijnen (de ray en de muur) elkaar snijden
+    //Bereken de noemer van het snijpunt
   let denominator = ((x2 - x1) * (y4 - y3)) - ((y2 - y1) * (x4 - x3));
   let numerator1 = ((y1 - y3) * (x4 - x3)) - ((x1 - x3) * (y4 - y3));
   let numerator2 = ((y1 - y3) * (x2 - x1)) - ((x1 - x3) * (y2 - y1));
 
+    //Als de denominator 0 is, dan zijn de lijnen parallel
   if (denominator == 0) {
+      //Als ook numerator1 en numerator2 0 zijn, dan liggen de lijnen op elkaar
       return numerator1 == 0 && numerator2 == 0;
   }
 
+    //Bereken de r- en s-waardes van het snijpunt
   let r = numerator1 / denominator;
   let s = numerator2 / denominator;
 
+    //Als r en s tussen 0 en 1 liggen, dan snijden de lijnen elkaar
   return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
 }
 
-function checkPlayerAndWalls() {
-  // Initialize starting point of the ray (the monster's position)
+function checkPlayerAndWalls() { //Functie om te controleren of de speler gezien wordt door het monster
+  //Initialiseer de startpositie van de ray (de positie van het monster)
   let rayStartX = Spr2x + Spr2formaat/2;
   let rayStartY = Spr2y + Spr2formaat/2;
 
-  // Initialize end point of the ray (the player's position)
+  //Initialiseer de eindpositie van de ray (de positie van de speler)
   let rayEndX = x + PlayerScaleXY/2;
   let rayEndY = y + PlayerScaleXY/2;
 
-  for (let i = 0; i < walls.length; i++) {
+  for (let i = 0; i < walls.length; i++) { // Controleer of de ray een muur snijdt
       let wall = walls[i];
       if (doLinesIntersect(rayStartX, rayStartY, rayEndX, rayEndY, wall.x, wall.y, wall.x + wall.width, wall.y + wall.height)) {
-          SeesPlayer = false;
+          SeesPlayer = false; //De SeesPlayer variable naar False veranderen
           break;
       } else {
-          SeesPlayer = true;
+          SeesPlayer = true; //De SeesPlayer variable naar True veranderen
       }
   }
   console.log("seesPlayer: ", SeesPlayer);
 }
+// Voer de functie elke seconde uit
 setInterval(checkPlayerAndWalls, 1000);
 
 //RaycastEind
 
 let EndCoinReady = false
-function EndCoin() {
+function EndCoin() { //Een functie om de EndCoin te maken
   document.getElementById("CoinsCounter").textContent = "Escape";
-  document.getElementById("CoinsCounter").style.color = "red";
-  CoinColor = "green";
+  document.getElementById("CoinsCounter").style.color = "red"; //De tekst (coin counter) veranderen
+  CoinColor = "green"; //De munten een nieuwe kleur geven
   coinlocationsX.push(Math.floor(Math.random() * 1400)) //De willekeurige locatie X van de munten maken
   coinlocationsY.push(Math.floor(Math.random() * 800)) //De willekeurige locatie Y van de munten maken
   setTimeout(EndCoinReadyToggle, 50)
