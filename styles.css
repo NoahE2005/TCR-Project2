@@ -3,6 +3,7 @@
 
 html {
   font-family: "Montserrat", sans-serif;
+  text-transform: capitalize;
 }
 
 /**/
@@ -90,7 +91,6 @@ nav {
   top: 0;
   bottom: 0;
   z-index: 4;
-  text-transform: capitalize;
 }
 
 /* Add a black background color to the top navigation */
