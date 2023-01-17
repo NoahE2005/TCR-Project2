@@ -115,6 +115,7 @@ nav {
     font-size: 1.1vw;
     transition: 0.5s;
     z-index: 1;
+    min-width: 12vw;
 }
 
 /* Change the color of links on hover */
@@ -144,7 +145,6 @@ nav {
     width: 100%;
     z-index: 1;
 }
-
 
 .navbar {
   overflow: hidden;
