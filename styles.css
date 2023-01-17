@@ -91,6 +91,9 @@ nav {
   top: 0;
   bottom: 0;
   z-index: 4;
+  border-bottom-style: solid;
+  border-bottom-color: white;
+  border-bottom-width: 0.5vh;
 }
 
 /* Add a black background color to the top navigation */
@@ -324,7 +327,7 @@ footer {
   background-color: rgb(22, 22, 22);
   border-top-style: solid;
   border-top-color: white;
-  border-top-width: 0.8vh;
+  border-top-width: 0.5vh;
   position: sticky;
   display: flex;
   bottom: 0;
@@ -334,6 +337,7 @@ footer {
   z-index: 5;
   text-align: center;
   margin-top: 1vh;
+  align-content: center;
 }
 
 .FooterButtons {
@@ -361,7 +365,7 @@ footer {
   margin-left: 1vw;
   margin-right: 1vw;
   padding: 1vw 2.5vw;
-  font-size: x-large;
+  font-size: large;
   transition: 0.2s;
 }
 
