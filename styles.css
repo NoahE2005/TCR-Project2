@@ -367,6 +367,7 @@ footer {
   padding: 1vw 2.5vw;
   font-size: large;
   transition: 0.2s;
+  cursor: pointer;
 }
 
 
