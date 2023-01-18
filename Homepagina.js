@@ -64,6 +64,7 @@ function arrowClick(e) {
   }
 }
 
+
 // IMAGE SLIDE FUNCTION
 function slideshow() {
   if (counter < imageSlides.length) {
