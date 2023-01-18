@@ -181,6 +181,7 @@ h1 {
   padding: 1em;
   background-color: white;
   min-height: 15vw;
+  min-width: 25vw;
   float: right;
 }
 
