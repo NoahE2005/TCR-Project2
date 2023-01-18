@@ -659,4 +659,6 @@ function WinScreen() {
   document.getElementById("LoadingText").innerHTML = "You Win";
   document.getElementById("LoadingText").textContent = "You Win";
   document.getElementById("LoadingText").style.color = "green";
+  document.getElementById("CoinsCounter").textContent = "You Win";
+  document.getElementById("CoinsCounter").style.color = "green";
 }
