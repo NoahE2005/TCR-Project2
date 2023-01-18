@@ -64,6 +64,7 @@ function arrowClick(e) {
   }
 }
 
+
 // IMAGE SLIDE FUNCTION
 function slideshow() {
   if (counter < imageSlides.length) {
@@ -79,8 +80,17 @@ function slideshow() {
 setTimeout(slideshow, 1000);
 var imageSlideshowInterval = setInterval(slideshow, 10000);
 
-function OpenUrl(Link) {
-  alert (currentImage)
-  alert (currentImage)
-  window.open(Link)
+function OpenUrl() {
+  if(counter ==1) {
+    window.open('Noah/noah-3.html')
+  }
+  if(counter == 2) {
+    window.open('Justin/justin-3.html')
+  }
+  if(counter == 3) {
+    window.open('Bjorn/bjorn-3.html')
+  }
+  if(counter == 4) {
+    window.open('Lars/lars-3.html')
+  }
 }
