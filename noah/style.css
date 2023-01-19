@@ -24,6 +24,10 @@ main {
     margin-bottom: 2em;
 }
 
+.Comment {
+  color: green;
+}
+
 a {
   text-decoration: none;
   list-style: none;
@@ -58,6 +62,19 @@ h1 {
   font-weight: bold;
 }
 
+.FloatLeft {
+  float: left;
+}
+
+.FloatRight {
+  float: right;
+}
+
+.TextCenter {
+  text-align: center;
+  align-self: center;
+}
+
 .waviy {
     position: relative;
     -webkit-box-reflect: below -37px linear-gradient(transparent, rgba(0,0,0,.2));
@@ -81,6 +98,17 @@ h1 {
     background-color: rgb(51, 51, 51);
     padding-top: 1em; 
     padding-bottom: 2em;
+  }
+
+  .PortfolieSection2 {
+    background-color: rgb(34, 34, 34);
+    padding-top: 4em; 
+    padding-bottom: 2em;
+  }
+
+  .PortfolioNaam {
+    margin-top: 7em;
+    margin-bottom: 10em;
   }
 
   .TextColorgradientButton {
@@ -153,6 +181,7 @@ h1 {
   padding: 1em;
   background-color: white;
   min-height: 15vw;
+  min-width: 25vw;
   float: right;
 }
 
@@ -317,7 +346,7 @@ canvas {
 .content, .modal {
   top:0;
   left:0;
-  height:98vh;
+  height: 840px;
   width: 98vw;
   text-align: center;
 }
@@ -344,6 +373,10 @@ canvas {
   overflow: hidden;
 }
 
+.GameDetailsBigText {
+  font-size: 4.5vw;
+}
+
 @keyframes CanvasZoom {
   0% {
     width: 98vw;
@@ -356,3 +389,8 @@ canvas {
 }
 
 /*portfolio*/
+.PortfolioBody {
+  background-image: url(../Assets/images/Noah/abstract-flat-green-and-blue-background-free-vector.jpg);
+  padding: 0;
+  margin: 0;
+}

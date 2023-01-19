@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../Noah/Style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="../Assets/images/game-favicon.ico">
     <title>Spel detail</title>
 </head>
@@ -12,9 +14,9 @@
     
     <nav>
         <div class="topnav">
-            <a href="../index.html">Home</a>
+            <a href="../index.html"><i class="fa fa-fw fa-home"></i>Home</a>
             <div class="subnav" >
-                <a class="topnavborder active" class="subnavbtn">Over Noah <img src="../Assets/Images/Arrow.png"  class="DropdownImg"></a>
+                <a class="subnavbtn active"><i class="fa fa-user-o"></i> Over Noah <img src="../Assets/Images/Arrow.png"  class="DropdownImg"></a>
                 <div class="subnav-content">
                   <a href="../noah/noah-1.html">portfolio</a>
                   <a href="../noah/noah-2.html">favoriete spel</a>
@@ -23,7 +25,7 @@
                 </div>
           </div>
             <div class="subnav">
-                <a class="subnavbtn">over Justin <img src="../Assets/Images/Arrow.png" class="DropdownImg"></a>
+                <a class="topnavborder" class="subnavbtn"><i class="fa fa-user-o"></i> Over Justin <img src="../Assets/Images/Arrow.png" class="DropdownImg"></a>
                 <div class="subnav-content">
                     <a href="../Justin/justin-1.html">portfolio</a>
                     <a href="../Justin/justin-2.html">favoriete spel</a>
@@ -32,7 +34,7 @@
                 </div>
             </div>
             <div class="subnav">
-                <a class="subnavbtn">over Bjorn<img src="../Assets/Images/Arrow.png" class="DropdownImg"></a>
+                <a class="subnavbtn"><i class="fa fa-user-o"></i> Over Bjorn<img src="../Assets/Images/Arrow.png" class="DropdownImg"></a>
                 <div class="subnav-content">
                     <a href="../bjorn/bjorn-1.html">portfolio</a>
                     <a href="../bjorn/bjorn-2.html">favoriete spel</a>
@@ -41,7 +43,7 @@
                 </div>
             </div>
             <div class="subnav">
-                <a class="subnavbtn">over Lars<img src="../Assets/Images/Arrow.png" class="DropdownImg"></a>
+                <a class="subnavbtn"><i class="fa fa-user-o"></i> Over Lars<img src="../Assets/Images/Arrow.png" class="DropdownImg"></a>
                 <div class="subnav-content">
                     <a href="../lars/lars-1.html">portfolio</a>
                     <a href="../lars/lars-2.html">favoriete spel</a>
@@ -51,6 +53,676 @@
             </div>
       </nav>
 
-    
+    <main>
+        <h1 class="GameDetailsBigText">Game details</h1>
+        <section class="MainText">
+            <h1>Wat voor soort spel is dit?</h1>
+            <p>
+                Dit is een soort doolhof-horror spel waar de speler munten moeten pakken, en een monster ontwijken.<br>
+                je moet in totaal 9 munten pakken om het spel te halen, een het monster word steeds sneller.<br>
+            </p>
+            <br><br>
+        </section>
+
+        <section class="MainText">
+            <h1>Waren er obstakels voor dit spel te maken?</h1>
+            <p>
+                Ja, ik had wel een paar obstakels. maar de obstakels hadden het meest te maken met Collision.<br>
+                maar met de hulp van het internet had ik het na een lange tijd werkend te krijgen.<br>
+            </p>
+            <br><br>
+        </section>
+
+        <section class="MainText">
+            <h1>Hoe speel je het spel?</h1>
+            <p>
+                Je speelt het spel om met WASD te bewegen en door het doolhof te lopen.<br>
+                Je moet het rode vierkant (monster) ontwijken en de gele vierkanten (munten) pakken.<br> 
+                Na de achtste munt moet je nog een groene munt pakken.
+            </p>
+            <br><br>
+        </section>
+
+        <section class="MainText">
+            <h1>Hoe ziet de volledige code eruit?</h1>
+            <p>
+                deze code voor het speel is wel complex met meer dan 600 lines van code
+            </p>
+            <p>
+                <h2>Code</h2>
+
+                <br>const  Canvas = document.getElementById("Canvas")
+                <br>const ctx = Canvas.getContext("2d")
+                <br>const Character = Canvas.getContext("2d")
+                <br>const coins = Canvas.getContext("2d")
+                <br>const Monster = Canvas.getContext("2d")
+                <br>const Walls = Canvas.getContext("2d")
+                <br>
+                <br>const PlayerWalkSpeed = 3; <p1 class="Comment">//Snelheid van de speler</p1>
+                <br>const PlayerColor = 000000; <p1 class="Comment">//Kleur van de speler</p1>
+                <br>const PlayerScaleXY = 20; <p1 class="Comment">//Grootte van de speler</p1>
+                <br>const MaxCoins = 8; <p1 class="Comment">//Maximaal aantal munten in het spel</p1>
+                <br>const minCoinDistance = 350; <p1 class="Comment">//Minimum afstand tussen de munten</p1>
+                <br>const MaxWalls = 150; <p1 class="Comment">//Maximaal aantal muren in het spel (alleen als willekeurig)</p1>
+                <br>
+                <br>var Breed = 0;
+                <br>var Hoog = 0;
+                <br>var Loading = true;
+                <br>
+                <br>let x = 50; <p1 class="Comment">//X locatie van speler</p1>
+                <br>let y = 50; <p1 class="Comment">//Y locatie van speler</p1>
+                <br>let vxl = 0; <p1 class="Comment">// de X links "velocity" van speler</p1>
+                <br>let vxr = 0; <p1 class="Comment">// de X rechts "velocity" van speler</p1>
+                <br>let vy = 0; <p1 class="Comment">// de Y "velocity" van speler</p1>
+                <br>
+                <br>var player = Character.fillRect(0,0, 0, 0); <p1 class="Comment">//Tekent de speler op het canvas</p1>
+                <br>var CoinsRef = coins.fillRect(0,0, 0, 0); <p1 class="Comment">//Tekent de munten op het canvas</p1>
+                <br>var CoinCount = 0; <p1 class="Comment">//Houdt bij hoeveel munten de speler verzameld heeft</p1>
+                <br>var coinlocationsX = []; <p1 class="Comment">//Slaat X-locaties van munten op</p1>
+                <br>var coinlocationsY = []; <p1 class="Comment">//Slaat Y-locaties van munten op</p1>
+                <br>var CoinscaleXY = 10; <p1 class="Comment">//Slaat de XY grootte van de munten op</p1>
+                <br>var CoinColor = "yellow"; <p1 class="Comment">//Slaat de kleur van de munten op</p1>
+                <br>
+                <br>CoinsBegin()
+                <br>function UpdateScreen() {
+                <br>  ctx.clearRect(0,0, Canvas.width, Canvas.height) <p1 class="Comment">//canvas schoonmaken</p1>
+                <br>Character.clearRect(0,0, Canvas.width, Canvas.height) <p1 class="Comment">//De speler van het canvas verwijderen</p1>
+                <br>Character.beginPath();
+                <br>Character.fillStyle = "white"; <p1 class="Comment">//De kleur van de speler</p1>
+                <br>player = Character.fillRect(x,y, PlayerScaleXY, PlayerScaleXY) <p1 class="Comment">//De speler op het canvas toevoegen</p1>
+                <br>Character.closePath();
+                <br>Monster.beginPath();
+                <br>Monster.fillStyle = "red"; <p1 class="Comment">//De kleur van het monster</p1>
+                <br>Monster.fillRect(Spr2x, Spr2y, Spr2formaat, Spr2formaat); <p1 class="Comment">//De monster op de canvas toevoegen</p1>
+                <br>Monster.closePath();
+                <br>UpdatePlayerLocation();
+                <br>DrawWalls();
+                <br>Coins();
+                <br>requestAnimationFrame(UpdateScreen)
+                <br>}
+                <br>setTimeout(UpdateScreen, 1000)
+                <br>setTimeout(EindLoad, 7000) //7 seconden loaden
+                <br>
+                <br>function UpdatePlayerLocation() { <p1 class="Comment">//De locatie van de speler updaten</p1>
+                    <br><p1 class="Comment">//eerst checken voor collision</p1>
+                    <br>if (checkWallCollision(x + vxl, y + vy, PlayerScaleXY)) {
+                        <br>vxl = 0;
+                        <br>}
+                        <br>if (checkWallCollision(x + vxr, y + vy, PlayerScaleXY )) {
+                            <br>vxr = 0;
+                            <br>}
+                            <br>if (checkWallCollision(x + vxl + vxr, y + vy, PlayerScaleXY)) {
+                                <br>vy = 0;
+                                <br>}
+                                <br>x += vxl;
+                                <br>x += vxr;
+                                <br>y += vy;
+                                <br>}
+                                <br>
+                                <br>function CoinsBegin() { <p1 class="Comment">// een array van de X en Y locatie van de munten maken</p1>
+                                    <br>for (let i = 0; i < MaxCoins; i++) {
+                                        <br>coinlocationsX.push(Math.floor(Math.random() * 1400)) //De willekeurige locatie X van de munten maken
+                                        <br>coinlocationsY.push(Math.floor(Math.random() * 800)) //De willekeurige locatie Y van de munten maken
+                                        <br>}
+                                        <br>}
+                                        <br>
+                                        <br>
+                <br>function Coins() {
+                    <br>for (let i = 0; i < coinlocationsX.length; i++) {
+                        <br>coins.beginPath();
+                        <br>coins.fillStyle = CoinColor; <p1 class="Comment">//de munten een kleur geven</p1>
+                        <br>coins.fillRect(coinlocationsX.at(i),coinlocationsY.at(i), CoinscaleXY, CoinscaleXY); <p1 class="Comment">//de munten op het canvas toevoegen</p1>
+                        <br>coins.closePath();
+                        <br>for (let i = 0; i < coinlocationsX.length; i++) {
+                            <br>let coinX = coinlocationsX[i]; //de coinX variable maken
+                            <br>let coinY = coinlocationsY[i]; //de coinY variable maken
+                            <br><p1 class="Comment">//Kijken of de munten in een muur zitten</p1>
+                            <br>if (checkCoinWallCollision(coinX, coinY)) {
+                                <br>coinX = Math.random() * (Canvas.width - 20);
+                                <br>coinY = Math.random() * (Canvas.height - 20);
+                                <br>        }
+                                <br>        coinlocationsX[i] = coinX;
+                                <br>        coinlocationsY[i] = coinY;
+                                <br>      }
+                                <br>    }
+                                <br>    for (let i = 0; i < coinlocationsX.length; i++) {
+                                    <br>      let coinX = coinlocationsX[i];
+                                    <br>      let coinY = coinlocationsY[i];
+                                    <br>      <p1 class="Comment">//Een 2de check voor de munten in een muur, en als ze in een muur zitten worden ze uit de muur gehaald</p1>
+                                    <br>      if (checkCoinWallCollision(coinX, coinY)) {
+                                        <br>          coinX = Math.random() * (Canvas.width - 20);
+                                        <br>         coinY = Math.random() * (Canvas.height - 20);
+                                        <br>      }
+                                        <br> 
+                                        <br>     <p1 class="Comment">//Een check of munten te dichtbij elkaar zijn, als ja worden ze naar een nieuwe locatie gezet</p1>
+                                        <br>     for (let j = 0; j < coinlocationsX.length; j++) {
+                                            <br>          if (i !== j) {
+                                                <br>              let otherCoinX = coinlocationsX[j];
+                                                <br>              let otherCoinY = coinlocationsY[j];
+                                                <br>              let distance = Math.sqrt(Math.pow(coinX - otherCoinX, 2) + Math.pow(coinY - otherCoinY, 2));
+                                                <br>              if (distance < minCoinDistance) {
+                                                    <br>                  coinX = Math.random() * (Canvas.width - 20);
+                                                    <br>                  coinY = Math.random() * (Canvas.height - 20);
+                                                    <br>             }
+                                                    <br>         }
+                                                    <br>      }
+                                                    <br> 
+                                                    <br>     coinlocationsX[i] = coinX;
+                                                    <br>     coinlocationsY[i] = coinY;
+                                                    <br> }
+                                                    <br>}
+                                                    <br>
+    <br>function CoinsCollisionCheck() { <p1 class="Comment">//een functie om munten op te pakken</p1>
+        <br>for (let i = 0; i < coinlocationsX.length; i++) {
+            <br>    if(coinlocationsX.at(i) >= -10 || coinlocationsY.at(i) >= -10) {
+                <br>  if((coinlocationsX.at(i) + CoinscaleXY) < x ||
+                <br>  coinlocationsX.at(i) > (x + PlayerScaleXY) ||
+                <br>    (coinlocationsY.at(i) + CoinscaleXY) < y ||
+                <br>     coinlocationsY.at(i) > (y + PlayerScaleXY)) {
+                    <br>}
+                    <br>else {
+                        <br>  if(!Loading) { <p1 class="Comment">// zorgen dat je geen munten op kan pakken als het spel aan het laden is</p1>
+                            <br>  CoinCount = CoinCount + 1; //coin count 1 omhoog
+                            <br>  console.log(CoinCount);
+                            <br>  delete coinlocationsX[i];
+                            <br>  delete coinlocationsY[i];
+                            <br>  UpdateMonsterSpeed(); <p1 class="Comment">//de monster sneller maken</p1>
+                            <br>  document.getElementById("CoinsCounter").textContent = "Coins: " + CoinCount; <p1 class="Comment">//de tekst updaten</p1>
+                            <br>  if(CoinCount >= MaxCoins) {
+                                <br>    EndCoin() <p1 class="Comment">//kijken of de EndCoin kan spawnen</p1>
+                                <br>    if (EndCoinReady) {
+                                    <br>      document.getElementById("CoinsCounter").textContent = "You Win";
+                                    <br>      document.getElementById("CoinsCounter").style.color = "green";
+                                    <br>    }
+                                    <br>  }
+                                    <br>}
+                                    <br>}
+                                    <br>}
+                                    <br>  }
+                                    <br>}
+                                    <br>setInterval(CoinsCollisionCheck,3)
+                                    <br>
+                                    <br><p1 class="Comment">//Begin Input</p1>
+                                    <br>addEventListener('keydown', function (e){ <p1 class="Comment">//kijken welke toetsen zijn ingedrukt met een Const voor de snelheid van de speler</p1>
+                                        <br>    if(e.code == 'KeyD') vxr = PlayerWalkSpeed;
+                                        <br>    if(e.code == 'KeyA') vxl = PlayerWalkSpeed * -1;
+                                        <br>    if(e.code == 'KeyS') vy = PlayerWalkSpeed;
+                                        <br>    if(e.code == 'KeyW') vy = PlayerWalkSpeed * -1;
+                                        <br>})
+                                        <br>addEventListener("keyup", function(e) { <p1 class="Comment">//de speler stoppen als de toets is los gelaten</p1>
+                                            <br>    if(e.code == 'KeyD') vxr = 0;
+                                            <br>    if(e.code == 'KeyA') vxl = 0;
+                                            <br>    if(e.code == 'KeyS') vy = 0;
+                                            <br>    if(e.code == 'KeyW') vy = 0;
+                                            <br>})
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>function OuterWallCollision() { <p1 class="Comment">//Een Collision check voor de grootte van de canvas zelf</p1>
+<br>  var breed = Canvas.offsetWidth - PlayerScaleXY; <p1 class="Comment">//breedte van canvass</p1>
+<br>
+<br>  var hoog = Canvas.offsetHeight - PlayerScaleXY; <p1 class="Comment">//hoogte van canvas</p1>
+<br>
+<br>  if(x <= 0){
+<br>      x = 0;
+<br>  }
+<br>  if(y <= 0){
+<br>      y = 0;
+<br>  }
+<br>  if(x >= breed)
+<br>  {
+<br>     x = breed;
+<br>  }
+<br>  if(y >= hoog)
+<br>  {
+<br>      y = hoog;
+<br> setTimeout(OuterWallCollision, 5)
+<br>}
+<br>OuterWallCollision()
+<br>
+<br>
+<br><p1 class="Comment">//Eind Input</p1>
+<br>
+<br><p1 class="Comment">//Begin Lighting</p1>
+<br>function TrackPlayer() { <p1 class="Comment">//Locatie van player pakken en het setten voor de style</p1>
+<br>    document.documentElement.style.setProperty('--cursorXpos', x + parseFloat(25) + "px") <p1 class="Comment">//de parsefloat om het te centreren</p1>
+<br>    document.documentElement.style.setProperty('--cursorYpos', y + parseFloat(75) + "px") <p1 class="Comment">//de parsefloat om het te centreren</p1>
+<br>    setTimeout(TrackPlayer, 50)
+<br>}
+<br>TrackPlayer()
+<br><p1 class="Comment">//Eind Lighting</p1>
+<br>
+<br><p1 class="Comment">//Begin Modal</p1>
+<br><p1 class="Comment">//Begin Loading</p1>
+<br>function EindLoad() { <p1 class="Comment">//de functie voor het einde van het loaden</p1>
+<br>var modal = document.getElementById("modal");
+<br>modal.classList.remove("activemodal");
+<br>document.getElementById("Canvas").style.animation = "CanvasZoom 2s forward";
+<br>document.getElementById("Canvas2").style.animation = "CanvasZoom 2s forward";
+<br>document.documentElement.style.setProperty('--Radius',15 + "rem")
+<br>document.getElementById("CoinsCounter").textContent = "Coins: 0";
+<br>Loading = false;
+<br>}
+<br>document.documentElement.style.setProperty('--Radius', 3000 + "rem")
+<br>
+<br><p1 class="Comment">//de loading tekst animatie</p1>
+<br>function LoadingText1() {
+<br>  document.getElementById("LoadingText").innerHTML = "Loading.";
+<br>  setTimeout(LoadingText2, 1500);
+<br>}
+<br>function LoadingText2() {
+<br>  document.getElementById("LoadingText").innerHTML = "Loading..";
+<br>  setTimeout(LoadingText3, 1000);
+<br>}
+<br>function LoadingText3() {
+<br>  document.getElementById("LoadingText").innerHTML = "Loading...";
+<br>  setTimeout(LoadingText1, 1000);
+<br>}
+<br>LoadingText1()
+<br><p1 class="Comment">//Eind Loading</p1>
+<br>
+<br> <p1 class="Comment">//Monster Begin</p1>
+<br> let Spr2x = 400; <p1 class="Comment">//X locatie van monster</p1>
+<br> let Spr2y = 220; <p1 class="Comment">//Y locatie van monster</p1>
+<br> let MonsterSpeed = 0.5; <p1 class="Comment">//De normalen snelheid van monster</p1>
+<br> 
+<br>
+<br> var Spr2formaat = 20; <p1 class="Comment">//De XY scale van monster</p1>
+<br> var telSpr2 = 0;
+<br>var maxSpr2 = 100;
+<br> var richtSpr2X = 1; <p1 class="Comment">//De X velocity van monster</p1>
+<br> var richtSpr2Y = 1; <p1 class="Comment">//De Y velocity van monster</p1>
+<br> var SeesPlayer = false; <p1 class="Comment">//Boolean om te checken of de speler de monster ziet</p1>
+<br>
+<br> function Spr2() {
+<br>  if(SeesPlayer) { <p1 class="Comment">//Checken of SeesPlayer is True</p1>
+<br>    <p1 class="Comment">//De monster naar de speler bewegen</p1>
+<br>    if(x > Spr2x) {
+<br>      richtSpr2X = MonsterSpeed;
+<br>    }
+<br>    if(x < Spr2x) {
+<br>      richtSpr2X = MonsterSpeed * -1;
+<br>    }
+<br>    if(y > Spr2y) {
+<br>      richtSpr2Y = MonsterSpeed;
+<br>    }
+<br>   if(y < Spr2y) {
+<br>     richtSpr2Y = MonsterSpeed * -1;
+<br>   }
+<br> }
+<br> else {
+<br>   <p1 class="Comment">//Als SeesPlayer False is gaat de monster een willekeurige richting op</p1>
+<br>    telSpr2++;
+<br>    if (telSpr2 > maxSpr2) {
+<br>        telSpr2 = 0;
+<br>        richtSpr2X = Math.floor(Math.random()*3) -1;Spr2formaat
+<br>        richtSpr2Y = Math.floor(Math.random()*3) -1;
+<br>    }
+<br>   }
+<br>   if (checkWallCollision(Spr2x + richtSpr2X, Spr2y + richtSpr2Y, Spr2formaat)) {
+<br>    richtSpr2X = 0;
+<br> }
+<br>   if (checkWallCollision(Spr2x + richtSpr2X, Spr2y + richtSpr2Y, Spr2formaat)) {
+<br>    richtSpr2Y = 0;
+<br>}
+<br>
+<br>    Spr2x += richtSpr2X; <p1 class="Comment">//De X locatie van monster updaten</p1>
+<br>    Spr2y += richtSpr2Y; <p1 class="Comment">//De Y locatie van monster updaten</p1>
+<br>    if (Spr2x<0) {richtSpr2X = MonsterSpeed;}
+<br>    if (Spr2x>Canvas.offsetWidth-Spr2formaat) {richtSpr2X = MonsterSpeed * -1;}
+<br>    if (Spr2y<0) {richtSpr2Y = MonsterSpeed;}
+<br>    if (Spr2y>Canvas.offsetHeight-Spr2formaat) {richtSpr2Y = MonsterSpeed * -1;}
+<br> }
+<br> setInterval(Spr2, 5)
+<br>
+<br>   function MonstercollisionCheck() { <p1 class="Comment">//Kijken of de speler de monster aan het aanraken is</p1>
+<br>    if((x + PlayerScaleXY) < Spr2x ||
+<br>    x > (Spr2x + Spr2formaat) ||
+<br>    (y + PlayerScaleXY) < Spr2y ||
+<br>    y > (Spr2y + Spr2formaat)) {
+<br>      console.log("Not colliding");
+<br>    }
+<br>   else {
+<br>      console.log("colliding")
+<br>    }
+<br> }
+<br>setInterval(MonstercollisionCheck,5)
+<br>
+<br>function UpdateMonsterSpeed() {
+<br>  richtSpr2X = 0;
+<br>  richtSpr2Y = 0;
+<br>  MonsterSpeed = MonsterSpeed + (CoinCount * 0.05); <p1 class="Comment">//De monster sneller maken de hoger dat de CoinCount is</p1>
+<br>}
+<br>
+<br> //Monster Eind
+<br>
+<br> //Maze begin
+<br> const walls = [  
+<br>  {x: 100, y: 100, width: 50, height: 50},
+<br> {x: 300, y: 300, width: 50, height: 50},
+<br> {x: 400, y: 400, width: 50, height: 50}
+<br>];
+<br>
+<br>walls.push( <p1 class="Comment">//De Muren zelf gemaakt</p1>
+<br> {x: 100, y: 150, width: 50, height: 50},
+<br>  {x: 150, y: 150, width: 50, height: 50},
+<br>  {x: 200, y: 150, width: 50, height: 50},
+<br>  {x: 300, y: 150, width: 50, height: 50},
+<br>  {x: 350, y: 150, width: 50, height: 50},
+<br>  {x: 200, y: 250, width: 50, height: 50},
+<br>  {x: 200, y: 50, width: 50, height: 50},
+<br>  {x: 150, y: 0, width: 50, height: 50},
+<br>  {x: 100, y: 0, width: 50, height: 50},
+<br> {x: 200, y: 0, width: 50, height: 50},
+<br>  {x: 150, y: 0, width: 50, height: 50},
+<br>  {x: 100, y: 0, width: 50, height: 50},
+<br>  {x: 50, y: 0, width: 50, height: 50},
+<br> {x: 0, y: 0, width: 50, height: 50},
+<br>  {x: 0, y: 50, width: 50, height: 50},
+<br>  {x: 0, y: 100, width: 50, height: 50},
+<br>  {x: 0, y: 150, width: 50, height: 50},
+<br>  {x: 0, y: 200, width: 50, height: 50},
+<br>  {x: 0, y: 250, width: 50, height: 50},
+<br>  {x: 0, y: 300, width: 50, height: 50},
+<br>  {x: 0, y: 350, width: 50, height: 50},
+<br>  {x: 50, y: 250, width: 50, height: 50},
+<br>  {x: 50, y: 300, width: 50, height: 50},
+<br>  {x: 100, y: 250, width: 50, height: 50},
+<br>  {x: 200, y: 300, width: 50, height: 50},
+<br>  {x: 200, y: 350, width: 50, height: 50},
+<br>  {x: 150, y: 350, width: 50, height: 50},
+<br>  {x: 150, y: 400, width: 50, height: 50},
+<br>  {x: 100, y: 400, width: 50, height: 50},
+<br> {x: 50, y: 450, width: 50, height: 50},
+<br> {x: 100, y: 450, width: 50, height: 50},
+<br>  {x: 50, y: 500, width: 50, height: 50},
+<br>  {x: 50, y: 550, width: 50, height: 50},
+<br>  {x: 50, y: 600, width: 50, height: 50},
+<br>  {x: 50, y: 700, width: 50, height: 50},
+<br> {x: 100, y: 700, width: 50, height: 50},
+<br>  {x: 100, y: 600, width: 50, height: 50},
+<br>  {x: 100, y: 750, width: 50, height: 50},
+<br>  {x: 150, y: 700, width: 50, height: 50},
+<br>  {x: 200, y: 700, width: 50, height: 50},
+<br>  {x: 250, y: 700, width: 50, height: 50},
+<br> {x: 250, y: 650, width: 50, height: 50},
+<br> {x: 250, y: 550, width: 50, height: 50},
+<br>  {x: 200, y: 550, width: 50, height: 50},
+<br>  {x: 100, y: 550, width: 50, height: 50},
+<br> {x: 100, y: 500, width: 50, height: 50},
+<br> {x: 200, y: 500, width: 50, height: 50},
+<br>  {x: 250, y: 500, width: 50, height: 50},
+<br>  {x: 300, y: 500, width: 50, height: 50},
+<br> {x: 350, y: 500, width: 50, height: 50},
+<br> {x: 450, y: 500, width: 50, height: 50},
+<br>  {x: 550, y: 500, width: 50, height: 50},
+<br>  {x: 350, y: 400, width: 50, height: 50},
+<br> {x: 300, y: 400, width: 50, height: 50},
+<br>  {x: 200, y: 400, width: 50, height: 50},
+<br> {x: 300, y: 350, width: 50, height: 50},
+<br> {x: 300, y: 250, width: 50, height: 50},
+<br>  {x: 350, y: 250, width: 50, height: 50},
+<br>  {x: 400, y: 250, width: 50, height: 50},
+<br> {x: 450, y: 250, width: 50, height: 50},
+<br> {x: 450, y: 300, width: 50, height: 50},
+<br> {x: 300, y: 100, width: 50, height: 50},
+<br>  {x: 300, y: 50, width: 50, height: 50},
+<br> {x: 350, y: 50, width: 50, height: 50},
+<br> {x: 400, y: 50, width: 50, height: 50},
+<br> {x: 500, y: 50, width: 50, height: 50},
+<br> {x: 500, y: 100, width: 50, height: 50},
+<br> {x: 500, y: 150, width: 50, height: 50},
+<br>  {x: 450, y: 150, width: 50, height: 50},
+<br>  {x: 400, y: 150, width: 50, height: 50},
+<br> {x: 600, y: 50, width: 50, height: 50},
+<br> {x: 600, y: 0, width: 50, height: 50},
+<br> {x: 600, y: 50, width: 50, height: 50},
+<br> {x: 550, y: 150, width: 50, height: 50},
+<br> {x: 600, y: 150, width: 50, height: 50},
+<br> {x: 650, y: 150, width: 50, height: 50},
+<br> {x: 700, y: 150, width: 50, height: 50},
+<br>  {x: 700, y: 50, width: 50, height: 50},
+<br>  {x: 750, y: 50, width: 50, height: 50},
+<br>  {x: 800, y: 50, width: 50, height: 50},
+<br>  {x: 850, y: 50, width: 50, height: 50},
+<br>  {x: 800, y: 100, width: 50, height: 50},
+<br>  {x: 800, y: 150, width: 50, height: 50},
+<br>  {x: 800, y: 250, width: 50, height: 50},
+<br>  {x: 800, y: 200, width: 50, height: 50},
+<br>  {x: 500, y: 250, width: 50, height: 50},
+<br>  {x: 550, y: 250, width: 50, height: 50},
+<br>  {x: 650, y: 250, width: 50, height: 50},
+<br>  {x: 650, y: 300, width: 50, height: 50},
+<br>  {x: 650, y: 350, width: 50, height: 50},
+<br>  {x: 600, y: 350, width: 50, height: 50},
+<br>  {x: 550, y: 350, width: 50, height: 50},
+<br>  {x: 550, y: 400, width: 50, height: 50},
+<br>  {x: 500, y: 500, width: 50, height: 50},
+<br>  {x: 500, y: 550, width: 50, height: 50},
+<br>  {x: 500, y: 600, width: 50, height: 50},
+<br>{x: 450, y: 600, width: 50, height: 50},
+<br>  {x: 400, y: 600, width: 50, height: 50},
+<br>  {x: 400, y: 650, width: 50, height: 50},
+<br> {x: 400, y: 700, width: 50, height: 50},
+<br>  {x: 400, y: 750, width: 50, height: 50},
+<br>  {x: 350, y: 600, width: 50, height: 50},
+<br>  {x: 350, y: 700, width: 50, height: 50},
+<br>  {x: 450, y: 700, width: 50, height: 50},
+<br>  {x: 450, y: 650, width: 50, height: 50},
+<br>  {x: 500, y: 650, width: 50, height: 50},
+<br>  {x: 500, y: 700, width: 50, height: 50},
+<br>  {x: 600, y: 700, width: 50, height: 50},
+<br>  {x: 650, y: 700, width: 50, height: 50},
+<br>  {x: 700, y: 700, width: 50, height: 50},
+<br>  {x: 600, y: 650, width: 50, height: 50},
+<br>  {x: 600, y: 600, width: 50, height: 50},
+<br>  {x: 650, y: 600, width: 50, height: 50},
+<br>  {x: 650, y: 550, width: 50, height: 50},
+<br>  {x: 650, y: 500, width: 50, height: 50},
+<br>  {x: 650, y: 450, width: 50, height: 50},
+<br>  {x: 650, y: 400, width: 50, height: 50},                                                                                                                                        <br>  {x: 700, y: 250, width: 50, height: 50},
+<br>  {x: 800, y: 300, width: 50, height: 50},
+<br>  {x: 800, y: 350, width: 50, height: 50},
+<br>  {x: 750, y: 350, width: 50, height: 50},
+<br>  {x: 750, y: 400, width: 50, height: 50},
+<br>  {x: 750, y: 500, width: 50, height: 50},
+<br>  {x: 750, y: 550, width: 50, height: 50},
+<br>  {x: 750, y: 600, width: 50, height: 50},
+<br>  {x: 800, y: 600, width: 50, height: 50},
+<br>  {x: 800, y: 650, width: 50, height: 50},
+<br>  {x: 800, y: 700, width: 50, height: 50},
+<br>  {x: 800, y: 750, width: 50, height: 50},
+<br>  {x: 850, y: 600, width: 50, height: 50},
+<br>  {x: 900, y: 600, width: 50, height: 50},
+<br>  {x: 950, y: 600, width: 50, height: 50},
+<br> {x: 1000, y: 600, width: 50, height: 50},
+<br> {x: 1000, y: 550, width: 50, height: 50},
+<br>  {x: 1000, y: 500, width: 50, height: 50},
+<br> {x: 1000, y: 450, width: 50, height: 50},
+<br>  {x: 1000, y: 400, width: 50, height: 50},
+<br>  {x: 1000, y: 350, width: 50, height: 50},
+<br>  {x: 950, y: 350, width: 50, height: 50},
+<br>  {x: 900, y: 350, width: 50, height: 50},
+<br> {x: 900, y: 300, width: 50, height: 50},
+<br>  {x: 900, y: 250, width: 50, height: 50},
+<br>  {x: 900, y: 150, width: 50, height: 50},
+<br>  {x: 950, y: 150, width: 50, height: 50},
+<br> {x: 950, y: 100, width: 50, height: 50},
+<br> {x: 950, y: 50, width: 50, height: 50},
+<br> {x: 950, y: 0, width: 50, height: 50},
+<br> {x: 950, y: 250, width: 50, height: 50},
+<br>  {x: 1000, y: 250, width: 50, height: 50},
+<br>  {x: 1100, y: 250, width: 50, height: 50},
+<br>  {x: 1100, y: 300, width: 50, height: 50},
+<br>  {x: 1100, y: 350, width: 50, height: 50},
+<br>  {x: 1100, y: 400, width: 50, height: 50},
+<br>  {x: 1100, y: 500, width: 50, height: 50},
+<br>  {x: 1100, y: 550, width: 50, height: 50},
+<br>{x: 1100, y: 600, width: 50, height: 50},
+<br>  {x: 1100, y: 650, width: 50, height: 50},
+<br>  {x: 1100, y: 700, width: 50, height: 50},
+<br>  {x: 1100, y: 800, width: 50, height: 50},
+<br> {x: 1150, y: 700, width: 50, height: 50},
+<br>  {x: 1200, y: 700, width: 50, height: 50},
+<br>  {x: 1250, y: 650, width: 50, height: 50},
+<br>  {x: 1300, y: 650, width: 50, height: 50},
+<br>  {x: 1400, y: 650, width: 50, height: 50},
+<br>  {x: 1400, y: 600, width: 50, height: 50},
+<br>  {x: 1400, y: 700, width: 50, height: 50},
+<br> {x: 1400, y: 750, width: 50, height: 50},
+<br> {x: 1350, y: 750, width: 50, height: 50},
+<br>  {x: 1300, y: 750, width: 50, height: 50},
+<br>  {x: 1200, y: 650, width: 50, height: 50},
+<br>  {x: 1000, y: 700, width: 50, height: 50},
+<br> {x: 1000, y: 650, width: 50, height: 50},
+<br> {x: 900, y: 700, width: 50, height: 50},
+<br> {x: 900, y: 750, width: 50, height: 50},
+<br>  {x: 1350, y: 550, width: 50, height: 50},
+<br>  {x: 1400, y: 550, width: 50, height: 50},
+<br> {x: 1300, y: 550, width: 50, height: 50},
+<br>{x: 1200, y: 550, width: 50, height: 50},
+<br> {x: 1200, y: 500, width: 50, height: 50},
+<br>{x: 1200, y: 400, width: 50, height: 50},
+<br> {x: 1200, y: 350, width: 50, height: 50},
+<br>{x: 1200, y: 450, width: 50, height: 50},
+<br> {x: 1250, y: 350, width: 50, height: 50},
+<br> {x: 1250, y: 450, width: 50, height: 50},
+<br> {x: 1300, y: 450, width: 50, height: 50},
+<br> {x: 1350, y: 450, width: 50, height: 50},
+<br> {x: 1350, y: 350, width: 50, height: 50},
+<br>{x: 1400, y: 350, width: 50, height: 50},
+<br> {x: 1400, y: 300, width: 50, height: 50},
+<br>{x: 1400, y: 250, width: 50, height: 50},
+<br> {x: 1400, y: 200, width: 50, height: 50},
+<br> {x: 1350, y: 200, width: 50, height: 50},
+<br>{x: 1300, y: 200, width: 50, height: 50},
+<br>{x: 1250, y: 200, width: 50, height: 50},
+<br>{x: 1200, y: 200, width: 50, height: 50},
+<br> {x: 1150, y: 150, width: 50, height: 50},
+<br> {x: 1200, y: 150, width: 50, height: 50},
+<br> {x: 1050, y: 150, width: 50, height: 50},
+<br> {x: 1050, y: 100, width: 50, height: 50},
+<br> {x: 1050, y: 50, width: 50, height: 50},
+<br>{x: 1050, y: 0, width: 50, height: 50},
+<br> {x: 1150, y: 100, width: 50, height: 50},
+<br>  {x: 1150, y: 0, width: 50, height: 50},
+<br> {x: 1350, y: 50, width: 50, height: 50},
+<br> {x: 1350, y: 100, width: 50, height: 50},
+<br> {x: 1300, y: 50, width: 50, height: 50},
+<br>{x: 1300, y: 100, width: 50, height: 50},
+<br> {x: 1250, y: 50, width: 50, height: 50},
+<br> {x: 0, y: 800, width: 5000, height: 50},
+<br> )
+<br>
+<br>
+<br>
+<br>function wallsBegin() { <p1 class="Comment">//een functie om een willekeurige locatie maken X en Y voor de muren, met een MaxWalls const variable</p1>
+<br> for (let i = 0; i < MaxWalls; i++) {
+<br>  let RandomX = Math.floor(Math.random() * 1000);
+<br>let RandomY = Math.floor(Math.random() * 800);
+<br> RandomX = Math.round(RandomX / 50)*50;
+<br>RandomY = Math.round(RandomY / 50)*50;
+<br>walls.push({x:RandomX, y:RandomY,width:50, height:50}); 
+<br>}
+<br>}
+<br><p1 class="Comment">//wallsBegin() //Comment verwijderen om doolhof willekeurig later genereren</p1>
+<br>
+<br>
+<br>function checkWallCollision(playerX, playerY, scale) { <p1 class="Comment">//Een functie om te kijken of de monster of speler in een muur zitten </p1>
+<br>  for (let i = 0; i < walls.length; i++) {
+<br>      let wall = walls[i];
+<br>      <p1 class="Comment">//Kijken of een speler/monster x of y in 1 van de muren x of y zit</p1>
+<br>      if (playerX + scale > wall.x && playerX < wall.x + wall.width && playerY + scale > wall.y && playerY < wall.y + wall.height) {
+<br>          return true;
+<br>      }
+<br>  }
+<br>  return false;
+<br>}
+<br>
+<br>function DrawWalls() { <p1 class="Comment">//Een functie met een loop om alle muren op het canvas zetten</p1>
+<br>  for (let i = 0; i < walls.length; i++) {
+<br>    let wall = walls[i];
+<br>    ctx.beginPath();
+<br>   ctx.fillStyle = "black"; 
+<br>    ctx.fillRect(wall.x, wall.y, wall.width, wall.height);
+<br>    ctx.closePath();
+<br> }
+<br>}
+<br>
+<br>function checkCoinWallCollision(coinX, coinY) { <p1 class="Comment">//Een functie om te kijken of een munt in een muur zit</p1>
+<br>  for (let i = 0; i < walls.length; i++) {
+<br>      let wall = walls[i];
+<br>     if (coinX + 20 > wall.x && coinX < wall.x + wall.width && coinY + 20 > wall.y && coinY < wall.y + wall.height) {
+<br>       console.log("CoinColidw")
+<br>         return true;
+<br>      }
+<br>  }
+<br>  return false;
+<br>}
+<br><p1 class="Comment">//Maze eind</p1>
+<br>
+<br><p1 class="Comment">//Raycast Begin</p1>
+<br>function doLinesIntersect(x1, y1, x2, y2, x3, y3, x4, y4) { <p1 class="Comment">//Functie om te controleren of twee lijnen (de ray en de muur) elkaar snijden</p1>
+<br>    <p1 class="Comment">//Bereken de noemer van het snijpunt</p1>
+<br>  let denominator = ((x2 - x1) * (y4 - y3)) - ((y2 - y1) * (x4 - x3));
+<br>  let numerator1 = ((y1 - y3) * (x4 - x3)) - ((x1 - x3) * (y4 - y3));
+<br>  let numerator2 = ((y1 - y3) * (x2 - x1)) - ((x1 - x3) * (y2 - y1));
+<br>
+<br>   <p1 class="Comment">//Als de denominator 0 is, dan zijn de lijnen parallel</p1>
+<br> if (denominator == 0) {
+<br>     <p1 class="Comment">//Als ook numerator1 en numerator2 0 zijn, dan liggen de lijnen op elkaar</p1>
+<br>     return numerator1 == 0 && numerator2 == 0;
+<br> }
+<br>
+<br>    <p1 class="Comment">//Bereken de r- en s-waardes van het snijpunt</p1>
+<br>  let r = numerator1 / denominator;
+<br>  let s = numerator2 / denominator;
+<br>
+<br>    <p1 class="Comment">//Als r en s tussen 0 en 1 liggen, dan snijden de lijnen elkaar</p1>
+<br>  return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
+<br>}
+<br>
+<br>function checkPlayerAndWalls() { <p1 class="Comment">//Functie om te controleren of de speler gezien wordt door het monster</p1>
+<br> <p1 class="Comment">//Initialiseer de startpositie van de ray (de positie van het monster)</p1>
+<br>  let rayStartX = Spr2x + Spr2formaat/2;
+<br>  let rayStartY = Spr2y + Spr2formaat/2;
+<br>
+<br> <p1 class="Comment">//Initialiseer de eindpositie van de ray (de positie van de speler)</p1>
+<br> let rayEndX = x + PlayerScaleXY/2;
+<br>  let rayEndY = y + PlayerScaleXY/2;
+<br>
+<br>  for (let i = 0; i < walls.length; i++) { <p1 class="Comment">// Controleer of de ray een muur snijdt</p1>
+<br>      let wall = walls[i];
+<br>      if (doLinesIntersect(rayStartX, rayStartY, rayEndX, rayEndY, wall.x, wall.y, wall.x + wall.width, wall.y + wall.height)) {
+<br>         SeesPlayer = false; //De SeesPlayer variable naar False veranderen
+<br>         break;
+<br>     } else {
+<br>        SeesPlayer = true; //De SeesPlayer variable naar True veranderen
+<br>     }
+<br>  }
+<br> console.log("seesPlayer: ", SeesPlayer);
+<br>}
+<br><p1 class="Comment">// Voer de functie elke seconde uit</p1>
+<br>setInterval(checkPlayerAndWalls, 1000);
+<br>
+<br><p1 class="Comment">//RaycastEind</p1>
+<br>
+<br>let EndCoinReady = false
+<br>function EndCoin() { <p1 class="Comment">//Een functie om de EndCoin te maken</p1>
+<br>  document.getElementById("CoinsCounter").textContent = "Escape";
+<br>  document.getElementById("CoinsCounter").style.color = "red"; <p1 class="Comment">//De tekst (coin counter) veranderen</p1>
+<br>  CoinColor = "green"; <p1 class="Comment">//De munten een nieuwe kleur geven</p1>
+<br>  coinlocationsX.push(Math.floor(Math.random() * 1400)) <p1 class="Comment">//De willekeurige locatie X van de munten maken</p1>
+<br>  coinlocationsY.push(Math.floor(Math.random() * 800)) <p1 class="Comment">//De willekeurige locatie Y van de munten maken</p1>
+<br> setTimeout(EndCoinReadyToggle, 50)
+<br>}
+<br>
+<br>function EndCoinReadyToggle() {
+<br>  EndCoinReady = true
+<br>}
+            </p>
+            <br><br>
+        </section>
+    </main>
 </body>
 </html>

@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+
+
 /*voor alles in main*/
 main {
     font-family: "Montserrat", sans-serif;
@@ -6,8 +10,8 @@ main {
 }
 
 /*voor de game code*/
-p1 {
-    color: rgb(0, 200, 0);
+p {
+    padding-left: 5vw;
 }
 
 /*li is voor lists*/
@@ -77,13 +81,13 @@ h1 {
     display: inline-block;
     color: #fff;
     text-transform: uppercase;
+    text-shadow: 5px 0.4px rgb(125, 125, 125);
 }
 
 /*voor het spel*/
 canvas {
     z-index: 2;
     margin-left: 15vw;
-    margin-right: 15vw;
     margin-top: 0,5vh;
     width: 70vw;
     height: auto;
@@ -91,7 +95,7 @@ canvas {
     background-repeat: no-repeat;
     background-size: cover;
     border-width: 3px;
-    border-radius: 1vh;
+    border-radius: 1.5vh;
     box-shadow: 0px 0px 20px black;
 }
 

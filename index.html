@@ -18,7 +18,7 @@
 
     <nav>
         <div class="topnav">
-            <a class="topnavborder active" href="homepage.html"><i class="fa fa-fw fa-home"></i>Home</a>
+            <a class="topnavborder active" href="index.html"><i class="fa fa-fw fa-home"></i>Home</a>
             <div class="subnav">
                 <a class="subnavbtn"><i class="fa fa-user-o"></i> Over Noah <img src="Assets/Images/Arrow.png" class="DropdownImg"></a>
                 <div class="subnav-content">
@@ -62,28 +62,21 @@
     <div class="SlideshowBG">
   <div class="slideshowContainer">
   
-    <!-- Replace the image 'src' with the images in your project.
-    Javascript is set up so that you can add as many images as you like, but make sure that you match the number of 'circle' span elements (below) to the number of images -->
-      <img class="imageSlides" src="Assets/Images/Homepagina/Slide1.png" onclick="alert('Noah/noah-3.html')" >
-      <img class="imageSlides" src="Assets/for_games/justin/castle.png" onclick="window.open('Justin/justin-3.html')">
-      <img class="imageSlides" src="Assets/images/Homepagina/2022-12-19.png" onclick="window.open('Bjorn/bjorn-3.html')">
-      <img class="imageSlides" src="Assets/Images/Homepagina/Slide4.png" onclick="window.open('Lars/lars-3.html')"> 
+      <img class="imageSlides" src="Assets/Images/Homepagina/Slide1.png" onclick="OpenUrl()" >
+      <img class="imageSlides" src="Assets/for_games/justin/castle.png" onclick="OpenUrl()">
+      <img class="imageSlides" src="Assets/images/Homepagina/2022-12-19.png" onclick="OpenUrl()">
+      <img class="imageSlides" src="Assets/Images/Homepagina/Slide4.png" onclick="OpenUrl()"> 
       
-    <!-- I would recommend to replace these 'span' elements with 'img' files
-    for each the left and right arrow that fits your project, and size accordingly.
-    I've shown 'span' elements because I didn't want to upload files. -->
       <span id ="leftArrow" onclick="arrowClick(1)" class="slideshowArrow">&#8249;</span>
       <span id ="rightArrow" onclick="arrowClick(1)" class="slideshowArrow">&#8250;</span>
       
       <div class="slideshowCircles">
-    <!-- Filled 'dot' class is set to first image in slideshow, and then via Javascript the filled 'dot' class follows the current image.
-    Make sure you match the number of these 'circle' span elements to the number of images in your slideshow. -->
         <span class="circle dot"></span>
         <span class="circle"></span>
         <span class="circle"></span>
         <span class="circle"></span>
       </div>
-      
+
     </div>
     </div>
 
@@ -103,7 +96,7 @@
         <h2>Over Justin</h2><br>
         <p1>Goededag ik ben justin<br>
             Ik game veel maar ik vind ook anime en youtube ook leuk. Ik ben een stil persoon met weinig 
-            vrienden omdat ik vrienden maken moelijk vind.
+            vrienden omdat ik vrienden maken moelijk vind maar nu heb ik een klas vol vrienden.
             Ik ben ook een student bij Techniek College Rotterdam en daar studeer ik software develepor.
             Voor mijn eerste project op de TRC moest ik met iemand anders een website maken over de ouderavond voor alle ouders en onze mentor. 
             en dan nu voor mijn tweede project moet ik een spel in javascript maken met een website erbij. 
@@ -111,7 +104,7 @@
             games speel ik vooral simulatie spellen.
             zoals slimerancher 1 en 2 of city skylines maar afentoe speel ik ook idle games zoals cookie clicker. met tuinieren
             heb ik een eigen mini vijver en een kas. ik groei op dit moment van het schrijven spaanse pepers, cherry tomaten,
-            komkommerkruid, en tuinkers. maar dat is nu in de winter moelijk om te verzorgen.
+            komkommerkruid, en tuinkers. maar dat is nu in de koudere maanden moelijk om te verzorgen.
         </p1>
     </div>
     <div class="text">
@@ -125,16 +118,27 @@
     </div>
     <div class="text">
         <h2>Over Lars</h2><br>
-        <p1></p1>
+        <p1>Ik ben Lars en dit is de tekst over mij. Ik studeer de opleiding software develepor op het Techniek college Rotterdam. In mijn vrije tijd ben ik eigenlijk altijd met vrienden.
+            Maar als er niemand is game ik programmeer ik of kijk ik een serie. Ik ben zelf best een rustig persoon en laat mezelf niet echt horen. Ik hou ervan om naar muziek te luisteren
+            en dat doe ik dan ook wel de hele dag door. Ik weet nog niet welke kant ik op wil als software developer maar ik denk richting de games programmeren. Als 10 jarig kind speelden ik
+            regelmatig games en besloot dat ik ze zelf later wilden gaan maken. Sinds ik op de opleiding zit ben ik erachter gekomen dat er nog veel meer kanten zijn die je op kan gaan als software
+            developer dus ik ben er nog steeds niet helemaal over uit.
+        </p1>
     </div>
  </div>
  </div>
 </div>
 
 <footer>
-    <p>
-        Footer
-    </p>
+
+    <div class="column">
+        <div class="FooterButtons">
+    <button class="FooterButton" onclick="window.location.href=('https://github.com/NoahE2005/TCR-Project2.git')"><img src="assets/images/Homepagina/Github_logo.png" alt="github">Github</button><br>
+    <button class="FooterButton" onclick="window.location.href=('https://tcr-student.educus.nl/?0;')"><img src="assets/images/Homepagina/eduarte_favicon.png" alt="eduarte">Eduarte</button><br>
+    <button class="FooterButton" onclick="window.location.href=('https://flexedu.instructure.com/;')"><img src="assets/images/Homepagina/Canvas_logo.png" alt="canvas">Canvas</button>
+        </div>
+    </div>
 </footer>
+
 </body>
 </html>

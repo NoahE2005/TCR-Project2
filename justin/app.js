@@ -11,8 +11,11 @@ let mouse = {   //begin locatie van de muis
 }
 
 addEventListener('mousemove', (event) => {    //ziet de locatie van de muis
-  mouse.x = event.pageX,
-  mouse.y = event.pageY
+  reallocation = canvas.getBoundingClientRect(), // absolute afmetingen van de canvas
+  schaalX = canvas.width / reallocation.width,   
+  schaalY = canvas.height / reallocation.height,
+  mouse.x = (event.pageX - reallocation.left)*schaalX,
+  mouse.y = (event.pageY - reallocation.top)*schaalY
 });
 
 addEventListener('click', Shoot);   //conect de keys aan acties
@@ -56,9 +59,8 @@ function randomIntFromRange(min, max) {   //voor latere randomizers
   return Math.floor(Math.random() * (max-min+1) + min);
 }
 
-function Shoot () {
-  let bullet = new Circle(player.x, player.y, 8, 'white');
-  // says the x and y spawn value and the size than the color
+function Shoot() {
+  let bullet = new Circle(player.x, player.y, 8, 'white');    // says the x and y spawn value and the size than the color
   // bullet.mx = mouse.x;
   // bullet.my = mouse.y;
 
@@ -66,7 +68,7 @@ function Shoot () {
   let vy = mouse.y - bullet.y;
   let speed = 6;
 
-  let dist = Math.sqrt(vx * vx + vy + vy);
+  let dist = Math.sqrt(vx * vx + vy * vy);
   bullet.dx = vx / dist;
   bullet.dy = vy / dist;
 
@@ -81,7 +83,7 @@ function SpawnEnemy() {
   let enemy = new Circle(canvas.width, randomIntFromRange(40, canvas.height - 10), 10, 'red');//level 1 vijand
   let level = randomIntFromRange(1, 4);   //bepaalt de level van vijanden
   enemy.speed = 2;    //vijand snelheid
-  enemy.health = Math.ceil(level / 2);    //bepaalt health
+  enemy.health = level/2;    //bepaalt health
   if (level == 2) {   //level 2 vijand
     enemy.color = 'blue';   //vijand kleur
     enemy.speed = 2,5;    //vijand snelheid
@@ -99,10 +101,9 @@ function SpawnEnemy() {
 }
 
 let player;
-function Start () {   //start het spel
-  player = new Circle(0, canvas.height/2, 20, 'orange');    //maakt de speler
+function Start() {   //start het spel
+  player = new Circle(0, canvas.height/2, 22, 'orange');    //maakt de speler
 }
-
 
 let originalTimer = 120;    //timer voor de vijanden
 let spawnTimer = originalTimer;
@@ -143,9 +144,8 @@ function Update () {
 
     if (enemy.x < 45) { // bepaald waar de vijanden verdwijnen
       enemies.splice(i, 1);   //verwijderd de vijand
-      points = 0;
       originalTimer = 150;
-      Start();
+      points = 0;
     }
 
     for (let j = 0; j < bullets.length; j++) {
@@ -160,8 +160,8 @@ function Update () {
         bullets.splice(j, 1);   //verwijderd de bullet
         if (enemy.health <= 0){
           enemies.splice(i, 1);   //verwijderd de vijand
+          points += 1;   //geeft punten
         }
-        points += 1;    //geeft punten
       }
     }
 
@@ -171,9 +171,9 @@ function Update () {
   player.update();  //update de speler
 
   ctx.fillStyle = "#FFFFFF";    //text kleur
-  ctx.font = "20px sans-serif";   //text font
+  ctx.font = "12px sans-serif";   //text font
   ctx.textAlign = "center";   //waar de text staat
-  ctx.fillText("Points: " + points, canvas.width/2, 22);    //de text
+  ctx.fillText("points: " + points, canvas.width/2, 15);    //de text
 }
 
 function MovePlayer(direction) {
